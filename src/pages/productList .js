@@ -2,11 +2,11 @@ import { Pagination, Rating } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { Button, Card, Col, Container, Input, Label, Row, Spinner } from "reactstrap";
 import { callAPI, btnLoc, onclickCard } from "../actions/action";
 import "../App.css";
-import routerList from "../router";
+import { useNavigate } from "react-router-dom";
+
 
 const ProductList = () => {
 
@@ -27,15 +27,20 @@ const ProductList = () => {
         //     color: color
         // }
         const valueFilter = {
-            rating: rating
+            rating: rating,
+            color: color
         }
         console.log();
         dispatch(btnLoc(valueFilter));
     }
     const productDetail = (id) => {
-
-        dispatch(onclickCard(id))
+       navigate("/product/" + id)
     }
+    const navigate = useNavigate();
+     const onColor = (event) =>{
+        setColor(event.target.value);
+        console.log(event.target.value);
+     }
     return (
         <>
             {
@@ -77,7 +82,7 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Color</h4>
                                 <Container>
-                                    <Input type="checkbox" value={"trang"} onClick={() => { setColor("trang") }} /> &nbsp;
+                                    <Input type="checkbox" /*value={true} onChange={() => {onColor(value)}}*/ /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trắng</Label>
                                 </Container>
                                 <Container>
@@ -141,9 +146,8 @@ const ProductList = () => {
                             {product.data ?
                                 product.data.map((productItem, index) => {
                                     return (
-                                        <Link key={index} to={productItem._id}>
-
-                                            <Card href={routerList.path} onClick={() => productDetail(productItem._id)} key={index} className="grid-item" style={{
+                                      
+                                            <Card  onClick={() => productDetail(productItem._id)} key={index} className="grid-item" style={{
                                                 width: '22rem',
                                                 margin: "10px",
                                                 height: '30rem'
@@ -154,9 +158,9 @@ const ProductList = () => {
                                                     <p className="text-center "><span className="m-2 " style={{ textDecorationLine: "line-through" }}>400</span> <b>{productItem.buyPrice}</b></p>
                                                 </Container>
                                             </Card>
-                                        </Link>
+                                      
                                     )
-                                }) : ""}
+                                }) :  <Spinner color="warning" style={{ marginLeft: "400px" }}></Spinner>}
                         </Col>
                         <Stack direction="row" justifyContent="flex-end" p="30px" pr="70px" mt="50px">
                             <Pagination count={10} variant="outlined" shape="rounded" />
