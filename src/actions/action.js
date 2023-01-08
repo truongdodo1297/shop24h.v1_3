@@ -20,7 +20,6 @@ const callAPI = () => {
         catch (error) {
             console.log(error)
         }
-
     }
 }
 const btnLoc = (valueFilter) => {
@@ -83,7 +82,7 @@ const apiAddCard = (productId) => {
             })
             const respnose = await fetch("http://localhost:8000/product/" + productId, myHeaders);
             const data = await respnose.json();
-            console.log(data);
+            // console.log(data);
             return dispatch({
                 type: ADD_CARD,
                 data: data
