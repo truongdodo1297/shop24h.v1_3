@@ -5,7 +5,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiAddCard, changeSoLuong, soLuongProduct } from "../actions/action";
+import { apiAddCard, changeSoLuong, soLuongProduct, ApiItemInShopping } from "../actions/action";
 
 
 const ProductInfo = () => {
@@ -13,7 +13,7 @@ const ProductInfo = () => {
     const { productId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { dataAddCard, soLuongItem } = useSelector((reduxData) => reduxData.shopReducer);
+    const { dataAddCard, soLuongItem, soLuongSanPham } = useSelector((reduxData) => reduxData.shopReducer);
 
     useEffect(() => {
         dispatch(apiAddCard(productId))
@@ -28,19 +28,22 @@ const ProductInfo = () => {
     const onBtnAddToCard = () => {
         // localStorage.setItem("number", number + 1);
         // setNumber( parseInt(number)  + 1);
+        // debugger;
         setNumberItem(numberItem + 1);
         const soLuong = numberItem + 1;
         const id = dataAddCard.data._id;
+        console.log(id)
+        dispatch(soLuongProduct())
         dispatch(changeSoLuong(soLuong, id)); 
-        dispatch(soLuongProduct());  // thêm số lượng khi click
+        dispatch(ApiItemInShopping(id)); 
     }
 
     return (
 
         <>
             <Container>
-                <Container style={{marginTop: "30px",  textAlign: "end"}} onClick={() => goToShop()}>
-                    <ShoppingCartCheckoutIcon style={{marginTop: "30px",  textAlign: "end"}} onClick={() => goToShop()}></ShoppingCartCheckoutIcon><div className="icoShopping"><p >{soLuongItem}</p></div>
+                <Container style={{ marginTop: "30px", textAlign: "end" }} onClick={() => goToShop()}>
+                    <ShoppingCartCheckoutIcon style={{ marginTop: "30px", textAlign: "end" }} onClick={() => goToShop()}></ShoppingCartCheckoutIcon><div className="icoShopping"><p >{soLuongItem}</p></div>
                 </Container>
 
                 {dataAddCard ? <Row >

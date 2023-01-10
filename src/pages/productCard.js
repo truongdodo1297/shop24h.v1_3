@@ -1,34 +1,37 @@
-import {  Row, Col, ButtonGroup, Button } from "reactstrap";
+import { Row, Col, ButtonGroup, Button } from "reactstrap";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApiItemInShopping } from "../actions/action";
 const ProductCard = () => {
 
+    console.log("Trang giỏ hàng");
     const dispatch = useDispatch();
-    const { soLuongSanPham, dataShopping, soLuongItem } = useSelector((reduxData) => reduxData.shopReducer);
+    const { soLuongSanPham, dataShopping } = useSelector((reduxData) => reduxData.shopReducer);
+
     console.log(dataShopping)
+
     useEffect(() => {
-        if(soLuongSanPham !== null){
-            soLuongSanPham.map((product,index)=>{
-                dispatch(ApiItemInShopping(product.id))
-            })
-        }
+        // if (soLuongSanPham !== null) {
+        //     soLuongSanPham.map((product, index) => {
+        //         dispatch(ApiItemInShopping(product.id))
+        //     })
+        // }
+     
     }, [])
     return (
         <>
-            {dataShopping ? dataShopping.map((product, index) => {
-                return (
+            {dataShopping ?
                     <Row className="mt-3">
                         <Col xs="4" className="d-flex text-center bg-light">
                             <Row style={{ width: "180px" }}>
-                                <img src={product.data.imageUrl}></img>
+                                <img src={dataShopping.data.imageUrl}></img>
                             </Row>
                             <Row className="text-center pt-5">
-                                <h4>{product.data.name}</h4>
+                                <h4>{dataShopping.data.name}</h4>
                             </Row>
                         </Col>
                         <Col xs="3" className="price text-center pt-5">
-                            <h4>{product.data.buyPrice}</h4>
+                            <h4>{dataShopping.data.buyPrice}</h4>
                         </Col>
                         <Col xs="2" className="quantity text-center pt-5" >
                             <ButtonGroup
@@ -39,7 +42,7 @@ const ProductCard = () => {
                                     +
                                 </Button>
                                 <Button outline>
-                                    {soLuongItem}
+                                    {soLuongSanPham.soLuong}
                                 </Button>
                                 <Button outline>
                                     -
@@ -51,8 +54,8 @@ const ProductCard = () => {
                         </Col>
                         <hr></hr>
                     </Row>
-                )
-            })
+
+           
 
                 : <h3>Data Emty !!</h3>}
 

@@ -1,15 +1,15 @@
-import {CALL_API,PAGE_PENDING,BTN_LOC,ADD_CARD,SO_LUONG_SAN_PHAM,PRODUCT_IN_SHOPPING,SL_PRODUCT_IN_SHOPPING} from "../constants/constant";
+import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING } from "../constants/constant";
 
 const dataState = {
     product: [],
     statusPending: false,
-    rating: "",
-    dataAddCard: "", 
+    rating: "", // bo
+    dataAddCard: "",
     soLuongSanPham: [], //id và số lần click vào sp
-    dataShopping : [], //call api vaf luu vao day
+    dataShopping: [], //call api vaf luu vao day
     soLuongItem: 0   // số lần click hien tren gio hang
 }
-const shopReducer = (state = dataState, action)=>{
+const shopReducer = (state = dataState, action) => {
     switch (action.type) {
         case PAGE_PENDING:
             break;
@@ -24,27 +24,23 @@ const shopReducer = (state = dataState, action)=>{
             state.dataAddCard = action.data
             break;
         case SO_LUONG_SAN_PHAM:
-            state.soLuongSanPham.push(
-               action.data
-            );
-            console.log("số lương trong giỏ hàng là : " + state.soLuongSanPham);
+            state.soLuongSanPham = {
+                id: action.data.id,
+                soLuong: action.data.soLuong,
+            };
+            console.log("thông tin trong giỏ hàng là");
             console.log(state.soLuongSanPham);
             break;
         case PRODUCT_IN_SHOPPING:
-            //
-            state.dataShopping.push(
-                action.data
-             );
-            console.log("data trong gio hang là : " + state.dataShopping);
-            console.log(state.dataShopping);
+            state.dataShopping = action.data
             break;
-        case SL_PRODUCT_IN_SHOPPING: 
-            state.soLuongItem =  state.soLuongItem + 1
-            console.log("sl trong gio hang là : " + state.soLuongItem);
+        case SL_PRODUCT_IN_SHOPPING:
+            state.soLuongItem = state.soLuongItem + 1
+
             break;
         default:
             break;
     }
-    return {...state}
+    return { ...state }
 }
 export default shopReducer;
