@@ -1,9 +1,11 @@
-import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING } from "../constants/constant";
+import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING,STATUS_INPUT,
+     SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT,CARD_IN_VIEW } from "../constants/constant";
 
 const dataState = {
     product: [],
+    productIncard: [],
     statusPending: false,
-    rating: "", // bo
+    statusinput : false, // bo
     dataAddCard: "",
     soLuongSanPham: [], //id và số lần click vào sp
     dataShopping: [], //call api vaf luu vao day
@@ -17,6 +19,10 @@ const shopReducer = (state = dataState, action) => {
             state.product = action.data
             // state.statusPending = false
             break;
+        case CARD_IN_VIEW:
+            state.productIncard = action.data
+            // state.statusPending = false
+            break;
         case BTN_LOC:
             state.product = action.data
             break;
@@ -24,19 +30,28 @@ const shopReducer = (state = dataState, action) => {
             state.dataAddCard = action.data
             break;
         case SO_LUONG_SAN_PHAM:
-            state.soLuongSanPham = {
+            state.soLuongSanPham = [{
                 id: action.data.id,
-                soLuong: action.data.soLuong,
-            };
+                soLuong: action.data.soLuong ,
+            }]
             console.log("thông tin trong giỏ hàng là");
             console.log(state.soLuongSanPham);
             break;
         case PRODUCT_IN_SHOPPING:
-            state.dataShopping = action.data
+            state.dataShopping.push(action.data)
             break;
         case SL_PRODUCT_IN_SHOPPING:
             state.soLuongItem = state.soLuongItem + 1
-
+            break;
+        case TANG_SL_PRODUCT_IN_SHOPPING:
+            state.soLuongSanPham.push({
+                id: action.data.id,
+                soLuong: action.data.soLuong
+            })
+            break;
+        case TANG_SL_PRODUCT:
+            state.soLuongSanPham.soLuong =  state.soLuongSanPham.soLuong  + 1;
+          
             break;
         default:
             break;

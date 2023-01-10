@@ -1,26 +1,31 @@
-.menu{
+.menu {
     background-color: aqua;
 }
-.grid-container{
+
+.grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
 }
+
 .grid-item {
     padding: 18px;
-    border: 1px solid rgba(160, 158, 158, 0.8);
+    border: 1px solid rgba(224, 224, 224, 0.8);
     font-size: 25px;
     text-align: center;
-  }
- .grid-item:hover {
+}
+
+.grid-item:hover {
     opacity: 0.7;
     border: 1px solid rgba(254, 4, 4, 0.8);
-  }
-.btn-block{
+}
+
+.btn-block {
     width: 200px;
     margin-top: 200px;
     margin-left: 30px;
 }
-.icoShopping{
+
+.icoShopping {
     background-color: rgb(253, 92, 92);
     width: 20px;
     text-align: center;
@@ -28,4 +33,130 @@
     height: 20px;
     margin-top: -38px;
     margin-left: 1270px;
+
+}
+
+.iconPhone {
+    /* background-color: rgb(192, 190, 190); */
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+}
+
+p:hover {
+    color: blue;
+
+}
+
+.nav {
+    padding-left: 200px;
+    background-color: rgb(39, 39, 39);
+}
+
+.navItem {
+    padding-left: 70px;
+}
+
+img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.imgBody {
+    /* height: 500px; */
+    margin-top: 150px;
+    text-align: center;
+}
+
+.imgBody2 {
+    padding-top: 30px;
+    /* height: 500px; */
+    margin-top: 30px;
+    text-align: center;
+    background-color: black;
+}
+
+h1 {
+    font-size: 54px;
+    background: -webkit-linear-gradient(rgba(2, 0, 36, 1) 1%, rgba(245, 36, 224, 1) 47%, rgba(0, 212, 255, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.New {
+    font-size: x-large;
+}
+
+.iPhoneName {
+    margin-top: -10px;
+    font-size: xx-large;
+    font-weight: 500;
+}
+
+.btnBuy {
+    align-items: center;
+    width: 80px;
+    background-color: rgb(15, 15, 231);
+    border-radius: 30px;
+    height: 45px;
+    margin-left: -40px;
+}
+
+a {
+    font-size: larger;
+    font-weight: 500;
+    margin-left: 50px;
+}
+
+.img2 {
+    width: 100%;
+    margin-left: -50px;
+}
+
+.imgBody3 {
+    background-color: blueviolet;
+    display: flex;
+    padding-top: 30px;
+    height: 600px;
+    margin-top: 30px;
+    text-align: center;
+    background-color: #f3f9ea;
+}
+
+.text1 {
+    padding-left: 85px;
+}
+
+.imgBody4 {
+    padding-left: 70px;
+}
+
+.imgHeadPhone {
+
+    text-align: center;
+    width: 400px;
+    margin-top: 250px;
+    margin-left: 200px;
+    position: absolute;
+}
+
+h2 {
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.cardHeadPhone {
+    text-align: center;
+    justify-content: center;
+}
+
+.CardFooter:hover {
+    background-color: rgb(65, 77, 255);
+}
+
+.imgCard:hover {
+    opacity: 0.6;
 }

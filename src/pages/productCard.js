@@ -16,22 +16,23 @@ const ProductCard = () => {
         //         dispatch(ApiItemInShopping(product.id))
         //     })
         // }
-     
+
     }, [])
     return (
         <>
-            {dataShopping ?
+            {dataShopping ? dataShopping.map((el, index) => {
+                return (
                     <Row className="mt-3">
                         <Col xs="4" className="d-flex text-center bg-light">
                             <Row style={{ width: "180px" }}>
-                                <img src={dataShopping.data.imageUrl}></img>
+                                <img src={el.data.imageUrl}></img>
                             </Row>
                             <Row className="text-center pt-5">
-                                <h4>{dataShopping.data.name}</h4>
+                                <h4>{el.data.name}</h4>
                             </Row>
                         </Col>
                         <Col xs="3" className="price text-center pt-5">
-                            <h4>{dataShopping.data.buyPrice}</h4>
+                            <h4>{el.data.buyPrice}</h4>
                         </Col>
                         <Col xs="2" className="quantity text-center pt-5" >
                             <ButtonGroup
@@ -55,7 +56,10 @@ const ProductCard = () => {
                         <hr></hr>
                     </Row>
 
-           
+                )
+            })
+
+
 
                 : <h3>Data Emty !!</h3>}
 

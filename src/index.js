@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import reducer from "./reducers";
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware} from 'redux';
+<script src="https://kit.fontawesome.com/6d54c48153.js" crossorigin="anonymous"></script>
 
 const stote = createStore(reducer, applyMiddleware(thunk));
 const root = ReactDOM.createRoot(document.getElementById('root'));

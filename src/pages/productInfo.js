@@ -1,18 +1,17 @@
 
 import { Rating } from "@mui/material";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, ButtonGroup } from "reactstrap";
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiAddCard, changeSoLuong, soLuongProduct, ApiItemInShopping } from "../actions/action";
+import { apiAddCard, changeSoLuong, soLuongProduct, ApiItemInShopping,addNewProduct } from "../actions/action";
 
 
 const ProductInfo = () => {
-
+    const navigate = useNavigate();
     const { productId } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { dataAddCard, soLuongItem, soLuongSanPham } = useSelector((reduxData) => reduxData.shopReducer);
 
     useEffect(() => {
@@ -29,13 +28,39 @@ const ProductInfo = () => {
         // localStorage.setItem("number", number + 1);
         // setNumber( parseInt(number)  + 1);
         // debugger;
-        setNumberItem(numberItem + 1);
-        const soLuong = numberItem + 1;
-        const id = dataAddCard.data._id;
-        console.log(id)
-        dispatch(soLuongProduct())
-        dispatch(changeSoLuong(soLuong, id)); 
-        dispatch(ApiItemInShopping(id)); 
+    //     if(soLuongSanPham == ""){ // nếu mảng chứa số lượng sản phâm rỗng thì thây đỗi 
+    //         setNumberItem(numberItem + 1);
+    //         dispatch(soLuongProduct());
+    //         const soLuong = numberItem + 1;
+    //         const id = dataAddCard.data._id;
+    //         dispatch(changeSoLuong(soLuong, id)); 
+    //         dispatch(ApiItemInShopping(id));
+    //     }
+    //     else {
+    //         const id = dataAddCard.data._id;
+    //         soLuongSanPham.map((el,index)=>{
+    //             if(el.id == id){
+    //                 // console.log("yes");
+    //                 setNumberItem(numberItem + 1);
+    //                 const soLuong = numberItem + 1;
+    //                 const id = dataAddCard.data._id;
+    //                 dispatch(changeSoLuong(soLuong, id)); 
+    //             }
+    //            else{
+    //                 console.log("else");
+    //                 console.log(soLuongSanPham);
+
+    //             setNumberItem(numberItem + 1);
+    //             dispatch(soLuongProduct());
+    //             const soLuong = numberItem + 1;
+    //             const id = dataAddCard.data._id;
+    //             dispatch(addNewProduct(soLuong, id)); 
+    //             dispatch(ApiItemInShopping(id));
+    //            }
+    //         })
+    //     }
+
+         dispatch(ApiItemInShopping(dataAddCard.data._id));
     }
 
     return (
@@ -53,12 +78,26 @@ const ProductInfo = () => {
                         </Row>
                         <Row></Row>
                     </Col>
-                    <Col >
-                        <h1>{dataAddCard.data.name}</h1>
-                        <p style={{ fontSize: "medium" }}>Brand: {dataAddCard.data.brand} </p>
-                        <p>Rating:   <Rating name="read-only" value={dataAddCard.data.rating} readOnly /></p>
-                        <p>mô tả: {dataAddCard.data.description} </p>
+                    <Col>
+                        <h3>{dataAddCard.data.name}</h3>
+                        <span style={{ fontSize: "20px",paddingTop: "40px" }}>Brand: {dataAddCard.data.brand} </span><br></br>
+                        <span style={{ fontSize: "20px" }} >Rating:   <Rating name="read-only" value={dataAddCard.data.rating} readOnly /></span><br></br>
+                        <span style={{ fontSize: "20px" }}>mô tả: {dataAddCard.data.description} </span>
                         <h3 style={{ color: "red" }}>${dataAddCard.data.buyPrice}</h3>
+                        <ButtonGroup
+                                className="my-2"
+                                size="sm"
+                            >
+                                <Button outline>
+                                    +
+                                </Button>
+                                <Button outline>
+                                  
+                                </Button>
+                                <Button outline>
+                                    -
+                                </Button>
+                            </ButtonGroup><br></br>
                         <Button onClick={() => onBtnAddToCard()}>Add to card</Button>
                     </Col>
                 </Row> : <h3 className="text-center ">No data here !!</h3>}

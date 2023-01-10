@@ -21,11 +21,6 @@ const ProductList = () => {
     const [color, setColor] = useState();
 
     const onBtnLoc = () => {
-        // const valueFilter = {
-        //     rating: rating,
-        //     price: price,
-        //     color: color
-        // }
         const valueFilter = {
             rating: rating,
             color: color
@@ -37,10 +32,15 @@ const ProductList = () => {
        navigate("/product/" + id)
     }
     const navigate = useNavigate();
-     const onColor = (event) =>{
-        setColor(event.target.value);
-        console.log(event.target.value);
-     }
+     
+     const [statusVot1, setStatusVot1] = useState(false);
+     const [statusVot2, setStatusVot2] = useState(false);
+     const [statusVot3, setStatusVot3] = useState(false);
+     const [statusVot4, setStatusVot4] = useState(false);
+     const [statusVot5, setStatusVot5] = useState(false);
+     const [statusColorDen, setStatusColorDen] = useState(false);
+     const [statusColorTrang, setStatusColorTrang] = useState(false);
+
     return (
         <>
             {
@@ -52,11 +52,11 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Caregories</h4>
                                 <Container style={{ display: "block" }}>
-                                    <a href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black", paddingTop: "30px" }}>Wireless</a><br></br>
-                                    <a href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</a><br></br>
-                                    <a href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</a><br></br>
-                                    <a href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</a><br></br>
-                                    <a href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</a><br></br>
+                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black", paddingTop: "30px" }}>Wireless</h3><br></br>
+                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
+                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
+                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
+                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
                                 </Container>
                             </Container>
                             <Container className="mt-3">
@@ -82,11 +82,11 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Color</h4>
                                 <Container>
-                                    <Input type="checkbox" /*value={true} onChange={() => {onColor(value)}}*/ /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>Trắng</Label>
+                                    <Input type="checkbox"  checked={statusColorTrang} value={"trang"} onChange={() => {setColor("trang"); setStatusColorTrang(!statusColorTrang); setStatusColorDen(false)}}/> &nbsp;
+                                    <Label className="mb-1"  style={{ fontSize: "larger" }}>Trắng</Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" value={"den"} onClick={() => { setColor("den") }} /> &nbsp;
+                                    <Input type="checkbox" checked={statusColorDen} value={"den"} onClick={() => { setColor("den"); setStatusColorDen(!statusColorDen); setStatusColorTrang(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Đen</Label>
                                 </Container>
                             </Container>
@@ -116,23 +116,23 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Rating</h4>
                                 <Container>
-                                    <Input type="checkbox" value={5} onClick={() => { setRating(5) }} /> &nbsp;
+                                    <Input type="checkbox"   checked={statusVot5} defaultValue={5} value={true} onClick={() => { setRating(5); setStatusVot1(false);setStatusVot2(false);setStatusVot3(false);setStatusVot4(false);setStatusVot5(!statusVot5) }} /> &nbsp;
                                     <Rating name="read-only" value={5} readOnly />
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" value={4} onClick={() => { setRating(4) }} /> &nbsp;
+                                    <Input type="checkbox"   checked={statusVot4} value={4} onClick={() => { setRating(4); setStatusVot1(false);setStatusVot2(false);setStatusVot3(false);setStatusVot4(!statusVot4);setStatusVot5(false) }} /> &nbsp;
                                     <Rating name="read-only" value={4} readOnly />
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" value={3} onClick={() => { setRating(3) }} /> &nbsp;
+                                    <Input type="checkbox"   checked={statusVot3} value={3} onClick={() => { setRating(3); setStatusVot1(false);setStatusVot2(false);setStatusVot3(!statusVot3);setStatusVot4(false);setStatusVot5(false) }} /> &nbsp;
                                     <Rating name="read-only" value={3} readOnly />
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" value={2} onClick={() => { setRating(2) }} /> &nbsp;
+                                    <Input type="checkbox"   checked={statusVot2} value={2} onClick={() => { setRating(2); setStatusVot1(false);setStatusVot2(!statusVot2);setStatusVot3(false);setStatusVot4(false);setStatusVot5(false) }} /> &nbsp;
                                     <Rating name="read-only" value={2} readOnly />
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" value={1} onClick={() => { setRating(1) }} /> &nbsp;
+                                    <Input type="checkbox"  checked={statusVot1} value={1} onClick={() => { setRating(1); setStatusVot1(!statusVot1);setStatusVot2(false);setStatusVot3(false);setStatusVot4(false);setStatusVot5(false) }} /> &nbsp;
                                     <Rating name="read-only" value={1} readOnly />
                                 </Container>
 
