@@ -1,7 +1,7 @@
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css"
 import AppleIcon from '@mui/icons-material/Apple';
-import { Button, Card,CardFooter, CardBody, CardTitle, CardText, Col, Container, Nav, NavItem, NavLink, Row } from "reactstrap";
+import { Button, Card, CardFooter, CardBody, CardTitle, CardText, Col, Container, Nav, NavItem, NavLink, Row } from "reactstrap";
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
@@ -26,30 +26,7 @@ const Home = () => {
     }
     return (
         <div className="d-block">
-            <Nav >
-                <AppleIcon ></AppleIcon>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">Mac</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">iPad</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">iPhone</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">Watch</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">AirPods</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">HeadPhone</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className=" navItem m-2 ml-5" href="/components/">TV & Home</NavLink>
-                </NavItem>
-            </Nav>
+           
             <Row style={{ justifyContent: "center", backgroundColor: " rgb(230, 230, 230)", height: "110px" }} >
                 <Col className="iconPhone" xs="2">
                     <PhoneIphoneIcon style={{ fontSize: "55px" }} />
@@ -120,36 +97,39 @@ const Home = () => {
                 </Container>
                 <img style={{ width: "100%" }} src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-max-select-pink-202011_FV1_FMT_WHH?wid=940&hei=800&fmt=jpeg&qlt=90&.v=1604776024000"></img>
             </Container>
+
             <Row className="cardHeadPhone">
                 <h2>Which HeadPhone is right for you?</h2>
-               {
-                productIncard ? productIncard.data.map((el,index)=>{
-                    return(
-                 <Card
-                className=" cardItem my-2 mt-5 m-2"
-                color="primary"
-                outline
-                style={{
-                    width: '18rem'
-                }}
-            >
-                <img className="imgCard"
-                    alt="Card"
-                    src={el.imageUrl}
-                />
-                <CardBody>
-                    <CardTitle tag="h5">
-                        {el.name}
-                    </CardTitle>
-                    <CardText>
-                        With supporting text below as a natural lead-in to additional content.
-                    </CardText>
-                </CardBody>
-                <CardFooter className="CardFooter" onClick={()=>{ goToProduct() }}>
-                        Show more
-                </CardFooter >
-            </Card> )})   : ""
-               }
+              
+                {
+                    productIncard.data ? productIncard.data.map((el, index) => {
+                        return (
+                            <Card
+                                className=" cardItem my-2  m-2"
+                                color="primary"
+                                outline
+                                style={{
+                                    width: '18rem',
+                                }}
+                            >
+                                <img className="imgCard"
+                                    alt="Card"
+                                    src={el.imageUrl}
+                                />
+                                <CardBody>
+                                    <CardTitle tag="h5">
+                                        {el.name}
+                                    </CardTitle>
+                                    <CardText>
+                                        With supporting text below as a natural lead-in to additional content.
+                                    </CardText>
+                                </CardBody>
+                                <CardFooter className="CardFooter" onClick={() => { goToProduct() }}>
+                                    Show more
+                                </CardFooter >
+                            </Card>)
+                    }) : <h1>Opssss !</h1>
+                }
             </Row>
         </div>
     )

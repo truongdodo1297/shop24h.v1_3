@@ -21,7 +21,7 @@
 
 .btn-block {
     width: 200px;
-    margin-top: 200px;
+    margin-top: 100px;
     margin-left: 30px;
 }
 
@@ -54,7 +54,7 @@ p:hover {
 }
 
 .navItem {
-    padding-left: 70px;
+    padding-left: 40px;
 }
 
 img {
@@ -135,17 +135,11 @@ a {
 }
 
 .imgHeadPhone {
-
     text-align: center;
     width: 400px;
     margin-top: 250px;
     margin-left: 200px;
     position: absolute;
-}
-
-h2 {
-    font-size: 60px;
-    font-weight: 600;
 }
 
 .cardHeadPhone {
@@ -159,4 +153,106 @@ h2 {
 
 .imgCard:hover {
     opacity: 0.6;
+}
+.imgCard{
+    padding: 50px;
+    text-align: center;
+}
+.imgItemInfo{
+    width: 500px;
+   
+}
+.textInfo{
+    padding-left: 150px;
+}
+
+.divColor1{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(8, 7, 7);
+    border-radius: 20px;
+    border: 4px solid blue;
+}
+.divColor2{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(253, 250, 243);
+    border-radius: 20px;
+    border: 3px solid blue;
+    margin-left: 20px;
+}
+.btnAddToCard{
+    background-color: rgb(58, 58, 221);
+    width: 350px;
+    padding: 5px;
+    font-size: large;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+.rowInfoH2{
+    padding-left: 150px;
+    font-size: larger;
+}
+.hr1{
+    margin-left: 70px;
+    width: 500px;
+}
+.rowInfoP{
+    font-size: larger;
+}
+.rowInfo{
+    margin-top: 50px;
+}
+.shopHeadH2{
+    font-size: 45px;
+    font-weight: 700;
+}
+.shopHead{
+    margin-top: 80px;
+    text-align: center;
+    align-items: center;
+}
+
+.shopItem{
+    justify-content: center;
+    padding-right: 50px;
+    padding: 120px;
+    padding-left: 100px;
+}
+
+.shopImg{
+ text-align: end;
+ padding-right: 80px;
+ padding-top: 50px;
+}
+.shopH2{
+    font-size: 30px;
+    font-weight: 600;
+}
+.shopButton{
+    background-color: white;
+    color: black;
+    font-weight: 700;
+    font-size: x-large;
+    border: none;
+}
+.shopPrice{
+ text-align: end;
+}
+
+.shopP{
+    font-size: 20px;
+    font-weight: 500;
+    color: #4444ff;
+    text-align: end;
+}
+.shopPriceP{
+    margin-left: 15px;
+    font-size: larger;
+    font-weight: 700;
+}
+.shopTotal{
+    margin-top: 70px;
 }

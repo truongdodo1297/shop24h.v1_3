@@ -1,4 +1,4 @@
-import { Navbar, Col } from "reactstrap";
+import { Navbar, Col, NavItem, NavLink, Nav } from "reactstrap";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
@@ -22,7 +22,30 @@ const Header = () => {
                     <YouTubeIcon className="m-3"></YouTubeIcon>
                     <TwitterIcon className="m-3" ></TwitterIcon>
                 </Col>
-            </Navbar>
+                </Navbar>
+                <Nav >
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-4" href="/components/">Mac</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-1" href="/components/">iPad</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-5" href="/components/">iPhone</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-5" href="/components/">Watch</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-5" href="/components/">AirPods</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-5" href="/components/">HeadPhone</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink className=" navItem m-1 ml-5" href="/components/">TV & Home</NavLink>
+                </NavItem>
+            </Nav>
         </>
     )
 }

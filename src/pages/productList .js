@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, Col, Container, Input, Label, Row, Spinner } from "reactstrap";
-import { callAPI, btnLoc, onclickCard } from "../actions/action";
+import { callAPI, btnLoc, onclickCard,changePagination } from "../actions/action";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
@@ -11,21 +11,23 @@ import { useNavigate } from "react-router-dom";
 const ProductList = () => {
 
     const dispatch = useDispatch();
-    const { product, statusPending } = useSelector((reduxData) => reduxData.shopReducer);
+    const { product, statusPending, limit, currentPage} = useSelector((reduxData) => reduxData.shopReducer);
     useEffect(() => {
-        dispatch(callAPI())
-    }, [])
+        dispatch(callAPI(limit,currentPage))
+    }, [currentPage])
 
     const [rating, setRating] = useState();
     const [price, setPrice] = useState();
     const [color, setColor] = useState();
+    const [brand, setBrand] = useState();
 
     const onBtnLoc = () => {
         const valueFilter = {
             rating: rating,
-            color: color
+            color: color,
+            brand: brand
         }
-        console.log();
+        console.log(valueFilter);
         dispatch(btnLoc(valueFilter));
     }
     const productDetail = (id) => {
@@ -40,6 +42,14 @@ const ProductList = () => {
      const [statusVot5, setStatusVot5] = useState(false);
      const [statusColorDen, setStatusColorDen] = useState(false);
      const [statusColorTrang, setStatusColorTrang] = useState(false);
+     const [brandDEVIA, setBrandDEVIA] = useState(false);
+     const [brandIPHONE, setBrandIPHONE] = useState(false);
+     const [brandXiaomi, setbrandXiaomi] = useState(false);
+     const [brandNo, setBrandNo] = useState(false);
+     const onChangePagination = (event, value) => {
+        console.log("change page")
+        dispatch(changePagination(value)); 
+    }
 
     return (
         <>
@@ -47,7 +57,7 @@ const ProductList = () => {
                 statusPending ?
                     <Spinner color="warning" style={{ marginLeft: "500px" }}></Spinner>
                     :
-                    <Row className="d-flex">
+                    <Row className="d-flex mt-5">
                         <Col xs="3" style={{ paddingLeft: "90px" }}>
                             <Container className="mt-3">
                                 <h4>Caregories</h4>
@@ -62,18 +72,18 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Brands</h4>
                                 <Container>
-                                    <Input type="checkbox" /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
+                                <Input type="checkbox"  checked={brandDEVIA} value={"DEVIA"} onChange={() => {setBrandDEVIA(!brandDEVIA); setBrand("DEVIA")}} ></Input>&nbsp;
+                                    <Label className="mb-1"  style={{ fontSize: "larger" }}>DEVIA</Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
+                                <Input type="checkbox"  checked={brandIPHONE} value={"IPHONE"} onChange={() => {setBrandIPHONE(!brandIPHONE); setBrandDEVIA(false); setBrand("IPHONE")}} ></Input>&nbsp;
+                                    <Label className="mb-1"  style={{ fontSize: "larger" }}>IPHONE</Label>
                                 </Container>   <Container>
-                                    <Input type="checkbox" /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
+                                <Input type="checkbox"  checked={brandXiaomi} value={"Xiaomi"} onChange={() => {setbrandXiaomi(!brandXiaomi);setBrandIPHONE(false); setBrandDEVIA(false); setBrand("Xiaomi")}} ></Input>&nbsp;
+                                    <Label className="mb-1"  style={{ fontSize: "larger" }}>XIAOMI</Label>
                                 </Container>   <Container>
-                                    <Input type="checkbox" /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
+                                <Input type="checkbox"  checked={brandNo} value={"no"} onChange={() => {setBrandNo(!brandNo); setbrandXiaomi(false);setBrandIPHONE(false); setBrandDEVIA(false); setBrand("no")}} ></Input>&nbsp;
+                                    <Label className="mb-1"  style={{ fontSize: "larger" }}>BRAND KHÁC</Label>
                                 </Container>   <Container>
                                     <Input type="checkbox" /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
@@ -137,9 +147,9 @@ const ProductList = () => {
                                 </Container>
 
                             </Container>
-                            <Container>
-                                <Button color="info" className="btn btn-block" onClick={onBtnLoc}>Lọc</Button>
-                            </Container>
+                            <Row >
+                                <Button  color="info" className="btn btn-block" onClick={onBtnLoc}>Lọc</Button>
+                            </Row>
                         </Col>
 
                         <Col Container xs="9" className="grid-container" >
@@ -163,7 +173,7 @@ const ProductList = () => {
                                 }) :  <Spinner color="warning" style={{ marginLeft: "400px" }}></Spinner>}
                         </Col>
                         <Stack direction="row" justifyContent="flex-end" p="30px" pr="70px" mt="50px">
-                            <Pagination count={10} variant="outlined" shape="rounded" />
+                            <Pagination count={"noPage"} defaultPage={currentPage} onChange={()=> onChangePagination()} variant="outlined" shape="rounded" />
                         </Stack>
 
                     </Row>

@@ -9,5 +9,6 @@ export const TANG_SL_PRODUCT_IN_SHOPPING= " tang so luong PRODUCT_IN_SHOPPING";
 export const TANG_SL_PRODUCT= " tang so luong PRODUCT_IN_SHOPPING";
 export const STATUS_INPUT= "status nut input";
 export const CARD_IN_VIEW= "status nut input";
+export const PAGINATION_CHANGE= "PAGINATION_CHANGE";
 
 
