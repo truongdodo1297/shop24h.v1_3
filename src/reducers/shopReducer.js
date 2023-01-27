@@ -1,27 +1,30 @@
-import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING,STATUS_INPUT,PAGINATION_CHANGE,
-     SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT,CARD_IN_VIEW } from "../constants/constant";
+import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING,PAGINATION_CHANGE,
+    CLEAR_DATA,STATUS_LOGIN, TANG_SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT,CARD_IN_VIEW } from "../constants/constant";
 
 const dataState = {
-    totalUser : 0,
-    product: [],
-    limit: 2,
-    currentPage: 0,
-    productIncard: [],
-    statusPending: false,
-    statusinput : false, // bo
-    dataAddCard: "",
-    soLuongSanPham: [], //id và số lượng
-    dataShopping: [], //call api vaf luu vao day
+    totalProduct : 0, //tổng số data
+    product: [], // dư liệu project
+    limit: 9, 
+    statusLogin: false, 
+    currentPage: 1,
+    productIncard: [], //dữ liệu 1 projet
+    statusPending: true, 
+    dataAddCard: "", //  ??
+    soLuongSanPham: null, //call api vaf luu vao day
+    dataShopping: [], //call api vaf luu vao day ???
     soLuongItem: 0   // số lần click hien tren gio hang
 }
 const shopReducer = (state = dataState, action) => {
     switch (action.type) {
         case PAGE_PENDING:
             break;
+        case CLEAR_DATA:
+            state.dataShopping = []
+            break;
         case CALL_API:
             state.product = action.data
-            state.totalUser = action.totalData
-            // state.statusPending = false
+            state.totalProduct = action.totalData
+            state.statusPending = false
             break;
         case CARD_IN_VIEW:
             state.productIncard = action.data
@@ -36,15 +39,11 @@ const shopReducer = (state = dataState, action) => {
             state.dataAddCard = action.data
             break;
         case SO_LUONG_SAN_PHAM:
-            state.soLuongSanPham = action.data
-            console.log("thông tin trong giỏ hàng là");
-            console.log(state.soLuongSanPham);
+            // console.log(action.data.data + ">")
+            state.soLuongSanPham = action.data.data
             break;
         case PRODUCT_IN_SHOPPING:
             state.dataShopping.push(action.data)
-            break;
-        case SL_PRODUCT_IN_SHOPPING:
-            state.soLuongItem = state.soLuongItem + 1
             break;
         case TANG_SL_PRODUCT_IN_SHOPPING:
             state.soLuongSanPham.push({
@@ -54,7 +53,11 @@ const shopReducer = (state = dataState, action) => {
             break;
         case TANG_SL_PRODUCT:
             state.soLuongSanPham.soLuong =  state.soLuongSanPham.soLuong  + 1;
-          
+            break;
+        case STATUS_LOGIN:
+            state.statusLogin = true
+            console.log( "kq")
+            console.log( state.statusLogin)
             break;
         default:
             break;

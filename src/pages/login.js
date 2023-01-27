@@ -3,9 +3,14 @@ import auth from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import changeStatusLogin from "../actions/action"
+import { Button, FormGroup, Input, Label } from "reactstrap";
 
 const provider = new GoogleAuthProvider();
 function App() {
+    const dispatch = useDispatch();
+    const { statusLogin } = useSelector((reduxData) => reduxData.shopReducer);
 
     const [user, setUser] = useState(null)
     const logInWithGoogle = () => {
@@ -13,6 +18,11 @@ function App() {
             .then((result) => {
                 console.log(result)
                 setUser(result.user)
+                console.log(statusLogin)
+                if (statusLogin == false) {
+                    // dispatch(changeStatusLogin())
+                }
+
             })
             .catch((err) => {
                 console.log(err)
@@ -21,34 +31,64 @@ function App() {
     const navigate = useNavigate();
     return (
         <>
-        {user? navigate("/product") :
-              <div className="vh-50" style={{ backgroundColor: "#e9ecef" }}>
-                    <div className="container py-5 ">
-                        <div className="row h-50 d-flex justify-content-center align-items-center ">
-                            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-                                <div className="card shadow-2-strong" style={{ borderRadius: "1rem" }}>
-                                    <div className="card-body text-center">
-                                        <button onClick={logInWithGoogle} className="btn btn-lg  btn-primary mt-5" style={{ backgroundColor: "#dd4b39" }}
-                                        > Sign in with google</button>
-                                        <div><h4 className="mt-5" style={{ border: "1px solid #adb5bd", marginBottom: "-30px", borderRadius: "1rem", width: "30px", marginLeft: "200px" }}>or</h4></div>
-                                        <div className="form-outline mb-2">
-                                            <hr className="mb-5"></hr>
-                                            <input placeholder="Email" type="email" id="typeEmailX-2" className="form-control form-control-lg" />
+            {user ? navigate("/product") :
+                <div className="containerSigin">
+                    <div className="d-flex justify-content-center h-100" >
+                        <div className="card">
+                            <div className="card-header ">
+                                <h3>Sign In</h3>
+                                <div className="d-flex justify-content-end social_icon">
+                                    {/* <span><i className="fab fa-facebook-square"></i></span> */}
+                                    <span onClick={()=>logInWithGoogle()}><i className="fab fa-google-plus-square"></i></span>
+                                    {/* <span><i className="fab fa-twitter-square"></i></span> */}
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <form>
+                                    <div className="input-group form-group mt-3 ">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text"><i className="fas fa-user fa-2x" ></i></span>
                                         </div>
-                                        <div className="form-outline mb-2">
-                                            <input placeholder="Password" type="password" id="typePasswordX-2" className="form-control form-control-lg" />
-                                        </div>
-                                        <div className="form-check d-flex justify-content-start ">
-                                        </div>
-                                        <button className="btn btn-primary mt-5 btn-block" type="submit">Login</button>
-                                        <hr className="my-4"></hr>
-                                        <p>Don't have account? <span style={{ color: "#198754" }}>sign up here</span></p>
+                                        <Input type="text" className="form-control inputInfo" placeholder="username"></Input>
+
                                     </div>
+                                    <div className="input-group form-group mt-2">
+                                        <div className="input-group-prepend" >
+                                            <span className="input-group-text"><i className="fas fa-key fa-2x"></i></span>
+                                        </div>
+                                        <Input type="password" className="form-control" placeholder="password"></Input>
+                                    </div>
+                                    <div className="row align-items-center remember ml-3 p-3 mt-3">
+                                        <FormGroup check>
+                                            <Input
+                                                name="check"
+                                                type="checkbox"
+                                            />
+                                            <Label
+                                                check
+                                                for="exampleCheck"
+                                            >
+                                                Check me out
+                                            </Label>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="form-group">
+                                        <button type="submit" value="Login" className="btn btn-lg login_btn">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="card-footer pt-0 h-50">
+                                <div className="d-flex justify-content-center links">
+                                    Don't have an account?<a href="#">Sign Up</a>
+                                </div>
+                                <div className="d-flex justify-content-center">
+                                    <a href="#">Forgot your password?</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div>
+            }
         </>
     );
 }
