@@ -173,7 +173,7 @@ const ProductList = () => {
                                             <img alt="product" src={productItem.imageUrl}></img>
                                             <Container className="mt-3">
                                                 <p className="text-center">{productItem.name}</p>
-                                                <p className="text-center "><span className="m-2 " style={{ textDecorationLine: "line-through" }}>400</span> <b>{productItem.buyPrice}</b></p>
+                                                <p className="text-center "><span className="m-2 " style={{ textDecorationLine: "line-through" }}>{productItem.buyPrice}</span> <b>{productItem.promotionPrice}</b></p>
                                             </Container>
                                         </Card>
 

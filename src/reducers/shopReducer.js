@@ -1,5 +1,8 @@
-import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, PRODUCT_IN_SHOPPING,PAGINATION_CHANGE,
-    CLEAR_DATA,STATUS_LOGIN, TANG_SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT,CARD_IN_VIEW } from "../constants/constant";
+import { CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, SO_LUONG_SAN_PHAM, 
+    PRODUCT_IN_SHOPPING,PAGINATION_CHANGE, CLEAR_DATA,STATUS_LOGIN,
+     TANG_SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT,CARD_IN_VIEW,
+     GET_ALL_ORDER, GET_ALL_PRODUCT,GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER, 
+     GET_PRODUCT_DETAIL, CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER } from "../constants/constant";
 
 const dataState = {
     totalProduct : 0, //tổng số data
@@ -12,7 +15,13 @@ const dataState = {
     dataAddCard: "", //  ??
     soLuongSanPham: null, //call api vaf luu vao day
     dataShopping: [], //call api vaf luu vao day ???
-    soLuongItem: 0   // số lần click hien tren gio hang
+    soLuongItem: 0 ,   // số lần click hien tren gio hang
+    allOrder : "",
+    allProduct : "",
+    productDetail : "",
+    orderDetail : "",
+    customerDetail : "",
+    allCustomer : ""
 }
 const shopReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -56,8 +65,48 @@ const shopReducer = (state = dataState, action) => {
             break;
         case STATUS_LOGIN:
             state.statusLogin = true
-            console.log( "kq")
             console.log( state.statusLogin)
+            break;
+        case GET_ALL_ORDER:
+            console.log(action.data)
+            state.allOrder = action.data
+            console.log( "get all user")
+            break;
+        case GET_ALL_PRODUCT:
+            console.log(action.data)
+            state.allProduct = action.data
+            console.log( "get all product")
+            break;
+        case GET_ALL_CUSTOMER:
+            console.log(action.data)
+            state.allCustomer = action.data
+            console.log( "get all customer")
+            break;
+        case GET_FILTER_CUSTOMER:
+            console.log(action.data)
+            state.allCustomer = action.data
+            console.log( "get SDT customer")
+            break;
+        case GET_PRODUCT_DETAIL:
+            console.log(action.data)
+            state.productDetail = action.data
+            console.log( "get product detail")
+            break;
+        case CLEAR_MODAL:
+            state.productDetail = ""
+            console.log( "clear modal")
+            break;
+        case GET_ORDER_DETAIL:
+            state.orderDetail = action.data
+            console.log( "get order detail")
+            break;
+        case GET_CUSTOMER_FILTER:
+            state.allCustomer = action.data
+            console.log( "get customer detail")
+            break;
+        case GET_ORDER_FILTER:
+            state.allOrder = action.data
+            console.log( "get order filter")
             break;
         default:
             break;

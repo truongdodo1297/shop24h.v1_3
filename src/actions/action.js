@@ -1,6 +1,10 @@
+import { type } from "@testing-library/user-event/dist/type";
+import { json } from "react-router-dom";
 import {
-    CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, CARD_IN_VIEW,PAGINATION_CHANGE,
-    SO_LUONG_SAN_PHAM,CLEAR_DATA,STATUS_LOGIN, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING, TANG_SL_PRODUCT
+    CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, CARD_IN_VIEW, PAGINATION_CHANGE,
+    SO_LUONG_SAN_PHAM, CLEAR_DATA, STATUS_LOGIN, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING,
+    TANG_SL_PRODUCT, GET_ALL_ORDER, GET_ALL_PRODUCT, GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER, GET_PRODUCT_DETAIL,
+    CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER
 } from "../constants/constant"
 
 const URL = "http://localhost:8000";
@@ -15,14 +19,14 @@ const callAPI = (currentPage, limit) => {
                 type: PAGE_PENDING
             })
             const respnoseTotal = await fetch(URL + "/product", myHeaders);
-            const dataTotal =  await respnoseTotal.json();
+            const dataTotal = await respnoseTotal.json();
 
-            const respnose = await fetch(URL + "/productlimit9?_start=" + ((currentPage-1) * limit) + "&_limit=" + limit, myHeaders);
+            const respnose = await fetch(URL + "/productlimit9?_start=" + ((currentPage - 1) * limit) + "&_limit=" + limit, myHeaders);
 
             const data = await respnose.json();
             return dispatch({
                 type: CALL_API,
-                totalData : dataTotal.data.length,
+                totalData: dataTotal.data.length,
                 data: data
             })
         }
@@ -33,30 +37,30 @@ const callAPI = (currentPage, limit) => {
 }
 
 const btnLoc = (valueInPutFilter) => {
-return async(dispatch) => {
-try {
-    var myHeaders = new Headers();
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             await dispatch({
                 type: PAGE_PENDING
             })
-            const res = await fetch(URL + "/productFiter/:?color=" +  valueInPutFilter.color + "&buyPrice=" +  valueInPutFilter.price + "&brand=" +  valueInPutFilter.brand + "&rating=" + valueInPutFilter.rating, myHeaders);
-            const data =  await res.json();
+            const res = await fetch(URL + "/productFiter/:?color=" + valueInPutFilter.color + "&buyPrice=" + valueInPutFilter.price + "&brand=" + valueInPutFilter.brand + "&rating=" + valueInPutFilter.rating, myHeaders);
+            const data = await res.json();
             console.log(valueInPutFilter.rating)
             console.log(data)
             return dispatch({
-                type: BTN_LOC, 
+                type: BTN_LOC,
                 data: data
             })
-    
-} catch (error) {
-    
-}
-}
-   
-  
-      
+
+        } catch (error) {
+
+        }
+    }
+
+
+
 }
 
 //?
@@ -91,7 +95,7 @@ const apiAddCard = (productId) => {
             await dispatch({
                 type: PAGE_PENDING
             })
-            const respnose = await fetch(URL +  "/productID/" + productId, myHeaders);
+            const respnose = await fetch(URL + "/productID/" + productId, myHeaders);
             const data = await respnose.json();
             console.log(data);
             return dispatch({
@@ -188,7 +192,7 @@ const AddUserProductDetail = (id, soLuong, imgUrl, buyPrice, name) => {
                 body: JSON.stringify({
                     product: id,
                     quantity: soLuong,
-                    imgUrl : imgUrl,
+                    imgUrl: imgUrl,
                     buyPrice: buyPrice,
                     name: name
                 }),
@@ -200,7 +204,7 @@ const AddUserProductDetail = (id, soLuong, imgUrl, buyPrice, name) => {
             const data = await respnose.json();
             console.log(data)
             return;
-           
+
         }
         catch (error) {
             console.log(error)
@@ -209,7 +213,7 @@ const AddUserProductDetail = (id, soLuong, imgUrl, buyPrice, name) => {
 }
 
 // lấy về AIP order detail
-const callAPIAddUserProductDetail = ()=> {
+const callAPIAddUserProductDetail = () => {
     return async (dispatch) => {
         try {
             const body = {
@@ -231,22 +235,22 @@ const callAPIAddUserProductDetail = ()=> {
         }
     }
 }
-const changePagination = (value) =>{
-    return{
+const changePagination = (value) => {
+    return {
         type: PAGINATION_CHANGE,
         payload: value
     }
 }
 
 // xóa state lưu thông tin datashoping
-const clearData = () =>{
-    return{
+const clearData = () => {
+    return {
         type: CLEAR_DATA
     }
 }
 // remove product api
 
-const removeProduct = (productId) =>{
+const removeProduct = (productId) => {
     return async (dispatch) => {
         try {
             const body = {
@@ -262,7 +266,7 @@ const removeProduct = (productId) =>{
             const data = await respnose.json();
             console.log("Delete order");
             console.log(data);
-            return ;
+            return;
         }
         catch (error) {
             console.log(error)
@@ -270,11 +274,379 @@ const removeProduct = (productId) =>{
     }
 }
 
-const changeStatusLogin = () =>{
-    return{
-    type: STATUS_LOGIN
+const changeStatusLogin = () => {
+    return {
+        type: STATUS_LOGIN
     }
 }
+const getAllOrder = () => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            const respnose = await fetch(URL + "/order", myHeaders);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ALL_ORDER,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getAllProduct = () => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            const respnose = await fetch(URL + "/product", myHeaders);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ALL_PRODUCT,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getAllCustomer = () => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            const respnose = await fetch(URL + "/customer", myHeaders);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ALL_CUSTOMER,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getFilterCusromerBySDT = (SDT) => {
+    return async (dispatch) => {
+        try {
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(URL + "/customerSTD/" + SDT);
+
+            const respnose = await fetch(URL + "/customerSDT/" + SDT, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_FILTER_CUSTOMER,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const deleteProduct = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(id);
+            const respnose = await fetch(URL + "/product/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+
+            return;
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const deleteOrder = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(id);
+            const respnose = await fetch(URL + "/order/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+
+            return;
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const postProduct = (body) => {
+    return async (dispatch) => {
+        try {
+            let raw = JSON.stringify(
+                {
+                    name: body.name,
+                    description: body.description,
+                    type: body.type,
+                    imageUrl: body.imageUrl,
+                    buyPrice: body.buyPrice,
+                    promotionPrice: body.promotionPrice,
+                    color: body.color,
+                    rating: body.rating,
+                    brand: body.brand
+                })
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+
+            const respnose = await fetch(URL + "/post-product", requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getProductDetail = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+
+            const respnose = await fetch(URL + "/productID/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_PRODUCT_DETAIL,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getOrdertDetail = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+
+            const respnose = await fetch(URL + "/order/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ORDER_DETAIL,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const putProduct = (id, body) => {
+    return async (dispatch) => {
+        try {
+            let raw = JSON.stringify({
+                name: body.name,
+                description: body.description,
+                type: body.type,
+                imageUrl: body.imageUrl,
+                buyPrice: body.buyPrice,
+                promotionPrice: body.promotionPrice,
+                color: body.color,
+                rating: body.rating,
+                brand: body.brand
+            })
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(raw);
+
+            const respnose = await fetch(URL + "/product/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return;
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const putOrder = (id, body) => {
+    return async (dispatch) => {
+        try {
+            let raw = JSON.stringify({
+              
+            })
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(raw);
+
+            const respnose = await fetch(URL + "/order/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ORDER_DETAIL,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const clearModal = () =>{
+    return{
+        type: CLEAR_MODAL
+    }
+}
+
+const getFilterCustomer = (fullName, phone) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(URL + "/customerFilter" +  "/:?phone=" + phone + "&fullName=" + fullName)
+            const respnose = await fetch(URL + "/customerFilter" +  "/:?phone=" + phone + "&fullName=" + fullName , requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_CUSTOMER_FILTER,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getOrdertFilter = (vRaw) => {
+    return async (dispatch) => {
+        try {
+            let phone = vRaw.phone;
+            let fullName = vRaw.fullName;
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+
+            const respnose = await fetch(URL + "/orderFilter/" + ":?phone=" + phone +"&fullName=" + fullName , requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_ORDER_FILTER,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export {
     callAPI,
     btnLoc,
@@ -290,5 +662,19 @@ export {
     changePagination,
     clearData,
     removeProduct,
-    changeStatusLogin
+    changeStatusLogin,
+    getAllOrder,
+    getAllProduct,
+    getAllCustomer,
+    getFilterCusromerBySDT,
+    postProduct,
+    deleteProduct,
+    getProductDetail,
+    putProduct,
+    clearModal,
+    deleteOrder,
+    putOrder, 
+    getOrdertDetail,
+    getFilterCustomer, 
+    getOrdertFilter
 }

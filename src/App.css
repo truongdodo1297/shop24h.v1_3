@@ -342,14 +342,8 @@ s .shopDiv {
     margin-top: 15px;
 }
 
-
 .TTSoLuong {
     background-color: #4444ff;
-}
-
-.TTKhachHang {
-    /* /* background-color: rgb(126, 125, 125); */
-
 }
 
 .TTVitri {
@@ -384,9 +378,6 @@ s .shopDiv {
     padding-right: 50px;
 }
 
-.CartSP {
-    /* background-color: #4444ff; */
-}
 
 .cartTTKhachHang {
     padding-left: 40px;
@@ -410,8 +401,7 @@ s .shopDiv {
 }
 
 
-
-@import url('https://fonts.googleapis.com/css?family=Numans');
+/* @import url('https://fonts.googleapis.com/css?family=Numans'); */
 
 
 .containerSigin {
@@ -420,7 +410,7 @@ s .shopDiv {
     padding: 110px;
 }
 
-.card {
+.card1 {
     height: 370px;
     margin-top: auto;
     margin-bottom: auto;
@@ -466,9 +456,7 @@ s .shopDiv {
     margin-left: 15px;
     margin-right: 5px;
 }
-/* .inputInfo{
-    height: 30px;
-} */
+
 .login_btn {
     margin-left: 60px;
     color: black;
@@ -481,9 +469,6 @@ s .shopDiv {
     background-color: white;
 }
 
-.links {
-    color: white;
-}
 
 .links a {
     margin-left: 4px;

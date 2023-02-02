@@ -4,6 +4,7 @@ import Cart from "./pages/productCart";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import ThanhToan from "./pages/thanhToan";
+import Admin from "./pages/admin";
 
 const routerList = [
   
@@ -13,5 +14,6 @@ const routerList = [
     {path:"/cart", element: <Cart/>},
     {path:"/Login", element: <Login/>},
     {path:"/ThanhToan", element: <ThanhToan/>},
+    {path:"/admin", element: <Admin/>}
 ]
 export default routerList;

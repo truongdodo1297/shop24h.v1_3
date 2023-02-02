@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { callAPIAddUserProductDetail, removeProduct } from "../actions/action";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 const ProductCard = () => {
 
     const navigate = useNavigate();
@@ -78,22 +78,26 @@ const ProductCard = () => {
         console.log(e.target.value)
         setWarOrder(e.target.value)
     }
+    const apartmentChange = (e) => {
+        console.log(e.target.value)
+        setApartment(e.target.value)
+    }
     const [fullName, setFullName] = useState()
     const [phone, setPhone] = useState()
-    // const [sex, setSex] = useState()
-    const [email, setEmail] = useState()
     const [cityNameOrder, setCityNameOrder] = useState()
     const [districOrder, setDistricOrder] = useState()
     const [warOrder, setWarOrder] = useState()
-    const [companyName, setCompanyName] = useState()
-    const [companyAddress, setCompanyAddress] = useState()
-    const [MST, setMST] = useState()
-
+    const [apartment, setApartment] = useState()
     const [sexBoy, setSexBoy] = useState(false)
     const [sexGirl, setSexGirl] = useState(false)
     const [sex, setCheckedSex] = useState()
-    const changePhone = (e) =>{
+    const [requirement, setRequirement] = useState()
+    const changePhone = (e) => {
         setPhone(e.target.value)
+    }
+    const changeRequirement = (e) => {
+        console.log(e.target.value)
+        setRequirement(e.target.value)
     }
 
     const changeSexBoy = () => {
@@ -119,76 +123,68 @@ const ProductCard = () => {
     }
 
     const datHang = () => {
-        if(fullName == undefined){
-            alert("!!")
-            return
-        }
-        if(phone == undefined){
-            alert("!!")
-            return
-        }
-        if(sex == undefined){
-            alert("!!")
-            return
-        }
-        if(cityNameOrder == undefined){
-            alert("!!")
-            return
-        }
-        if(districOrder == undefined){
-            alert("!!")
-            return
-        }
-        if(warOrder == undefined){
-            alert("!!")
-            return
-        }
-        console.log(fullName)
+        // if(fullName == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        // if(phone == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        // if(sex == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        // if(cityNameOrder == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        // if(districOrder == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        // if(warOrder == undefined){
+        //     alert("!!")
+        //     return
+        // }
+        let orderProduct = saveData.map((function (item) {
+            return {
+                product: item.Product,
+                quantity: item.quantity
+            }
+        }))
+        console.log(orderProduct)
         let raw = JSON.stringify({
             fullName: fullName,
             phone: phone,
             sex: sex,
-            // email: "do",
             address: {
                 city: cityNameOrder,
                 distric: districOrder,
                 war: warOrder,
+                apartment: apartment
             },
+            requirement: requirement,
+            order: orderProduct
         })
-        // var raw = JSON.stringify({
-        //     "fullName": "do",
-        //     "sex": "do",
-        //     "phone": 12333334411,
-        //     "email": "cclm3vvcc",
-        //     "address": {
-        //         "city": "vv",
-        //         "distric": "cc",
-        //         "war": "vv"
-        //     },
-        //     "company": {
-        //         "companyName": "ll",
-        //         "companyAddress": " oo",
-        //         "MST": 1233
-        //     }
-        // });
 
         console.log(raw)
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
-                var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                };
-                const response =  fetch("http://localhost:8000/post-order", requestOptions);
-                console.log("post order")
-        
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        const response = fetch("http://localhost:8000/post-order", requestOptions);
+        const data = response.json()
+        console.log("post order")
+        console.log(data)
+
     }
     console.log(saveData)
-
-    
 
     return (
         <>
@@ -252,9 +248,9 @@ const ProductCard = () => {
                                                                 <LocalMallIcon></LocalMallIcon>
                                                                 <span style={{ marginLeft: "10px", marginTop: "95px" }}>In stock and ready to ship.</span>
                                                             </Col>
-                                                            <Col>
+                                                            {/* <Col>
                                                                 <p className="shopPriceP" href="/">Enter zip code</p>
-                                                            </Col>
+                                                            </Col> */}
                                                         </Row>
                                                     </Col>
                                                     <hr className="shopHr"></hr>
@@ -271,12 +267,12 @@ const ProductCard = () => {
                                         <h6>THÔNG TIN KHÁCH HÀNG</h6>
                                         <Row className="pt-2">
                                             <Col xs="3">
-                                                <Input type="radio" checked = {sexBoy} onClick={()=>changeSexBoy()} />
+                                                <Input type="radio" checked={sexBoy} onClick={() => changeSexBoy()} />
                                                 <Label check> Anh </Label>
                                             </Col>
 
                                             <Col xs="6">
-                                                <Input type="radio" checked = {sexGirl}  onClick={()=>changeSexGirl()} />
+                                                <Input type="radio" checked={sexGirl} onClick={() => changeSexGirl()} />
                                                 <Label check>Chị </Label>
                                             </Col>
 
@@ -322,12 +318,12 @@ const ProductCard = () => {
                                                 <Col xs="6" >
                                                     <Col>
                                                         {city ?
-                                                            <FormControl style={{ width: "180px" }}>
+                                                            <FormControl style={{ width: "180px" , paddingTop: "4px"}}>
                                                                 <InputLabel >Chọn tỉnh / Thành phố</InputLabel>
                                                                 <Select
                                                                     size="small"
                                                                     onChange={cityChange}>
-                                                                    <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
+                                                                    {/* <MenuItem value={'none'}></MenuItem> */}
                                                                     {city.map((value, index) => {
                                                                         return <MenuItem value={index} >{value.Name}</MenuItem>
                                                                     }
@@ -342,7 +338,7 @@ const ProductCard = () => {
                                                     </Col>
 
                                                     <Col className="mt-3">
-                                                        <FormControl style={{ width: "180px" }}>
+                                                        <FormControl style={{ width: "180px", paddingTop: "4px" }}>
                                                             <InputLabel >Chọn Phường / Xã</InputLabel>
                                                             <Select
                                                                 size="small"
@@ -364,20 +360,18 @@ const ProductCard = () => {
 
                                                 <Col>
                                                     <Col xs="5">
-                                                        <FormControl style={{ width: "180px" }}>
+                                                        <FormControl style={{ width: "180px", paddingTop: "4px" }}>
                                                             <InputLabel >Chọn Quận / Huyện</InputLabel>
                                                             <Select
                                                                 size="small"
-                                                                // value={cityName}
-                                                                fullWidth
                                                                 onChange={districChange}>
-                                                                <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
+                                                                <MenuItem value={'none'}></MenuItem>
                                                                 {districtName ? districtName.map((value, index) => {
                                                                     return <MenuItem value={index}>{value.Name}</MenuItem>
                                                                 }
                                                                 ) :
                                                                     <Select>
-                                                                        <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
+                                                                        <MenuItem value={'none'}></MenuItem>
                                                                     </Select>}
                                                             </Select>
 
@@ -386,18 +380,19 @@ const ProductCard = () => {
                                                     </Col>
 
                                                     <Col xs="5">
-                                                        <FormControl size="small" className=" mt-3">
-                                                            <InputLabel >Số nhà, tên đường</InputLabel>
-                                                            <Input className="TTInputDiaChi">
-                                                                {/* { ""} */}
-                                                            </Input>
-                                                        </FormControl>
+                                                        <TextField
+                                                            className="TTInputDiaChi mt-3"
+                                                            xs="10"
+                                                            size="small"
+                                                            label="Số nhà, tên đường"
+                                                        />
                                                     </Col></Col>
                                             </Row>
 
                                         </Col>
                                         <Col xs="6" className="pl-2 mt-3">
                                             <TextField
+                                                onChange={changeRequirement}
                                                 className="TextField"
                                                 size="small"
                                                 label="Yêu cầu khác (không bắt buộc)"
@@ -407,67 +402,6 @@ const ProductCard = () => {
                                             />
                                         </Col>
 
-                                        <Row className="mt-4" >
-
-                                            <Col xs="12" className="m-1">
-                                                <Input
-                                                    onClick={changeDisplay}
-                                                    name="radio1"
-                                                    type="checkbox"
-                                                    value="checked"
-                                                    defaultValue="checked"
-                                                />
-                                                <Label check> Gọi người khác nhận hàng (nếu có) </Label>
-                                                <Row className="TTNguoiNhanHang" style={displayNguoiNhanHang}>
-
-                                                    <Row className="pt-2">
-                                                        <Col xs="3">
-                                                            <Input name="radio1" type="radio" />
-                                                            {' '}
-                                                            <Label check> Anh </Label>
-                                                        </Col>
-
-                                                        <Col xs="6">
-                                                            <Input name="radio1" type="radio" />
-                                                            {' '}
-                                                            <Label check>Chị </Label>
-                                                        </Col>
-
-                                                    </Row>
-                                                    <Row className="mt-2 ">
-                                                        <Col xs="4" >
-                                                            <TextField
-                                                                label="Họ và tên"
-                                                                size="small"
-                                                            />
-                                                        </Col>
-                                                        <Col xs="6">
-                                                            <TextField
-                                                                label="Số điện thoại"
-                                                                size="small"
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                </Row>
-                                            </Col>
-
-                                            <Col xs="12" className="m-1">
-                                                <Input
-                                                    name="radio1"
-                                                    type="checkbox"
-                                                />
-                                                {' '}
-                                                <Label check> Hướng dẫn sử dụng, giải đáp thắc mắc </Label>
-                                            </Col>
-                                            <Col xs="12" className="m-1">
-                                                <Input
-                                                    name="radio1"
-                                                    type="checkbox"
-                                                />
-                                                {' '}
-                                                <Label check> Xuất hóa đơn công ty </Label>
-                                            </Col>
-                                        </Row>
                                         <Row>
                                             <Col>
                                                 <hr></hr>
