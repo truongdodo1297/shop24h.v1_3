@@ -1,7 +1,77 @@
+@media (max-width: 767px) {
+    .Nav_lg{
+        display: none;
+    }
+    .Nav_Icon{
+        display: none;
+    }
+    .imgHeadPhone{
+        position: relative;
+        padding-top: 0%;
+    }
+    .imgHeadPhone{
+        display: none;
+    }
+  }
+@media (min-width: 1024px) {
+    .Navbar_sm{
+        display: none;
+    }
+    .imgHeadPhone_xs{
+        display: none;
+    }
+    .imgBody3_tilte{
+        background-color: #4444ff;
+        width: 4400px;
+        padding-top: 300px;
+        margin-right: 120px;
+    }
+    .iPhoneName{
+        font-size: 50px;
+        font-weight: 700;
+    }
+  }
+.Nav_sm_NavItem{
+    width: 20%;
+    background-color: #4444ff;
+  }
+  .Navbar_sm{
+    color: white;
+    background-color: rgb(54, 53, 53);
+  }
+  .icoShopping {
+    background-color: rgb(252, 22, 22);
+    width: 20px;
+    text-align: center;
+    border-radius: 25px;
+    height: 20px;
+    align-items: flex-end;
+    margin-top: -10px;
+    margin-left: -5px;
+}
+.NavItem_con {
+    display: flex;
+    justify-content: end;
+}
 .menu {
     background-color: aqua;
 }
-
+.imgHeadPhone_xs{
+    margin-top: 30px;
+    text-align: center;
+}
+.Navbar_sm_Nav{
+    padding-top: 0px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 15px;
+    color: white;
+    background-color: rgb(54, 53, 53);
+    position: absolute;
+    width: 98%;
+    text-align: left;
+   
+}
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -25,15 +95,13 @@
     margin-left: 30px;
 }
 
-.icoShopping {
-    background-color: rgb(253, 92, 92);
-    width: 20px;
-    text-align: center;
-    border-radius: 25px;
-    height: 20px;
-    margin-top: -38px;
-    margin-left: 1270px;
 
+.ShoppingCartCheckoutIcon {
+    margin-top: 15px;
+    text-align: end;
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .iconPhone {
@@ -45,16 +113,15 @@
 
 p:hover {
     color: blue;
-
 }
 
 .nav {
     padding-left: 200px;
-    background-color: rgb(39, 39, 39);
+    background-color: rgb(226, 226, 226);
 }
 
 .navItem {
-    padding-left: 40px;
+    color: white;
 }
 
 img {
@@ -66,14 +133,12 @@ img {
 }
 
 .imgBody {
-    /* height: 500px; */
-    margin-top: 150px;
+    margin-top: 3rem;
     text-align: center;
 }
 
 .imgBody2 {
     padding-top: 30px;
-    /* height: 500px; */
     margin-top: 30px;
     text-align: center;
     background-color: black;
@@ -94,11 +159,18 @@ h1 {
     margin-top: -10px;
     font-size: xx-large;
     font-weight: 500;
+    color: black;
+}
+.iPhoneName2 {
+    margin-top: -10px;
+    font-size: xx-large;
+    font-weight: 500;
+    color: white;
 }
 
 .btnBuy {
     align-items: center;
-    width: 80px;
+    width: 85px;
     background-color: rgb(15, 15, 231);
     border-radius: 30px;
     height: 45px;
@@ -112,22 +184,28 @@ a {
 }
 
 .img2 {
-    width: 100%;
-    margin-left: -50px;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
 }
 
 .imgBody3 {
-    background-color: blueviolet;
-    display: flex;
-    padding-top: 30px;
-    height: 600px;
+    padding-bottom: -30px;
     margin-top: 30px;
     text-align: center;
-    background-color: #f3f9ea;
+    /* background-color: #f3f9ea; */
 }
-
-.text1 {
-    padding-left: 85px;
+.imgBody3_tilte{
+    width: 300px;
+    position: absolute;
+    justify-content: end;
+    margin-top: 110px;
+    text-align: center;
+    right: 0px;
+}
+.imgBody3_img{
+    width: 100%;
 }
 
 .imgBody4 {
@@ -135,12 +213,12 @@ a {
 }
 
 .imgHeadPhone {
+    margin-top: 260px;
     text-align: center;
     width: 400px;
-    margin-top: 250px;
-    margin-left: 200px;
+    margin-left: 220px;
     position: absolute;
-}
+} 
 
 .cardHeadPhone {
     text-align: center;
@@ -158,7 +236,6 @@ a {
 
 .imgItemInfo {
     width: 450px;
-
 }
 
 .imgItemInfo:hover {
@@ -246,7 +323,7 @@ a {
 
 .shopImg {
     text-align: end;
-    padding-right: 80px;
+    padding-right: 20px;
     padding-top: 50px;
 }
 
@@ -320,7 +397,6 @@ s .shopDiv {
 
 .imgHeader {
     width: 50px;
-    /* height: 30px; */
 }
 
 .SignInHeader {
@@ -338,9 +414,13 @@ s .shopDiv {
 }
 
 .AppleIcon {
-    color: white;
     margin-top: 15px;
+    left: 50%;
 }
+.NavbarBrand{
+    align-items: center;
+}
+
 
 .TTSoLuong {
     background-color: #4444ff;

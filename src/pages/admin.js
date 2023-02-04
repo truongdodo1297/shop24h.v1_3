@@ -13,29 +13,52 @@ const Admin = () => {
         setAdminCustomer("block")
         setAdminOrder("none")
         setAminProduct("none")
+        setColorCustomerList("red")
+        setColorProductList("black")
+        setColorOrderList("black")
     }
     const displayOrder = () => {
         setAdminCustomer("none")
         setAdminOrder("block")
         setAminProduct("none")
+        setColorCustomerList("black")
+        setColorProductList("black")
+        setColorOrderList("red")
+
+
     }
     const displayProduct = () => {
         setAdminCustomer("none")
         setAdminOrder("none")
         setAminProduct("block")
+        setColorOrderList("black")
+        setColorCustomerList("black")
+        setColorProductList("red")
     }
+    let styleFilter = {
+        marginTop: "5px",
+        borderRadius: "17px",
+        border: "1px solid blue",
+        padding: "18px"
+    }
+    const [colorProductList, setColorProductList]  = useState("red")
+    const [colorCustomerList, setColorCustomerList]  = useState("red")
+    const [colorOrderList, setColorOrderList]  = useState("red")
     return (
         <>
-            <Row>
-                <Col xs="2">
-                    <Row className="bg-danger mt-3" onClick={() => displayProduct()}>
-                        <h6>Danh sách sản phẩm</h6>
+            <Row >
+                <Col xs="2" style={styleFilter}>
+                    <Row className="mt-3"  onClick={() => displayProduct()}>
+                        <h6 style={{color: colorProductList }} >Danh sách sản phẩm</h6>
+                        <hr></hr>
                     </Row>
-                    <Row className="bg-danger mt-3" onClick={() => displayCustomer()}>
-                        <h6>Danh sách khách hàng</h6>
+                    <Row onClick={() => displayCustomer()}>
+                        <h6 style={{color: colorCustomerList }}>Danh sách khách hàng</h6>
+                        <hr></hr>
                     </Row>
-                    <Row className="bg-danger mt-3" onClick={() => displayOrder()}>
-                        <h6>Tất cả Order</h6>
+                    <Row onClick={() => displayOrder()}>
+                        <h6 style={{color: colorOrderList }}> Tất cả Order</h6>
+                        <hr></hr>
                     </Row>
                 </Col>
                 <Col>

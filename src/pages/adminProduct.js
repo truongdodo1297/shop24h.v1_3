@@ -2,22 +2,53 @@ import { FormGroup, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonDropdown, Col, Input, Row, Table, DropdownToggle, DropdownItem, InputGroup, DropdownMenu, Modal, ModalHeader, Label, ModalBody, ModalFooter, CloseButton } from "reactstrap";
-import { getAllProduct, postProduct, deleteProduct, getProductDetail, putProduct, clearModal} from "../actions/action";
+import { getAllProduct, postProduct, deleteProduct, getProductDetail, putProduct, clearModal } from "../actions/action";
 
-const AdminProduct = () =>{
+const AdminProduct = () => {
     const dispatch = useDispatch();
     const { allProduct, productDetail } = useSelector((reduxData) => reduxData.shopReducer);
+  // state modal và row bị ẩn
+  const [infoProduct, setInfoProduct] = useState("none")
+  const [noneInfoProduct, setNoneInfoProduct] = useState()
 
+  const [modalDetail, setModalDetail] = useState(false)
+  const [modalDeleteProduct, setmodalDeleteProduct] = useState()
+  const [productAtModal, setProductAtModal] = useState()
+  const [idProductAtModal, setIdProductAtModal] = useState()
+
+
+  const [name, setName] = useState()
+  const [type, setType] = useState()
+  const [img, setImg] = useState()
+  const [price, setPiricet] = useState()
+  const [color, setColor] = useState()
+  const [description, setDescription] = useState()
+  const [promotionPrice, setPromotionPrice] = useState()
+  const [rating, setRating] = useState()
+  const [brand, setBrand] = useState()
+
+  const [idProductDetail, setIdProductDetail] = useState()
+  const [nameDetail, setNameDetail] = useState()
+  const [typeDetail, setTypeDetail] = useState()
+  const [imgDetail, setImgDetail] = useState()
+  const [priceDetail, setPiricetDetailDetail] = useState()
+  const [colorDetail, setColorDetail] = useState()
+  const [descriptionDetail, setDescriptionDetail] = useState()
+  const [promotionPriceDetail, setPromotionPriceDetail] = useState()
+  const [ratingDetail, setRatingDetail] = useState()
+  const [brandDetail, setBrandDetails] = useState()
     useEffect(() => {
         dispatch(getAllProduct())
 
-    }, [])
-   
+    }, [productAtModal, modalDetail,noneInfoProduct, modalDeleteProduct])
+
     // hiện row nhập thông tin sản phẩm
     const onBtnThemSanPham = () => {
         console.log("Them sản phẩm")
         setInfoProduct("flex")
         setNoneInfoProduct("none")
+        dispatch(getAllProduct())
+
     }
     // thây đổi các state
     const setImgValue = (e) => {
@@ -82,8 +113,8 @@ const AdminProduct = () =>{
     const changeBrandProductDetail = (e) => {
         setBrandDetails(e.target.value)
     }
-       // hiện modal khi ấn nút xóa
-       const onBtnDeleteProduct = (name, id) => {
+    // hiện modal khi ấn nút xóa
+    const onBtnDeleteProduct = (name, id) => {
         console.log(name)
         setmodalDeleteProduct(true)
         setProductAtModal(name)
@@ -93,6 +124,7 @@ const AdminProduct = () =>{
     const deleteProductItem = () => {
         console.log("xóa sp")
         dispatch(deleteProduct(idProductAtModal))
+        setmodalDeleteProduct(false)
     }
     // đóng modal delete product
     const closeModalDeleteProduct = () => {
@@ -127,8 +159,8 @@ const AdminProduct = () =>{
         dispatch(putProduct(idProductDetail, raw))
         setModalDetail(false)
     }
-     // 
-     const onPostProduct = () => {
+    // 
+    const onPostProduct = () => {
         console.log("post sản phẩm")
         let body = {
             name: name,
@@ -150,44 +182,27 @@ const AdminProduct = () =>{
         setNoneInfoProduct("block")
 
     }
-// state modal và row bị ẩn
-const [infoProduct, setInfoProduct] = useState("none")
-const [noneInfoProduct, setNoneInfoProduct] = useState()
+  
+    let styleFilter = {
+        marginTop: "5px",
+        height: "120px",
+        borderRadius: "17px",
+        border: "1px solid blue",
+        width: "97%",
+        padding: "18px",
+        marginLeft: "20px"
+    }
+    let styleProduct = {
+        borderRadius: "30px",
+        border: "1px solid blue",
+        marginTop: "5px",
+        width: "97%",
+        marginLeft: "20px"
+    }
 
-
-const [sdt, setSdt] = useState()
-
-const [modalDetail, setModalDetail] = useState(false)
-const [modalDeleteProduct, setmodalDeleteProduct] = useState()
-const [productAtModal, setProductAtModal] = useState()
-const [idProductAtModal, setIdProductAtModal] = useState()
-
-
-const [name, setName] = useState()
-const [type, setType] = useState()
-const [img, setImg] = useState()
-const [price, setPiricet] = useState()
-const [color, setColor] = useState()
-const [description, setDescription] = useState()
-const [promotionPrice, setPromotionPrice] = useState()
-const [rating, setRating] = useState()
-const [brand, setBrand] = useState()
-
-const [idProductDetail, setIdProductDetail] = useState()
-const [nameDetail, setNameDetail] = useState()
-const [typeDetail, setTypeDetail] = useState()
-const [imgDetail, setImgDetail] = useState()
-const [priceDetail, setPiricetDetailDetail] = useState()
-const [colorDetail, setColorDetail] = useState()
-const [descriptionDetail, setDescriptionDetail] = useState()
-const [promotionPriceDetail, setPromotionPriceDetail] = useState()
-const [ratingDetail, setRatingDetail] = useState()
-const [brandDetail, setBrandDetails] = useState()
-
-
-    return(
+    return (
         <>
-          <Modal isOpen={modalDeleteProduct}>
+            <Modal isOpen={modalDeleteProduct}>
                 <ModalHeader>Bạn có chắc muốn xóa sản phẩm:  </ModalHeader>
                 <ModalBody>
                     <h5>{productAtModal}</h5>
@@ -225,113 +240,117 @@ const [brandDetail, setBrandDetails] = useState()
                         </Modal>
                     </> : ""
             }
-            
-             {allProduct ?
-                        <>
-                            <Row>
-                                <Col xs="2" style={{ display: noneInfoProduct, marginTop: "30px" }}><Button onClick={onBtnThemSanPham}>Thêm sản phẩm</Button></Col>
-                                <Col xs="2" style={{ display: infoProduct, marginTop: "30px" }}><Button outline color="primary" onClick={onPostProduct}>Thêm sản phẩm</Button></Col>
-                                <Row style={{ display: infoProduct, marginTop: " 10px" }}>
-                                    <Col> <TextField label="Ảnh" size="small" onChange={setImgValue}></TextField></Col>
-                                    <Col> <TextField label="Tên sản phẩm " size="small" onChange={setNameValue}></TextField></Col>
-                                    <Col> <TextField label="Loại" size="small" onChange={setTypeValue}></TextField></Col>
-                                    <Col> <TextField label="Giá bán " size="small" onChange={setPiricetValue} ></TextField></Col>
-                                    <Col> <TextField label="Màu sắc" size="small" onChange={setColorValue}></TextField></Col>
-                                    <Col> <TextField label="Mô tả" size="small" onChange={setDescriptionValue}></TextField></Col>
-                                    <Col> <TextField label="Giá Giảm " size="small" onChange={setPromotionPriceValue}></TextField></Col>
-                                    <Col> <TextField label="Đánh giá" size="small" onChange={setRatingValue}></TextField></Col>
-                                    <Col> <TextField label="Thương hiệu" size="small" onChange={setBrandValue}></TextField></Col>
-                                    <Col> <CloseButton size="small" onClick={() => closeRow()}></CloseButton></Col>
-                                </Row>
 
-                            </Row>
-                            <Table responsive>
-                                <thead>
+            {allProduct ?
+                <>
+                    <Col style={styleFilter}>
+                        <Row>
+                            <Col xs="2" style={{ display: noneInfoProduct }} ><Button outline color="primary" onClick={onBtnThemSanPham}>Thêm sản phẩm</Button></Col>
+                            <Col xs="2" style={{ display: infoProduct }}><Button outline color="primary" onClick={onPostProduct}>Thêm sản phẩm</Button></Col>
+                        </Row>
+                        <Row style={{ display: infoProduct, marginTop: " 10px" }}>
+                            <Col> <TextField label="Ảnh" size="small" onChange={setImgValue}></TextField></Col>
+                            <Col> <TextField label="Tên sản phẩm " size="small" onChange={setNameValue}></TextField></Col>
+                            <Col> <TextField label="Loại" size="small" onChange={setTypeValue}></TextField></Col>
+                            <Col> <TextField label="Giá bán " size="small" onChange={setPiricetValue} ></TextField></Col>
+                            <Col> <TextField label="Màu sắc" size="small" onChange={setColorValue}></TextField></Col>
+                            <Col> <TextField label="Mô tả" size="small" onChange={setDescriptionValue}></TextField></Col>
+                            <Col> <TextField label="Giá Giảm " size="small" onChange={setPromotionPriceValue}></TextField></Col>
+                            <Col> <TextField label="Đánh giá" size="small" onChange={setRatingValue}></TextField></Col>
+                            <Col> <TextField label="Thương hiệu" size="small" onChange={setBrandValue}></TextField></Col>
+                            <Col> <CloseButton size="small" onClick={() => closeRow()}></CloseButton></Col>
+                        </Row>
+
+                    </Col>
+                    <Col style={styleProduct}>
+                    <Table responsive >
+                        <thead>
+                            <tr>
+                                <th>
+                                    STT
+                                </th>
+                                <th>
+                                    Ảnh
+                                </th>
+                                <th style={{ width: "320px" }}>
+                                    Tên sản phẩm
+                                </th>
+                                <th>
+                                    Thương hiệu
+                                </th>
+                                <th>
+                                    Loại
+                                </th>
+                                <th>
+                                    Giá bán
+                                </th>
+                                <th>
+                                    Màu sắc
+                                </th>
+                                <th style={{ width: "70px" }}>
+                                    Mô tả
+                                </th>
+                                <th>
+                                    Giá Giảm
+                                </th>
+                                <th>
+                                    Đánh giá
+                                </th>
+                                {/* <th>
+                                </th> */}
+                            </tr>
+                        </thead>
+
+                        {allProduct.data.map((el, index) => {
+                            return (
+                                <tbody className="text-left" key={index}>
                                     <tr>
-                                        <th>
-                                            STT
+                                        <th scope="row">
+                                            {index + 1}
                                         </th>
-                                        <th>
-                                            Ảnh
-                                        </th>
-                                        <th style={{ width: "320px" }}>
-                                            Tên sản phẩm
-                                        </th>
-                                        <th>
-                                            Thương hiệu
-                                        </th>
-                                        <th>
-                                            Loại
-                                        </th>
-                                        <th>
-                                            Giá bán
-                                        </th>
-                                        <th>
-                                            Màu sắc
-                                        </th>
-                                        <th style={{ width: "70px" }}>
-                                            Mô tả
-                                        </th>
-                                        <th>
-                                            Giá Giảm
-                                        </th>
-                                        <th>
-                                            Đánh giá
-                                        </th>
-                                        <th>
-
-                                        </th>
+                                        <td style={{ height: "70px" }}>
+                                            <img src={el.imageUrl}></img>
+                                        </td>
+                                        <td >
+                                            {el.name}
+                                        </td>
+                                        <td>
+                                            {el.brand}
+                                        </td>
+                                        <td>
+                                            {el.type}
+                                        </td>
+                                        <td>
+                                            {el.buyPrice}
+                                        </td>
+                                        <td>
+                                            {el.color}
+                                        </td>
+                                        <td>
+                                            {el.description}
+                                        </td>
+                                        <td>
+                                            {el.promotionPrice}
+                                        </td>
+                                        <td>
+                                            {el.rating}
+                                        </td>
+                                        <td style={{ width: "110px" }}>
+                                            <Button outline size="sm" color="primary" onClick={() => onBtnSua(el._id)}>Sửa</Button>
+                                            <Button outline size="sm" color="danger" className="m-1" onClick={() => onBtnDeleteProduct(el.name, el._id)}>Xóa</Button>
+                                        </td>
                                     </tr>
-                                </thead>
+                                </tbody>
 
-                                {allProduct.data.map((el, index) => {
-                                    return (
-                                        <tbody className="text-left">
-                                            <tr>
-                                                <th scope="row">
-                                                    {index + 1}
-                                                </th>
-                                                <td style={{ height: "70px" }}>
-                                                    <img src={el.imageUrl}></img>
-                                                </td>
-                                                <td >
-                                                    {el.name}
-                                                </td>
-                                                <td>
-                                                    {el.brand}
-                                                </td>
-                                                <td>
-                                                    {el.type}
-                                                </td>
-                                                <td>
-                                                    {el.buyPrice}
-                                                </td>
-                                                <td>
-                                                    {el.color}
-                                                </td>
-                                                <td>
-                                                    {el.description}
-                                                </td>
-                                                <td>
-                                                    {el.promotionPrice}
-                                                </td>
-                                                <td>
-                                                    {el.rating}
-                                                </td>
-                                                <td style={{ width: "110px" }}>
-                                                    <Button outline size="sm" color="primary" onClick={() => onBtnSua(el._id)}>Sửa</Button>
-                                                    <Button outline size="sm" color="danger" className="m-1" onClick={() => onBtnDeleteProduct(el.name, el._id)}>Xóa</Button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-
-                                    )
-                                })}
+                            )
+                        })}
 
 
-                            </Table>
-                        </> : <h1>??</h1>
-                        }
+                    </Table>
+                    </Col>
+                    
+                </> : <h1>??</h1>
+            }
 
         </>
     )

@@ -68,16 +68,6 @@ const ProductList = () => {
                     <Row className="d-flex mt-5">
                         <Col xs="0" sm = "3" style={{ paddingLeft: "90px" }}>
                             <Container className="mt-3">
-                                <h4>Caregories</h4>
-                                <Container style={{ display: "block" }}>
-                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black", paddingTop: "30px" }}>Wireless</h3><br></br>
-                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
-                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
-                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
-                                    <h3 href="/" style={{ textDecoration: "none", fontSize: "larger", color: "black" }}>Wireless</h3><br></br>
-                                </Container>
-                            </Container>
-                            <Container className="mt-3">
                                 <h4>Brands</h4>
                                 <Container>
                                     <Input type="checkbox" checked={brandDEVIA} value={"DEVIA"} onChange={() => { setBrandDEVIA(!brandDEVIA); setBrand("DEVIA") }} ></Input>&nbsp;
@@ -100,25 +90,16 @@ const ProductList = () => {
                             <Container className="mt-3">
                                 <h4>Color</h4>
                                 <Container>
-                                    <Input type="checkbox" checked={statusColorTrang} value={"trang"} onChange={() => { setColor("trang"); setStatusColorTrang(!statusColorTrang); setStatusColorDen(false) }} /> &nbsp;
+                                    <Input type="checkbox" checked={statusColorTrang} value={"Trắng"} onChange={() => { setColor("trang"); setStatusColorTrang(!statusColorTrang); setStatusColorDen(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trắng</Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" checked={statusColorDen} value={"den"} onClick={() => { setColor("den"); setStatusColorDen(!statusColorDen); setStatusColorTrang(false) }} /> &nbsp;
+                                    <Input type="checkbox" checked={statusColorDen} value={"Đen"} onClick={() => { setColor("den"); setStatusColorDen(!statusColorDen); setStatusColorTrang(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Đen</Label>
                                 </Container>
                             </Container>
                             <Container className="mt-3">
                                 <h4>Price</h4>
-                                <Row style={{ marginLeft: "-50px", marginTop: "25px" }}>
-                                    <Col>
-                                        <Input size="2"></Input>
-                                    </Col>
-                                    <Col xs="1">-</Col>
-                                    <Col>
-                                        <Input ></Input>
-                                    </Col>
-                                </Row>
                                 <Container className="pt-3">
                                     <Input type="checkbox"  checked = {priceTren200} onClick={() => { setPrice(201);setPriceTren200(!priceTren200); setPriceTren1000(false);setPriceDuoi200(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trên 200 </Label>

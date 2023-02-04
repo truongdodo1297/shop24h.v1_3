@@ -4,7 +4,8 @@ import {
     CALL_API, PAGE_PENDING, BTN_LOC, ADD_CARD, CARD_IN_VIEW, PAGINATION_CHANGE,
     SO_LUONG_SAN_PHAM, CLEAR_DATA, STATUS_LOGIN, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING,
     TANG_SL_PRODUCT, GET_ALL_ORDER, GET_ALL_PRODUCT, GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER, GET_PRODUCT_DETAIL,
-    CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER
+    CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER, GET_CUSTOMER_DETAIL, CLEAR_CUSTOMER_DETAIL,
+    GIAM_SL_PRODUCT, GET_SL_ITEM
 } from "../constants/constant"
 
 const URL = "http://localhost:8000";
@@ -110,19 +111,6 @@ const apiAddCard = (productId) => {
     }
 }
 
-const changeSoLuong = (soLuong, id) => {
-    //lấy được số lần click
-    // loại sản phẩm
-    const data = {
-        soLuong: soLuong,
-        id: id
-    }
-    // console.log(data);
-    return {
-        type: SO_LUONG_SAN_PHAM,
-        data: data
-    }
-}
 // gọi api lấy sản phẩm theo id
 const ApiItemInShopping = (productId) => {
     console.log("id laf: " + productId)
@@ -148,15 +136,15 @@ const ApiItemInShopping = (productId) => {
         }
     }
 }
-const soLuongProduct = () => {
-    return {
-        type: SL_PRODUCT_IN_SHOPPING,
-    }
-}
 
 const addNewSL = () => {
     return {
         type: TANG_SL_PRODUCT,
+    }
+}
+const subtractionSL = () => {
+    return {
+        type: GIAM_SL_PRODUCT,
     }
 }
 //lấy về 4 sản phâmr
@@ -620,8 +608,13 @@ const getFilterCustomer = (fullName, phone) => {
 const getOrdertFilter = (vRaw) => {
     return async (dispatch) => {
         try {
+            let orderCode = vRaw.orderCode;
             let phone = vRaw.phone;
             let fullName = vRaw.fullName;
+            let startDay = vRaw.startDay
+            let endDay = vRaw.endDay
+            console.log(vRaw);
+
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             var requestOptions = {
@@ -633,7 +626,7 @@ const getOrdertFilter = (vRaw) => {
                 type: PAGE_PENDING
             })
 
-            const respnose = await fetch(URL + "/orderFilter/" + ":?phone=" + phone +"&fullName=" + fullName , requestOptions);
+            const respnose = await fetch(URL + "/orderFilter/" + ":?phone=" + phone +"&fullName=" + fullName + "&orderCode=" + orderCode + "&startDay=" + startDay + "&endDay=" + endDay, requestOptions);
             const data = await respnose.json();
             console.log(data);
             return dispatch({
@@ -647,15 +640,76 @@ const getOrdertFilter = (vRaw) => {
     }
 }
 
+const deleteCustomer = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+            console.log(id);
+            const respnose = await fetch(URL + "/customer/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return;
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const getCustomerDetail = (id) => {
+    return async (dispatch) => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            await dispatch({
+                type: PAGE_PENDING
+            })
+
+            const respnose = await fetch(URL + "/customer/" + id, requestOptions);
+            const data = await respnose.json();
+            console.log(data);
+            return dispatch({
+                type: GET_CUSTOMER_DETAIL,
+                data: data
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+}
+const clearCustomerDetail = () =>{
+    return{
+        type:CLEAR_CUSTOMER_DETAIL
+    }
+}
+const getSoLuongItem = (data) =>{
+    return{
+        type: GET_SL_ITEM,
+        data: data
+    }
+}
 export {
     callAPI,
     btnLoc,
     onclickCard,
     apiAddCard,
-    changeSoLuong,
     ApiItemInShopping,
-    soLuongProduct,
     addNewSL,
+    subtractionSL,
     callAPILimit3,
     AddUserProductDetail,
     callAPIAddUserProductDetail,
@@ -676,5 +730,9 @@ export {
     putOrder, 
     getOrdertDetail,
     getFilterCustomer, 
-    getOrdertFilter
+    getOrdertFilter,
+    deleteCustomer,
+    getCustomerDetail,
+    clearCustomerDetail,
+    getSoLuongItem
 }
