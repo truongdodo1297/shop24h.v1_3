@@ -312,7 +312,6 @@ const getAllProduct = () => {
             })
             const respnose = await fetch(URL + "/product", myHeaders);
             const data = await respnose.json();
-            console.log(data);
             return dispatch({
                 type: GET_ALL_PRODUCT,
                 data: data
