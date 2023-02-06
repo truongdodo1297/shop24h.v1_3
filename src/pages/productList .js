@@ -2,7 +2,7 @@ import { Pagination, Rating } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Col, Container, Input, Label, Row, Spinner } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Input, Label, Row, Spinner } from "reactstrap";
 import { callAPI, btnLoc, onclickCard, changePagination } from "../actions/action";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const ProductList = () => {
     const dispatch = useDispatch();
     const { product, statusPending, totalProduct, limit, currentPage } = useSelector((reduxData) => reduxData.shopReducer);
     useEffect(() => {
-        dispatch(callAPI(currentPage,limit))
+        dispatch(callAPI(currentPage, limit))
     }, [currentPage])
 
     const [rating, setRating] = useState();
@@ -46,69 +46,139 @@ const ProductList = () => {
     const [brandDEVIA, setBrandDEVIA] = useState(false);
     const [brandIPHONE, setBrandIPHONE] = useState(false);
     const [brandXiaomi, setbrandXiaomi] = useState(false);
-    const [brandNo, setBrandNo] = useState(false);
+    const [brandJBT, setBrandJBT] = useState(false);
     const [priceTren200, setPriceTren200] = useState(false);
     const [priceDuoi200, setPriceDuoi200] = useState(false);
     const [priceTren1000, setPriceTren1000] = useState(false);
     const noPage = Math.ceil(totalProduct / limit);
-    // console.log(noPage)
     const onChangePagination = (event, value) => {
-        console.log("change page")
         dispatch(changePagination(value));
     }
+    // onClick={() => { if(statusColorDen === false){setColor("Đen") ; console.log(1)} else{setColor(undefined)}  console.log(color); console.log(statusColorDen);  }}
+    const filterColorDen = () => {
+        if (!statusColorDen) {
+            setColor("Đen")
+        }
+        else {
+            setColor(undefined)
+        }
+        // bỏ dấu tích
+        setStatusColorDen(!statusColorDen);
+        //bỏ dấu tích ô trắng 
+        setStatusColorTrang(false)
+    }
+    const filterColorTrang = () => {
+        if (!statusColorTrang) {
+            setColor("Trắng")
+        }
+        else {
+            setColor(undefined)
+        }
+        // bỏ dấu tích
+        setStatusColorDen(false);
+        setStatusColorTrang(!statusColorTrang)
+    }
+    const filterbrandDEVIA = () => {
+        if (!brandDEVIA) {
+            setBrand("DEVIA")
+        }
+        else {
+            setBrand(undefined)
+        }
+        setBrandDEVIA(!brandDEVIA);
+        setBrandIPHONE(false);
+        setbrandXiaomi(false);
+        setBrandJBT(false);
+    }
+    const filterbrandIPHONE = () => {
+        if (!brandIPHONE) {
+            setBrand("IPHONE")
+        }
+        else {
+            setBrand(undefined)
+        }
+        setBrandIPHONE(!brandIPHONE);
+        setBrandDEVIA(false);
+        setbrandXiaomi(false);
+        setBrandJBT(false);
+    }
+    const filterbrandXIAOMI = () => {
+        if (!brandXiaomi) {
+            setBrand("XIAOMI")
+        }
+        else {
+            setBrand(undefined)
+        }
+        setbrandXiaomi(!brandXiaomi);
+        setBrandIPHONE(false);
+        setBrandDEVIA(false);
+        setBrandJBT(false);
 
+    }
+    const filterbrandJBT = () => {
+        if (!brandJBT) {
+            setBrand("JBT")
+        }
+        else {
+            setBrand(undefined)
+        }
+        setBrandJBT(!brandJBT);
+        setBrandIPHONE(false);
+        setBrandDEVIA(false);
+        setbrandXiaomi(false);
+
+    }
     return (
         <>
             {
                 statusPending ?
-                    <Row style={{height: "500px"}} >
-                        <Spinner color="warning" style={{marginLeft: "700px", marginTop: "200px",padding: "30px" }}></Spinner>
+                    <Row style={{ height: "500px" }} >
+                        <Spinner color="warning" style={{ marginLeft: "700px", marginTop: "200px", padding: "30px" }}></Spinner>
                     </Row>
                     :
-                    <Row className="d-flex mt-5">
-                        <Col xs="0" sm = "3" style={{ paddingLeft: "90px" }}>
+                    <Row >
+                        <Col md="3" className="LIST_Filter">
                             <Container className="mt-3">
                                 <h4>Brands</h4>
                                 <Container>
-                                    <Input type="checkbox" checked={brandDEVIA} value={"DEVIA"} onChange={() => { setBrandDEVIA(!brandDEVIA); setBrand("DEVIA") }} ></Input>&nbsp;
+                                    <Input type="checkbox" checked={brandDEVIA} value={"DEVIA"} onChange={() => filterbrandDEVIA()} ></Input>&nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>DEVIA</Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" checked={brandIPHONE} value={"IPHONE"} onChange={() => { setBrandIPHONE(!brandIPHONE); setBrandDEVIA(false); setBrand("IPHONE") }} ></Input>&nbsp;
+                                    <Input type="checkbox" checked={brandIPHONE} value={"IPHONE"} onChange={() => filterbrandIPHONE()} ></Input>&nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>IPHONE</Label>
-                                </Container>   <Container>
-                                    <Input type="checkbox" checked={brandXiaomi} value={"Xiaomi"} onChange={() => { setbrandXiaomi(!brandXiaomi); setBrandIPHONE(false); setBrandDEVIA(false); setBrand("Xiaomi") }} ></Input>&nbsp;
+                                </Container>
+                                <Container>
+                                    <Input type="checkbox" checked={brandXiaomi} value={"XIAOMI"} onChange={() => filterbrandXIAOMI()} ></Input>&nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>XIAOMI</Label>
-                                </Container>   <Container>
-                                    <Input type="checkbox" checked={brandNo} value={"undefined"} onChange={() => { setBrandNo(!brandNo); setbrandXiaomi(false); setBrandIPHONE(false); setBrandDEVIA(false); setBrand("undefined") }} ></Input>&nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>BRAND KHÁC</Label>
-                                </Container>   <Container>
-                                    <Input type="checkbox" /> &nbsp;
-                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBL</Label>
+                                </Container>
+                                <Container>
+                                    <Input type="checkbox" checked={brandJBT} value={"JBT"} onChange={() => filterbrandJBT()} ></Input>&nbsp;
+                                    <Label className="mb-1" style={{ fontSize: "larger" }}>JBT</Label>
                                 </Container>
                             </Container>
                             <Container className="mt-3">
                                 <h4>Color</h4>
                                 <Container>
-                                    <Input type="checkbox" checked={statusColorTrang} value={"Trắng"} onChange={() => { setColor("trang"); setStatusColorTrang(!statusColorTrang); setStatusColorDen(false) }} /> &nbsp;
+                                    <Input type="checkbox" checked={statusColorTrang} value={"Trắng"} onChange={() => { filterColorTrang() }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trắng</Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox" checked={statusColorDen} value={"Đen"} onClick={() => { setColor("den"); setStatusColorDen(!statusColorDen); setStatusColorTrang(false) }} /> &nbsp;
+                                    <Input type="checkbox" checked={statusColorDen} value={"Đen"} onClick={() => { filterColorDen() }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Đen</Label>
                                 </Container>
                             </Container>
                             <Container className="mt-3">
                                 <h4>Price</h4>
                                 <Container className="pt-3">
-                                    <Input type="checkbox"  checked = {priceTren200} onClick={() => { setPrice(201);setPriceTren200(!priceTren200); setPriceTren1000(false);setPriceDuoi200(false) }} /> &nbsp;
+                                    <Input type="checkbox" checked={priceTren200} onClick={() => { setPrice(201); setPriceTren200(!priceTren200); setPriceTren1000(false); setPriceDuoi200(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trên 200 </Label>
                                 </Container>
                                 <Container>
-                                    <Input type="checkbox"   checked = {priceDuoi200} onClick={() => { setPrice(199); setPriceTren200(false); setPriceTren1000(false);setPriceDuoi200(!priceDuoi200)  }} /> &nbsp;
+                                    <Input type="checkbox" checked={priceDuoi200} onClick={() => { setPrice(199); setPriceTren200(false); setPriceTren1000(false); setPriceDuoi200(!priceDuoi200) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Dưới 200</Label>
                                 </Container>   <Container>
-                                    <Input type="checkbox"  checked = {priceTren1000} onClick={() => { setPrice(1001); setPriceTren200(false); setPriceTren1000(!priceTren1000);setPriceDuoi200(false)  }} /> &nbsp;
+                                    <Input type="checkbox" checked={priceTren1000} onClick={() => { setPrice(1001); setPriceTren200(false); setPriceTren1000(!priceTren1000); setPriceDuoi200(false) }} /> &nbsp;
                                     <Label className="mb-1" style={{ fontSize: "larger" }}>Trên 1000</Label>
                                 </Container>
                             </Container>
@@ -141,23 +211,21 @@ const ProductList = () => {
                             </Row>
                         </Col>
 
-                        <Col Container xs="9" className="grid-container" >
+                        <Col Container md="9" xs="12" className="LIST_grid" >
                             {product.data ?
                                 product.data.map((productItem, index) => {
                                     return (
-
-                                        <Card onClick={() => productDetail(productItem._id)} key={index} className="grid-item" style={{
-                                            width: '20rem',
-                                            margin: "10px",
-                                            height: '30rem'
-                                        }}>
-                                            <img alt="product" src={productItem.imageUrl}></img>
-                                            <Container className="mt-3">
-                                                <p className="text-center">{productItem.name}</p>
-                                                <p className="text-center "><span className="m-2 " style={{ textDecorationLine: "line-through" }}>{productItem.buyPrice}</span> <b>{productItem.promotionPrice}</b></p>
-                                            </Container>
+                                        <Card onClick={() => productDetail(productItem._id)} key={index} className="LIST_gridItem">
+                                            <img className="LIST_img" alt="product" src={productItem.imageUrl}></img>
+                                            <CardBody >
+                                                <p className="LIST_type">{productItem.type}</p>
+                                                <p className="LIST_productName">{productItem.name}</p>
+                                                <p className="LIST_productPrice"><span className="m-2 " style={{ textDecorationLine: "line-through" }}>{productItem.buyPrice}</span> <b>{productItem.promotionPrice}</b></p>
+                                                <Col className="LIST_rating">
+                                                    <Rating name="read-only" value={productItem.rating} readOnly />
+                                                </Col>
+                                            </CardBody>
                                         </Card>
-
                                     )
                                 }) : <Spinner color="warning" style={{ marginLeft: "400px" }}></Spinner>}
                         </Col>

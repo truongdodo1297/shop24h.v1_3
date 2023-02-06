@@ -1,47 +1,50 @@
-import { FormGroup, TextField } from "@mui/material";
+import { FormGroup, Pagination, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ButtonDropdown, Col, Input, Row, Table, DropdownToggle, DropdownItem, InputGroup, DropdownMenu, Modal, ModalHeader, Label, ModalBody, ModalFooter, CloseButton } from "reactstrap";
-import { getAllProduct, postProduct, deleteProduct, getProductDetail, putProduct, clearModal } from "../actions/action";
+import { getAllProduct, callAPI, postProduct, deleteProduct, getProductDetail, putProduct, clearModal, changePagination } from "../actions/action";
 
 const AdminProduct = () => {
     const dispatch = useDispatch();
-    const { allProduct, productDetail } = useSelector((reduxData) => reduxData.shopReducer);
-  // state modal và row bị ẩn
-  const [infoProduct, setInfoProduct] = useState("none")
-  const [noneInfoProduct, setNoneInfoProduct] = useState()
+    const { limit, product, productDetail, currentPage, totalProduct } = useSelector((reduxData) => reduxData.shopReducer);
+    // state modal và row bị ẩn
+    const [infoProduct, setInfoProduct] = useState("none")
+    const [noneInfoProduct, setNoneInfoProduct] = useState()
 
-  const [modalDetail, setModalDetail] = useState(false)
-  const [modalDeleteProduct, setmodalDeleteProduct] = useState()
-  const [productAtModal, setProductAtModal] = useState()
-  const [idProductAtModal, setIdProductAtModal] = useState()
+    const [modalDetail, setModalDetail] = useState(false)
+    const [modalDeleteProduct, setmodalDeleteProduct] = useState()
+    const [productAtModal, setProductAtModal] = useState()
+    const [idProductAtModal, setIdProductAtModal] = useState()
 
 
-  const [name, setName] = useState()
-  const [type, setType] = useState()
-  const [img, setImg] = useState()
-  const [price, setPiricet] = useState()
-  const [color, setColor] = useState()
-  const [description, setDescription] = useState()
-  const [promotionPrice, setPromotionPrice] = useState()
-  const [rating, setRating] = useState()
-  const [brand, setBrand] = useState()
+    const [name, setName] = useState()
+    const [type, setType] = useState()
+    const [img, setImg] = useState()
+    const [price, setPiricet] = useState()
+    const [color, setColor] = useState()
+    const [description, setDescription] = useState()
+    const [promotionPrice, setPromotionPrice] = useState()
+    const [rating, setRating] = useState()
+    const [brand, setBrand] = useState()
 
-  const [idProductDetail, setIdProductDetail] = useState()
-  const [nameDetail, setNameDetail] = useState()
-  const [typeDetail, setTypeDetail] = useState()
-  const [imgDetail, setImgDetail] = useState()
-  const [priceDetail, setPiricetDetailDetail] = useState()
-  const [colorDetail, setColorDetail] = useState()
-  const [descriptionDetail, setDescriptionDetail] = useState()
-  const [promotionPriceDetail, setPromotionPriceDetail] = useState()
-  const [ratingDetail, setRatingDetail] = useState()
-  const [brandDetail, setBrandDetails] = useState()
+    const [idProductDetail, setIdProductDetail] = useState()
+    const [nameDetail, setNameDetail] = useState()
+    const [typeDetail, setTypeDetail] = useState()
+    const [imgDetail, setImgDetail] = useState()
+    const [priceDetail, setPiricetDetailDetail] = useState()
+    const [colorDetail, setColorDetail] = useState()
+    const [descriptionDetail, setDescriptionDetail] = useState()
+    const [promotionPriceDetail, setPromotionPriceDetail] = useState()
+    const [ratingDetail, setRatingDetail] = useState()
+    const [brandDetail, setBrandDetails] = useState()
     useEffect(() => {
-        dispatch(getAllProduct())
+        dispatch(callAPI(currentPage, limit))
 
-    }, [productAtModal, modalDetail,noneInfoProduct, modalDeleteProduct])
-
+    }, [productAtModal, modalDetail, noneInfoProduct, modalDeleteProduct, currentPage])
+    const noPage = Math.ceil(totalProduct / limit);
+    const onChangePagination = (event, value) => {
+        dispatch(changePagination(value));
+    }
     // hiện row nhập thông tin sản phẩm
     const onBtnThemSanPham = () => {
         console.log("Them sản phẩm")
@@ -180,9 +183,8 @@ const AdminProduct = () => {
         console.log("ĐÓNG")
         setInfoProduct("none")
         setNoneInfoProduct("block")
-
     }
-  
+
     let styleFilter = {
         marginTop: "5px",
         height: "120px",
@@ -241,7 +243,7 @@ const AdminProduct = () => {
                     </> : ""
             }
 
-            {allProduct ?
+            {product ?
                 <>
                     <Col style={styleFilter}>
                         <Row>
@@ -263,92 +265,94 @@ const AdminProduct = () => {
 
                     </Col>
                     <Col style={styleProduct}>
-                    <Table responsive >
-                        <thead>
-                            <tr>
-                                <th>
-                                    STT
-                                </th>
-                                <th>
-                                    Ảnh
-                                </th>
-                                <th style={{ width: "320px" }}>
-                                    Tên sản phẩm
-                                </th>
-                                <th>
-                                    Thương hiệu
-                                </th>
-                                <th>
-                                    Loại
-                                </th>
-                                <th>
-                                    Giá bán
-                                </th>
-                                <th>
-                                    Màu sắc
-                                </th>
-                                <th style={{ width: "70px" }}>
-                                    Mô tả
-                                </th>
-                                <th>
-                                    Giá Giảm
-                                </th>
-                                <th>
-                                    Đánh giá
-                                </th>
-                                {/* <th>
-                                </th> */}
-                            </tr>
-                        </thead>
+                        <Table responsive >
+                            <thead>
+                                <tr>
+                                    <th>
+                                        STT
+                                    </th>
+                                    <th>
+                                        Ảnh
+                                    </th>
+                                    <th style={{ width: "320px" }}>
+                                        Tên sản phẩm
+                                    </th>
+                                    <th>
+                                        Thương hiệu
+                                    </th>
+                                    <th>
+                                        Loại
+                                    </th>
+                                    <th>
+                                        Giá bán
+                                    </th>
+                                    <th>
+                                        Màu sắc
+                                    </th>
+                                    <th style={{ width: "70px" }}>
+                                        Mô tả
+                                    </th>
+                                    <th>
+                                        Giá Giảm
+                                    </th>
+                                    <th>
+                                        Đánh giá
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {console.log(product)}
+                            {product.data.map((el, index) => {
+                                return (
+                                    <tbody className="text-left" key={index}>
+                                        <tr>
+                                            <th scope="row">
+                                                {index + 1}
+                                            </th>
+                                            <td style={{ height: "70px" }}>
+                                                <img src={el.imageUrl}></img>
+                                            </td>
+                                            <td >
+                                                {el.name}
+                                            </td>
+                                            <td>
+                                                {el.brand}
+                                            </td>
+                                            <td>
+                                                {el.type}
+                                            </td>
+                                            <td>
+                                                {el.buyPrice}
+                                            </td>
+                                            <td>
+                                                {el.color}
+                                            </td>
+                                            <td style={{ maxHeight: "100px", textOverflow: "ellipsis" }}>
+                                                {el.description}
+                                            </td>
+                                            <td>
+                                                {el.promotionPrice}
+                                            </td>
+                                            <td>
+                                                {el.rating}
+                                            </td>
+                                            <td style={{ width: "110px" }}>
+                                                <Button className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSua(el._id)}>Sửa</Button>
+                                                <Button outline size="sm" color="danger" onClick={() => onBtnDeleteProduct(el.name, el._id)}>Xóa</Button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
-                        {allProduct.data.map((el, index) => {
-                            return (
-                                <tbody className="text-left" key={index}>
-                                    <tr>
-                                        <th scope="row">
-                                            {index + 1}
-                                        </th>
-                                        <td style={{ height: "70px" }}>
-                                            <img src={el.imageUrl}></img>
-                                        </td>
-                                        <td >
-                                            {el.name}
-                                        </td>
-                                        <td>
-                                            {el.brand}
-                                        </td>
-                                        <td>
-                                            {el.type}
-                                        </td>
-                                        <td>
-                                            {el.buyPrice}
-                                        </td>
-                                        <td>
-                                            {el.color}
-                                        </td>
-                                        <td>
-                                            {el.description}
-                                        </td>
-                                        <td>
-                                            {el.promotionPrice}
-                                        </td>
-                                        <td>
-                                            {el.rating}
-                                        </td>
-                                        <td style={{ width: "110px" }}>
-                                            <Button outline size="sm" color="primary" onClick={() => onBtnSua(el._id)}>Sửa</Button>
-                                            <Button outline size="sm" color="danger" className="m-1" onClick={() => onBtnDeleteProduct(el.name, el._id)}>Xóa</Button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                            )
-                        })}
+                                )
+                            })}
 
 
-                    </Table>
+                        </Table>
+                        <Stack>
+                            <Pagination count={noPage} defaultPage={currentPage} onChange={onChangePagination} variant="outlined" shape="rounded" />
+                        </Stack>
                     </Col>
-                    
+
                 </> : <h1>??</h1>
             }
 

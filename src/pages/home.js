@@ -1,7 +1,7 @@
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css"
 import AppleIcon from '@mui/icons-material/Apple';
-import { Button, Card, CardFooter, CardBody, CardTitle, CardText, Col, Container, Nav, NavItem, NavLink, Row } from "reactstrap";
+import { Button, Card, CardFooter, CardBody, CardTitle, CardText, Col, Container, Nav, NavItem, NavLink, Row, UncontrolledCarousel } from "reactstrap";
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
@@ -26,7 +26,7 @@ const Home = () => {
     }
     return (
         <div className="d-block">
-           
+
             <Row className="Nav_Icon" style={{ justifyContent: "center", backgroundColor: " rgb(230, 230, 230)", height: "110px" }} >
                 <Col className="iconPhone" xs="2">
                     <PhoneIphoneIcon style={{ fontSize: "55px" }} />
@@ -62,8 +62,8 @@ const Home = () => {
                     <Button className="btn btnBuy">Buy</Button>
                     <a>Learn more  </a>
                 </Container>
-                <Col xs = "12">
-                <img src="https://imageio.forbes.com/specials-images/imageserve/627fa3b6a736222d2161069c/0x0.jpg?format=jpg&crop=2276,1279,x145,y97,safe&width=1200"></img>
+                <Col xs="12">
+                    <img src="https://imageio.forbes.com/specials-images/imageserve/627fa3b6a736222d2161069c/0x0.jpg?format=jpg&crop=2276,1279,x145,y97,safe&width=1200"></img>
                 </Col>
             </Row>
             <Row className="imgBody2 text-light">
@@ -88,7 +88,7 @@ const Home = () => {
                         <a style={{ color: "blue" }}>Learn more  </a>
                     </div>
                 </Col> */}
-                <Container xs="12" md = "12" className="imgBody3_tilte">
+                <Container xs="12" md="12" className="imgBody3_tilte">
                     <p className="iPhoneName text-dark">WATCH</p>
                     <p className="text-danger">SERIES 8</p>
                     <h3>Love the power Love the value.</h3>
@@ -97,7 +97,7 @@ const Home = () => {
                         <a style={{ color: "blue" }}>Learn more  </a>
                     </div>
                 </Container>
-                <Col xs="12" md = "12">
+                <Col xs="12" md="12">
                     <img className="imgBody3_img" src="https://cdn.pixabay.com/photo/2015/11/03/18/41/iphone-1021299_960_720.jpg"></img>
                 </Col>
             </Row>
@@ -108,7 +108,7 @@ const Home = () => {
                     <p className="iPhoneName ">Explore all AirPods models and find the best ones for you.</p>
                     <a style={{ color: "blue" }}>Learn more  </a>
                 </Col>
-                <Row className="imgHeadPhone_xs" xs = "12">
+                <Row className="imgHeadPhone_xs" xs="12">
                     <h1 className="imgBody4_h1">Magic runs in the family.</h1>
                     <p className="iPhoneName ">Explore all AirPods models and find the best ones for you.</p>
                     <a style={{ color: "blue" }}>Learn more  </a>
@@ -118,18 +118,11 @@ const Home = () => {
 
             <Row className="cardHeadPhone">
                 <h2>Which HeadPhone is right for you?</h2>
-              
+
                 {
                     productIncard.data ? productIncard.data.map((el, index) => {
                         return (
-                            <Card
-                                className=" cardItem my-2  m-2"
-                                color="primary"
-                                outline
-                                style={{
-                                    width: '18rem',
-                                }}
-                            >
+                            <Card className=" HOME_card">
                                 <img className="imgCard"
                                     alt="Card"
                                     src={el.imageUrl}

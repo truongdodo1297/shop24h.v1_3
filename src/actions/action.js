@@ -5,7 +5,7 @@ import {
     SO_LUONG_SAN_PHAM, CLEAR_DATA, STATUS_LOGIN, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING,
     TANG_SL_PRODUCT, GET_ALL_ORDER, GET_ALL_PRODUCT, GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER, GET_PRODUCT_DETAIL,
     CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER, GET_CUSTOMER_DETAIL, CLEAR_CUSTOMER_DETAIL,
-    GIAM_SL_PRODUCT, GET_SL_ITEM
+    GIAM_SL_PRODUCT, GET_SL_ITEM, PAGINATION_ORDER_CHANGE
 } from "../constants/constant"
 
 const URL = "http://localhost:8000";
@@ -229,6 +229,13 @@ const changePagination = (value) => {
         payload: value
     }
 }
+const changePaginationOder = (value) => {
+    return {
+        type: PAGINATION_ORDER_CHANGE,
+        payload: value
+    }
+}
+
 
 // xóa state lưu thông tin datashoping
 const clearData = () => {
@@ -267,7 +274,7 @@ const changeStatusLogin = () => {
         type: STATUS_LOGIN
     }
 }
-const getAllOrder = () => {
+const getAllOrder = (currentPage, limit) => {
     return async (dispatch) => {
         try {
             var myHeaders = new Headers();
@@ -276,12 +283,17 @@ const getAllOrder = () => {
             await dispatch({
                 type: PAGE_PENDING
             })
-            const respnose = await fetch(URL + "/order", myHeaders);
-            const data = await respnose.json();
-            console.log(data);
+            const dataTotal = await fetch(URL + "/order", myHeaders);
+            const totalOrder = await dataTotal.json();
+
+            const response = await fetch(URL + "/orderLimit9?_start=" + ((currentPage - 1) * limit) + "&_limit=" + limit, myHeaders);
+            const data = await response.json();
+
+            console.log(totalOrder.data.length);
             return dispatch({
                 type: GET_ALL_ORDER,
-                data: data
+                totalOrder: totalOrder.data.length,
+                data : data
             })
         }
         catch (error) {
@@ -734,5 +746,6 @@ export {
     deleteCustomer,
     getCustomerDetail,
     clearCustomerDetail,
-    getSoLuongItem
+    getSoLuongItem,
+    changePaginationOder
 }

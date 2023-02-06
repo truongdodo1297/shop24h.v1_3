@@ -246,7 +246,7 @@ const ProductCard = () => {
                                                                     <h3>${(el.price * el.quantity).toLocaleString()} </h3>
                                                                     <p className="shopP" onClick={() => btnRemove(el.Product)}>Remove</p>
                                                                 </Col>
-                                                                <hr className="shopHr2"></hr>
+                                                                <hr ></hr>
                                                             </Row>
 
                                                             <div className="d-flex pt-3 pb-3">
@@ -255,7 +255,7 @@ const ProductCard = () => {
                                                                 <Col className="shopP">  <p>Add</p> </Col>
                                                             </div>
                                                             <Row>
-                                                                <hr className="shopHr2"></hr>
+                                                                <hr ></hr>
                                                                 <Col xs="12" >
                                                                     <p className="shopPriceP ">Find out how soon you can get this item</p>
                                                                     <LocalMallIcon></LocalMallIcon>
@@ -266,7 +266,7 @@ const ProductCard = () => {
                                                             </Col> */}
                                                             </Row>
                                                         </Col>
-                                                        <hr className="shopHr"></hr>
+                                                        <hr className="mt-2"></hr>
                                                 </Row>
                                             </>)
                                     }
@@ -313,7 +313,7 @@ const ProductCard = () => {
                                         <Row className="pt-3" >
                                             <h6>CHỌN CÁCH THỨC NHẬN HÀNG</h6>
                                             <Row className="pt-3">
-                                                <Col xs="3">
+                                                <Col xs="6">
                                                     <Input type="radio" checked={true} />
                                                     <Label check > Giao tận nơi </Label>
                                                 </Col>

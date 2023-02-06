@@ -1,4 +1,5 @@
-@media (max-width: 767px) {
+
+  @media only screen and (max-width: 600px) {
     .Nav_lg{
         display: none;
     }
@@ -12,8 +13,67 @@
     .imgHeadPhone{
         display: none;
     }
+    .LIST_rating{
+        margin-top: -13px;
+    }
+    .LIST_productPrice{
+        font-size: 14px;
+    }
+    .MuiRating-icon{
+        font-size: medium;
+        left: -27px;
+        margin-top: -15px;
+    }
+    /* body {
+      font-size: 8px;
+    } */
+    button{
+      font-size: 0.5em;
+        padding: 0.5em;
+    }
+    .AM_list{
+        display: none;
+    }
+    .grid-item{
+        width: 5rem;
+        height: 10rem;
+        background-color: #4444ff;
+    }
+    .LIST_Filter{
+        display: none;
+    }
+    .LIST_productName{
+        margin-top: -15px;
+        font-size: 15px;
+    }
+    .LIST_gridItem {
+        position: absolute;
+        padding: 8px;
+        border: 1px solid rgba(224, 5, 5, 0.8);
+        text-align: left;
+        margin: 0px;
+    }
+    .LIST_grid{
+        padding-top: 50px;
+        display: grid;
+        grid-template-columns: auto auto ;
+    }
+    .LIST_productName{
+        margin-top: -15px;
+        font-size: 15px;
+    }
+    .LIST_productPrice{
+        margin-top: -15px;
+    }
+    .Card{
+        border: #4444ff;
+    }
+    .LIST_type{
+        font-size: 2px;
+    }
   }
-@media (min-width: 1024px) {
+  
+@media (min-width: 600px) {
     .Navbar_sm{
         display: none;
     }
@@ -31,9 +91,31 @@
         font-weight: 700;
     }
   }
+  .LIST_img{
+    height: 50%;
+  }
+
+.LIST_productPrice{
+    margin-top: -15px;
+}
+
+  .LIST_productName{
+    margin-top: -15px;
+}
+
+ .LIST_Filter{
+    padding-top: 40px;
+    padding-left: 90px;
+ } 
 .Nav_sm_NavItem{
     width: 20%;
     background-color: #4444ff;
+  }
+  .footer{
+    width: 100%;
+    padding-top: 30px;
+    text-align: center;
+    background-color: #ced4da;
   }
   .Navbar_sm{
     color: white;
@@ -51,7 +133,7 @@
 }
 .NavItem_con {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .menu {
     background-color: aqua;
@@ -72,19 +154,36 @@
     text-align: left;
    
 }
-.grid-container {
+.LIST_grid {
+    padding-top: 30px;
     display: grid;
     grid-template-columns: auto auto auto;
+
+}
+.LIST_type{
+    font-size: 16px;
+    color: red;
+    font-weight: 600;
 }
 
-.grid-item {
+.LIST_gridItem {
+    position: relative;
     padding: 18px;
-    border: 1px solid rgba(224, 224, 224, 0.8);
+    border: 1px solid rgba(179, 179, 179, 0.8);
     font-size: 25px;
     text-align: center;
+    margin: 0.5rem;
+    height: auto;
+    width: auto;
+    max-width: 20rem;
+    max-height: 30rem;
 }
-
-.grid-item:hover {
+.HOME_card{
+    height: auto;
+    width: 15rem;
+    margin: 1rem;
+}
+.LIST_gridItem:hover {
     opacity: 0.7;
     border: 1px solid rgba(254, 4, 4, 0.8);
 }
@@ -94,6 +193,7 @@
     margin-top: 100px;
     margin-left: 30px;
 }
+
 
 
 .ShoppingCartCheckoutIcon {
@@ -109,10 +209,6 @@
     width: 100px;
     margin: 10px;
     text-align: center;
-}
-
-p:hover {
-    color: blue;
 }
 
 .nav {
@@ -469,10 +565,6 @@ s .shopDiv {
     padding: 10px;
     border: 1px solid blue;
     background-color: #fcfcfc;
-}
-
-.Select {
-    width: 180px;
 }
 
 .TTInputDiaChi {

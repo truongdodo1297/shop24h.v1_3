@@ -160,8 +160,8 @@ const AdminCustomer = () => {
                                             {/* <td>{el.email}</td> */}
                                             <td >Thành phố : {el.address.city}, Huyện: {el.address.distric}, xã/ Đường: {el.address.war}, số nhà: {el.address.apartment}</td>
                                             <td>
-                                                <Button outline size="sm" color="primary" onClick={() => onBtnSua(el._id)} >Sửa</Button>
-                                                <Button outline size="sm" color="danger" className="m-1" onClick={() => {setvIdCustomer(el._id); setvNameCustomer(el.fullName); setDisplayModalDelete(true)}}  >Xóa</Button>
+                                                <Button  className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSua(el._id)} >Sửa</Button>
+                                                <Button outline size="sm" color="danger" onClick={() => {setvIdCustomer(el._id); setvNameCustomer(el.fullName); setDisplayModalDelete(true)}}  >Xóa</Button>
                                             </td>
                                         </tr>
                                     )

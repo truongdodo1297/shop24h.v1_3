@@ -3,8 +3,8 @@ import { Button, ButtonDropdown, Col, Input, Row, Table, DropdownToggle, Dropdow
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment/moment";
-import { InputLabel, TextField } from "@mui/material";
-import { deleteOrder } from "../actions/action"
+import { InputLabel, Pagination, Stack, TextField } from "@mui/material";
+import { deleteOrder, changePaginationOder } from "../actions/action"
 
 
 const AdminOrder = () => {
@@ -21,12 +21,17 @@ const AdminOrder = () => {
 
     const [dislpayModalOderDetail, setDisplayModalOderDetail] = useState(false)
 
-    const dispatch = useDispatch();
-    const { allOrder } = useSelector((reduxData) => reduxData.shopReducer);
-    useEffect(() => {
-        dispatch(getAllOrder())
-    }, [dislpayModalOder,dislpayBtnTT2])
 
+    const dispatch = useDispatch();
+    const { allOrder, currentPageOrder, limit, totalOrder } = useSelector((reduxData) => reduxData.shopReducer);
+    useEffect(() => {
+        dispatch(getAllOrder( currentPageOrder, limit))
+    }, [dislpayModalOder, dislpayBtnTT2, currentPageOrder])
+    const noPage = Math.ceil(totalOrder/ limit);
+
+    const onChangePaginationOrder = (e,value) => {
+        dispatch(changePaginationOder(value))
+    }
 
     // ấn nút xóa order
     const onBtnDeleteOrder = (name, id) => {
@@ -76,7 +81,7 @@ const AdminOrder = () => {
         height: "120px",
         borderRadius: "17px",
         border: "1px solid blue",
-        width: "97%",
+        // width: "97%",
         padding: "18px",
         marginLeft: "20px"
     }
@@ -84,8 +89,9 @@ const AdminOrder = () => {
         borderRadius: "30px",
         border: "1px solid blue",
         marginTop: "5px",
-        width: "97%",
-        marginLeft: "20px"
+        // width: "97%",
+        marginLeft: "20px",
+        oveflow: "wap"
 
     }
     return (
@@ -103,21 +109,21 @@ const AdminOrder = () => {
             {allOrder ?
                 <>
 
-                    <Col style={styleFilter} >
+                    <Col style={styleFilter} xs="11" >
                         <Row >
-                            <Col xs="2" style={{ display: dislpayBtnTT }}>
+                            <Col xs="3" style={{ display: dislpayBtnTT }}>
                                 <Button outline color="primary" onClick={() => { setDislpayDislpayBtnTT2("block"); setDislpayDislpayBtnTT("none") }} >Tìm kiếm</Button>
                             </Col>
                         </Row >
                         <Row style={{ display: dislpayBtnTT2 }} >
                             <Row >
-                                <Col xs="2">
+                                <Col xs="3">
                                     <Button outline color="success" onClick={() => filterOder()}>Tìm kiếm</Button>
                                 </Col>
                             </Row>
                             <Row className="mt-2">
                                 <Col xs="2" >
-                                    <TextField size="small" label="Order code" onChange={(e)=> changeFilterOrderCode(e)}></TextField>
+                                    <TextField size="small" label="Order code" onChange={(e) => changeFilterOrderCode(e)}></TextField>
                                 </Col>
                                 <Col xs="2">
                                     <TextField size="small" label="Số điện thoại" onChange={(e) => changeFilterSDT(e)}></TextField>
@@ -126,10 +132,10 @@ const AdminOrder = () => {
                                     <TextField size="small" label="Tên khách hàng" onChange={(e) => changeFilterName(e)}></TextField>
                                 </Col>
                                 <Col xs="2">
-                                <Input type="date"  label = "Ngày bắt đầu" onChange={(e)=>{setvStartDay(e.target.value); console.log(vStartDay)} }/>
+                                    <Input type="date" label="Ngày bắt đầu" onChange={(e) => { setvStartDay(e.target.value); console.log(vStartDay) }} />
                                 </Col>
                                 <Col xs="2">
-                                <Input type="date" onChange={(e)=> setvEndDay(e.target.value)}/>
+                                    <Input type="date" onChange={(e) => setvEndDay(e.target.value)} />
                                 </Col>
                                 <Col><CloseButton className="mt-2" onClick={() => { setDislpayDislpayBtnTT2("none"); setDislpayDislpayBtnTT("block") }}> </CloseButton></Col>
                             </Row>
@@ -137,8 +143,8 @@ const AdminOrder = () => {
 
                     </Col>
 
-                    <Col style={styleProduct}>
-                        <Table>
+                    <Col xs="11" style={styleProduct} >
+                        <Table className="" xs="11">
                             <thead>
                                 <tr>
                                     <th>Order Code</th>
@@ -147,10 +153,10 @@ const AdminOrder = () => {
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
                                     <th>Ưu cầu khác</th>
-                                    <th className="text-center" style={{ width: "25%" }}>
+                                    <th className="text-center" >
                                         Order
                                     </th>
-                                    <th style={{ width: "10%" }}>Trạng thái</th>
+                                    {/* <th >Trạng thái</th> */}
                                     <th></th>
                                 </tr>
                             </thead>
@@ -166,14 +172,14 @@ const AdminOrder = () => {
                                                 <td >Thành phố : {el.customer.address.city}, Huyện: {el.customer.address.distric}, xã/ Đường: {el.customer.address.war}, số nhà: {el.customer.address.apartment}</td>
                                                 <td>{el.requirement}</td>
                                                 <td >
-                                                    <td style={{ width: "300px", height: "30px", textAlign: "center" }}>
-                                                        <td style={{ textAlign: "center" }}>Sản phẩm</td>
+                                                    <td style={{ height: "30px" }}>
+                                                        Sản phẩm
                                                     </td>
-                                                    <td style={{ width: "200px", height: "30px" }}>
-                                                        <td  >Màu sắc</td>
+                                                    <td>
+                                                        Màu sắc
                                                     </td>
-                                                    <td style={{ width: "200px", height: "30px" }}>
-                                                        <td  >Giá</td>
+                                                    <td >
+                                                        giá
                                                     </td>
                                                     {el.order.map((el, index) => {
                                                         return (
@@ -181,7 +187,7 @@ const AdminOrder = () => {
                                                                 <tr key={index}>
                                                                     <td>
                                                                         <tr>
-                                                                            <td><img style={{ width: "30px" }} src={el.product.imageUrl}></img></td>
+                                                                            <td><img style={{ width: "50px" }} src={el.product.imageUrl}></img></td>
                                                                             <td>{el.product.name}</td>
                                                                         </tr>
                                                                     </td>
@@ -193,17 +199,17 @@ const AdminOrder = () => {
                                                         )
                                                     })}
                                                 </td>
-                                                <td>
+                                                {/* <td>
                                                     <select text={el.status} value={el.status}>
                                                         <option>Xác nhận</option>
                                                         <option>Hủy bỏ</option>
                                                         <option>Hoàn tất</option>
                                                         <option>Chờ xác nhận</option>
                                                     </select>
-                                                </td>
-                                                <td style={{ width: "110px" }}>
-                                                    <Button outline size="sm" color="primary" onClick={() => onBtnSuaOrder(el._id)}>Sửa</Button>
-                                                    <Button outline size="sm" color="danger" className="m-1" onClick={() => onBtnDeleteOrder(el.name, el._id)}>Xóa</Button>
+                                                </td> */}
+                                                <td >
+                                                    <Button className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSuaOrder(el._id)}>Sửa</Button>
+                                                    <Button outline size="sm" color="danger" onClick={() => onBtnDeleteOrder(el.name, el._id)}>Xóa</Button>
                                                 </td>
                                             </tr>
                                         )
@@ -214,6 +220,9 @@ const AdminOrder = () => {
                     </Col>
 
                 </> : ""}
+            <Stack direction="row" justifyContent="flex-end" p="30px" pr="70px" mt="50px">
+                <Pagination count={noPage} defaultPage={currentPageOrder} onChange={onChangePaginationOrder} variant="outlined" shape="rounded" />
+            </Stack>
         </>
     )
 }

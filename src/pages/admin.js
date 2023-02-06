@@ -47,7 +47,7 @@ const Admin = () => {
     return (
         <>
             <Row >
-                <Col xs="2" style={styleFilter}>
+                <Col xs="2" md = "1" style={styleFilter} className = "AM_list">
                     <Row className="mt-3"  onClick={() => displayProduct()}>
                         <h6 style={{color: colorProductList }} >Danh sách sản phẩm</h6>
                         <hr></hr>
@@ -61,6 +61,7 @@ const Admin = () => {
                         <hr></hr>
                     </Row>
                 </Col>
+
                 <Col>
                     <Row style={{ display: adminProduct }}><AdminProduct></AdminProduct></Row>
                     <Row style={{ display: adminCustomer }}><AdminCustomer></AdminCustomer></Row>
