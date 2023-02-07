@@ -348,9 +348,10 @@ const AdminProduct = () => {
 
 
                         </Table>
-                        <Stack>
+                        <Stack direction="row" justifyContent="flex-end" p="30px" pr="70px" mt="50px">
                             <Pagination count={noPage} defaultPage={currentPage} onChange={onChangePagination} variant="outlined" shape="rounded" />
-                        </Stack>
+                        </Stack>          
+
                     </Col>
 
                 </> : <h1>??</h1>

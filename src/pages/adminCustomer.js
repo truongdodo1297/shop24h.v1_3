@@ -1,18 +1,18 @@
 
 import { Close } from "@mui/icons-material";
-import { FormGroup, TextField } from "@mui/material";
+import { FormGroup, Pagination, Stack, TextField } from "@mui/material";
 import { width } from "@mui/system";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-router-dom";
 import { Button, ButtonDropdown, Col, Input, Row, Table, DropdownToggle, DropdownItem, InputGroup, DropdownMenu, Modal, ModalHeader, Label, ModalBody, ModalFooter, CloseButton } from "reactstrap";
-import { deleteCustomer, getAllCustomer, getFilterCustomer, getCustomerDetail } from "../actions/action";
+import { deleteCustomer,changePaginationCustomer, getAllCustomer, getFilterCustomer, getCustomerDetail } from "../actions/action";
 
 const AdminCustomer = () => {
 
     const dispatch = useDispatch();
-    const { allCustomer, customerDetail } = useSelector((reduxData) => reduxData.shopReducer);
+    const { allCustomer, customerDetail,totalCustomer, currentPageCustomer, limit } = useSelector((reduxData) => reduxData.shopReducer);
     const [SDTCustomer, setSDTCustomer] = useState()
     const [nameCustomer, setNameCustomer] = useState()
     const [displayBtnTTCustomer, setDisplayBtnTTCustomer] = useState("none")
@@ -23,15 +23,14 @@ const AdminCustomer = () => {
     const [vIdCustomer, setvIdCustomer] = useState()
 
     useEffect(() => {
-        dispatch(getAllCustomer())
+        dispatch(getAllCustomer( currentPageCustomer, limit))
 
-    }, [displayBtnTTCustomer, displayModalDetail, displayModalDelete])
+    }, [displayBtnTTCustomer, displayModalDetail, displayModalDelete, currentPageCustomer])
 
-    // lấy danh sách khách hàng
-
-
-    // Customer
-
+    const onChangePaginationCustomer = (e,value) => {
+        dispatch(changePaginationCustomer(value))
+    }
+    const noPage = Math.ceil(totalCustomer / limit);
     const filterCustomer = () => {
         dispatch(getFilterCustomer(nameCustomer, SDTCustomer))
     }
@@ -43,7 +42,6 @@ const AdminCustomer = () => {
     const changeSDTCustomer = (e) => {
         setSDTCustomer(e.target.value)
     }
-
     const onBtnTimKiem = (e) => {
         setDisplayBtnTTCustomer("block")
         setdisplayBtnTTCustomer2("none")
@@ -60,7 +58,7 @@ const AdminCustomer = () => {
         dispatch(getCustomerDetail(id))
         setDisplayModalDetail(true)
     }
-    
+
     let styleFilter = {
         marginTop: "5px",
         height: "120px",
@@ -88,7 +86,7 @@ const AdminCustomer = () => {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="danger" onClick={() => deleteCustomerItem()}>Xóa</Button>
-                    <Button onClick={()=>setDisplayModalDelete(false)}>Đóng</Button>
+                    <Button onClick={() => setDisplayModalDelete(false)}>Đóng</Button>
                 </ModalFooter>
             </Modal>
             {customerDetail.data ?
@@ -142,11 +140,9 @@ const AdminCustomer = () => {
                         <tr>
                             <th>Tên khách hàng</th>
                             <th>Số điện thoại</th>
-                            {/* <th>Email</th> */}
                             <th className=" text-center" style={{ width: "50%" }}>
                                 Địa chỉ
                             </th>
-                            {/* <th></th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -157,11 +153,10 @@ const AdminCustomer = () => {
                                         <tr key={index}>
                                             <td>{el.fullName}</td>
                                             <td>0{el.phone}</td>
-                                            {/* <td>{el.email}</td> */}
                                             <td >Thành phố : {el.address.city}, Huyện: {el.address.distric}, xã/ Đường: {el.address.war}, số nhà: {el.address.apartment}</td>
                                             <td>
-                                                <Button  className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSua(el._id)} >Sửa</Button>
-                                                <Button outline size="sm" color="danger" onClick={() => {setvIdCustomer(el._id); setvNameCustomer(el.fullName); setDisplayModalDelete(true)}}  >Xóa</Button>
+                                                <Button className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSua(el._id)} >Sửa</Button>
+                                                <Button outline size="sm" color="danger" onClick={() => { setvIdCustomer(el._id); setvNameCustomer(el.fullName); setDisplayModalDelete(true) }}  >Xóa</Button>
                                             </td>
                                         </tr>
                                     )
@@ -172,7 +167,9 @@ const AdminCustomer = () => {
                     </tbody>
                 </Table>
             </Col>
-
+            <Stack direction="row" justifyContent="flex-end" p="30px" pr="70px" mt="50px">
+                <Pagination count={noPage} defaultPage={currentPageCustomer} onChange={onChangePaginationCustomer} variant="outlined" shape="rounded" />
+            </Stack>
         </>
     )
 }

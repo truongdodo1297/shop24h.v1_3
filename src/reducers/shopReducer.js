@@ -4,31 +4,41 @@ import {
     GET_ALL_ORDER, GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER,
     GET_PRODUCT_DETAIL, CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER,
     GET_ORDER_FILTER, GET_CUSTOMER_DETAIL, CLEAR_CUSTOMER_DETAIL, GIAM_SL_PRODUCT,
-    GET_SL_ITEM, PAGINATION_ORDER_CHANGE
+    GET_SL_ITEM, PAGINATION_ORDER_CHANGE, PAGINATION_CUSTOMER_CHANGE
 } from "../constants/constant";
 
 const dataState = {
     totalProduct: 0, //tổng số data
     totalOrder: 0, //tổng số data
+    totalCustomer: 0, //tổng số data
+
     product: "", // dư liệu project
     limit: 9,
     statusLogin: false,
+    statusPending: true,
+
     currentPage: 1,
     currentPageOrder: 1,
+    currentPageCustomer: 1,
+
     productIncard: [], //dữ liệu 1 projet
-    statusPending: true,
+
     dataAddCard: "", //  ??
     soLuongSanPham: null, //call api vaf luu vao day
     dataShopping: [], //call api vaf luu vao day ???
     soLuongItem: 0,   // số lần click hien tren gio hang
+
     allOrder: "",
+    allCustomer: "",
+
     productDetail: "",
     orderDetail: "",
     customerDetail: "",
-    allCustomer: ""
+
 }
 const shopReducer = (state = dataState, action) => {
     switch (action.type) {
+        
         case PAGE_PENDING:
             break;
         case CLEAR_DATA:
@@ -45,17 +55,21 @@ const shopReducer = (state = dataState, action) => {
         case BTN_LOC:
             state.product = action.data
             break;
+
         case PAGINATION_CHANGE:
             state.currentPage = action.payload
             break;
         case PAGINATION_ORDER_CHANGE:
             state.currentPageOrder = action.payload
             break;
+        case PAGINATION_CUSTOMER_CHANGE:
+            state.currentPageCustomer = action.payload
+            break;
+
         case ADD_CARD:
             state.dataAddCard = action.data
             break;
         case SO_LUONG_SAN_PHAM:
-            // console.log(action.data.data + ">")
             state.soLuongSanPham = action.data.data
             break;
         case PRODUCT_IN_SHOPPING:
@@ -77,17 +91,15 @@ const shopReducer = (state = dataState, action) => {
             console.log("get all order")
             break;
         case GET_ALL_CUSTOMER:
-            console.log(action.data)
+            state.totalCustomer = action.totalCustomer
             state.allCustomer = action.data
             console.log("get all customer")
             break;
         case GET_FILTER_CUSTOMER:
-            console.log(action.data)
             state.allCustomer = action.data
             console.log("get SDT customer")
             break;
         case GET_PRODUCT_DETAIL:
-            console.log(action.data)
             state.productDetail = action.data
             console.log("get product detail")
             break;
@@ -99,6 +111,7 @@ const shopReducer = (state = dataState, action) => {
             state.orderDetail = action.data
             console.log("get order detail")
             break;
+
         case GET_CUSTOMER_FILTER:
             state.allCustomer = action.data
             console.log("get customer detail")
@@ -111,6 +124,7 @@ const shopReducer = (state = dataState, action) => {
             state.customerDetail = action.data
             console.log("get customer detail")
             break;
+
         case CLEAR_CUSTOMER_DETAIL:
             state.customerDetail = ""
             console.log("get customer detail")

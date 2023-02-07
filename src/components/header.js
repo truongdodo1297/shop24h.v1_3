@@ -90,10 +90,10 @@ const Header = () => {
                 <NavItem>
                     <NavLink className=" navItem m-1 ml-5" href="/components/">TV & Home</NavLink>
                 </NavItem>
-                <Col className="ShoppingCartCheckoutIcon" xs="3">
+                <NavItem className="ShoppingCartCheckoutIcon" xs="2">
                     <ShoppingCartCheckoutIcon onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
                     <div className="icoShopping"><p>{soLuongItem}</p></div>
-                </Col>
+                </NavItem>
 
 
                 {/* <Col className="SignInHeader bg-danger" >
