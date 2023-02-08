@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { type } from "@testing-library/user-event/dist/type";
 import { json } from "react-router-dom";
 import {
@@ -295,11 +296,10 @@ const getAllOrder = (currentPage, limit) => {
             const response = await fetch(gURL + "/orderLimit9?_start=" + ((currentPage - 1) * limit) + "&_limit=" + limit, myHeaders);
             const data = await response.json();
 
-            console.log(totalOrder.data.length);
             return dispatch({
                 type: GET_ALL_ORDER,
                 totalOrder: totalOrder.data.length,
-                data : data
+                data: data
             })
         }
         catch (error) {
@@ -328,7 +328,7 @@ const getAllProduct = () => {
         }
     }
 }
-const getAllCustomer = (currentPage,limit) => {
+const getAllCustomer = (currentPage, limit) => {
     return async (dispatch) => {
         try {
             var myHeaders = new Headers();
@@ -337,19 +337,17 @@ const getAllCustomer = (currentPage,limit) => {
             await dispatch({
                 type: PAGE_PENDING
             })
-   
+
             const totalCustomer = await fetch(gURL + "/customer", myHeaders);
             const dataCustomer = await totalCustomer.json();
-            
+
             const response = await fetch(gURL + "/customerLimit9?_start=" + ((currentPage - 1) * limit) + "&_limit=" + limit, myHeaders);
             const data = await response.json();
 
-            console.log(dataCustomer.data.length);
-            console.log(currentPage);
             return dispatch({
                 type: GET_ALL_CUSTOMER,
                 data: data,
-                totalCustomer : dataCustomer.data.length
+                totalCustomer: dataCustomer.data.length
 
             })
         }
@@ -415,18 +413,22 @@ const deleteProduct = (id) => {
 const deleteOrder = (id) => {
     return async (dispatch) => {
         try {
+            let raw = JSON.stringify({
+                status: "Xóa"
+            })
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             var requestOptions = {
-                method: 'DELETE',
+                method: 'PUT',
                 headers: myHeaders,
+                body: raw,
                 redirect: 'follow'
             };
             await dispatch({
                 type: PAGE_PENDING
             })
             console.log(id);
-            const respnose = await fetch(gURL + "/order/" + id, requestOptions);
+            const respnose = await fetch(gURL + "/deleteOrder/" + id, requestOptions);
             const data = await respnose.json();
             console.log(data);
 
@@ -565,11 +567,14 @@ const putProduct = (id, body) => {
         }
     }
 }
-const putOrder = (id, body) => {
+
+const putOrder = (id, vBody) => {
+    console.log("??")
+    console.log(vBody)
     return async (dispatch) => {
         try {
             let raw = JSON.stringify({
-              
+                status: vBody
             })
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -587,18 +592,15 @@ const putOrder = (id, body) => {
             const respnose = await fetch(gURL + "/order/" + id, requestOptions);
             const data = await respnose.json();
             console.log(data);
-            return dispatch({
-                type: GET_ORDER_DETAIL,
-                data: data
-            })
+            return;
         }
         catch (error) {
             console.log(error)
         }
     }
 }
-const clearModal = () =>{
-    return{
+const clearModal = () => {
+    return {
         type: CLEAR_MODAL
     }
 }
@@ -616,7 +618,7 @@ const getFilterCustomer = (fullName, phone) => {
             await dispatch({
                 type: PAGE_PENDING
             })
-            const respnose = await fetch(gURL + "/customerFilter" +  "/:?phone=" + phone + "&fullName=" + fullName , requestOptions);
+            const respnose = await fetch(gURL + "/customerFilter" + "/:?phone=" + phone + "&fullName=" + fullName, requestOptions);
             const data = await respnose.json();
             console.log(data);
             return dispatch({
@@ -650,7 +652,7 @@ const getOrdertFilter = (vRaw) => {
                 type: PAGE_PENDING
             })
 
-            const respnose = await fetch(gURL + "/orderFilter/" + ":?phone=" + phone +"&fullName=" + fullName + "&orderCode=" + orderCode + "&startDay=" + startDay + "&endDay=" + endDay, requestOptions);
+            const respnose = await fetch(gURL + "/orderFilter/" + ":?phone=" + phone + "&fullName=" + fullName + "&orderCode=" + orderCode + "&startDay=" + startDay + "&endDay=" + endDay, requestOptions);
             const data = await respnose.json();
             console.log(data);
             return dispatch({
@@ -715,15 +717,46 @@ const getCustomerDetail = (id) => {
         }
     }
 }
-const clearCustomerDetail = () =>{
-    return{
-        type:CLEAR_CUSTOMER_DETAIL
+const clearCustomerDetail = () => {
+    return {
+        type: CLEAR_CUSTOMER_DETAIL
     }
 }
-const getSoLuongItem = (data) =>{
-    return{
+const getSoLuongItem = (data) => {
+    return {
         type: GET_SL_ITEM,
         data: data
+    }
+}
+const login = (userName, passWord) => {
+
+    return async (dispatch) => {
+        try {
+            let raw = JSON.stringify({
+                userName: userName,
+                passWord: passWord
+            })
+            console.log(raw)
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            const res = await fetch(gURL + "/login", requestOptions)
+            const messageLogin = await res.json()
+            console.log(messageLogin)
+            return dispatch({
+                type: STATUS_LOGIN,
+                messageLogin: messageLogin
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 }
 export {
@@ -751,14 +784,15 @@ export {
     putProduct,
     clearModal,
     deleteOrder,
-    putOrder, 
+    putOrder,
     getOrdertDetail,
-    getFilterCustomer, 
+    getFilterCustomer,
     getOrdertFilter,
     deleteCustomer,
     getCustomerDetail,
     clearCustomerDetail,
     getSoLuongItem,
     changePaginationOder,
-    changePaginationCustomer
+    changePaginationCustomer,
+    login
 }

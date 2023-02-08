@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment/moment";
 import { InputLabel, Pagination, Stack, TextField } from "@mui/material";
-import { deleteOrder, changePaginationOder } from "../actions/action"
+import { deleteOrder, changePaginationOder, putOrder } from "../actions/action"
 
 
 const AdminOrder = () => {
@@ -18,6 +18,7 @@ const AdminOrder = () => {
     const [vStartDay, setvStartDay] = useState("")
     const [vEndDay, setvEndDay] = useState("")
     const [vNameCustomer, setvNameCustomer] = useState()
+    const [vStatus, setvStatus] = useState()
 
     const [dislpayModalOderDetail, setDisplayModalOderDetail] = useState(false)
 
@@ -26,7 +27,7 @@ const AdminOrder = () => {
     const { allOrder, currentPageOrder, limit, totalOrder } = useSelector((reduxData) => reduxData.shopReducer);
     useEffect(() => {
         dispatch(getAllOrder( currentPageOrder, limit))
-    }, [dislpayModalOder, dislpayBtnTT2, currentPageOrder])
+    }, [dislpayModalOder, dislpayBtnTT2, currentPageOrder,vStatus])
     const noPage = Math.ceil(totalOrder/ limit);
 
     const onChangePaginationOrder = (e,value) => {
@@ -75,6 +76,15 @@ const AdminOrder = () => {
             startDay: vStartDay
         }
         dispatch(getOrdertFilter(vRaw))
+    }
+    //thây đổi trặng thái đơn hàng
+    const changeStatusOrder = (e) =>{
+        setvStatus(e.target.value)
+        console.log(e.target.value)
+        console.log(valueModalOder)
+        dispatch(putOrder(valueModalOder, vStatus))
+        // setvStatus("")
+
     }
     let styleFilter = {
         marginTop: "5px",
@@ -199,14 +209,14 @@ const AdminOrder = () => {
                                                         )
                                                     })}
                                                 </td>
-                                                {/* <td>
-                                                    <select text={el.status} value={el.status}>
-                                                        <option>Xác nhận</option>
-                                                        <option>Hủy bỏ</option>
-                                                        <option>Hoàn tất</option>
-                                                        <option>Chờ xác nhận</option>
+                                                <td>
+                                                    <select  value={el.status} onChange = {(e)=>{ setValueModalOder(el._id);changeStatusOrder(e); }}>
+                                                        <option value={"Xác nhận"}>Xác nhận</option>
+                                                        <option value={"Hủy bỏ"}>Hủy bỏ</option>
+                                                        <option value={"Hoàn tất"}>Hoàn tất</option>
+                                                        <option style={{display: "none"}}>Chờ xác nhận</option>
                                                     </select>
-                                                </td> */}
+                                                </td>
                                                 <td >
                                                     <Button className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSuaOrder(el._id)}>Sửa</Button>
                                                     <Button outline size="sm" color="danger" onClick={() => onBtnDeleteOrder(el.name, el._id)}>Xóa</Button>

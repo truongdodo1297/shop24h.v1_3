@@ -301,7 +301,6 @@ const AdminProduct = () => {
                                     <th></th>
                                 </tr>
                             </thead>
-                            {console.log(product)}
                             {product.data.map((el, index) => {
                                 return (
                                     <tbody className="text-left" key={index}>

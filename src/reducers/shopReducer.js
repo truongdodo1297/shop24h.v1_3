@@ -14,7 +14,7 @@ const dataState = {
 
     product: "", // dư liệu project
     limit: 9,
-    statusLogin: false,
+    statusLogin: true,
     statusPending: true,
 
     currentPage: 1,
@@ -27,6 +27,7 @@ const dataState = {
     soLuongSanPham: null, //call api vaf luu vao day
     dataShopping: [], //call api vaf luu vao day ???
     soLuongItem: 0,   // số lần click hien tren gio hang
+    messageLogin: "wc",   // số lần click hien tren gio hang
 
     allOrder: "",
     allCustomer: "",
@@ -82,7 +83,7 @@ const shopReducer = (state = dataState, action) => {
             state.soLuongItem = state.soLuongItem - 1;
             break;
         case STATUS_LOGIN:
-            state.statusLogin = true
+            state.statusLogin = false
             console.log(state.statusLogin)
             break;
         case GET_ALL_ORDER:
