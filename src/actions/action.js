@@ -6,7 +6,7 @@ import {
     SO_LUONG_SAN_PHAM, CLEAR_DATA, STATUS_LOGIN, PRODUCT_IN_SHOPPING, SL_PRODUCT_IN_SHOPPING,
     TANG_SL_PRODUCT, GET_ALL_ORDER, GET_ALL_PRODUCT, GET_ALL_CUSTOMER, GET_FILTER_CUSTOMER, GET_PRODUCT_DETAIL,
     CLEAR_MODAL, GET_ORDER_DETAIL, GET_CUSTOMER_FILTER, GET_ORDER_FILTER, GET_CUSTOMER_DETAIL, CLEAR_CUSTOMER_DETAIL,
-    GIAM_SL_PRODUCT, GET_SL_ITEM, PAGINATION_ORDER_CHANGE, PAGINATION_CUSTOMER_CHANGE
+    GIAM_SL_PRODUCT, GET_SL_ITEM, PAGINATION_ORDER_CHANGE, PAGINATION_CUSTOMER_CHANGE, MESSAGE_LOGIN, STATUS_SIGN,MOVE_ITEM
 } from "../constants/constant"
 
 const gURL = "http://localhost:8000";
@@ -138,7 +138,7 @@ const ApiItemInShopping = (productId) => {
     }
 }
 
-const addNewSL = () => {
+const addQuantity = () => {
     return {
         type: TANG_SL_PRODUCT,
     }
@@ -276,9 +276,10 @@ const removeProduct = (productId) => {
     }
 }
 
-const changeStatusLogin = () => {
+const changeStatusLogin = (payload) => {
     return {
-        type: STATUS_LOGIN
+        type: STATUS_LOGIN,
+        payload: payload
     }
 }
 const getAllOrder = (currentPage, limit) => {
@@ -728,6 +729,34 @@ const getSoLuongItem = (data) => {
         data: data
     }
 }
+const signIn = (raw) => {
+
+    return async (dispatch) => {
+        try {
+            console.log(raw)
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify(raw),
+                redirect: 'follow'
+            };
+            const res = await fetch(gURL + "/user", requestOptions)
+            const status = await res.json()
+            console.log(status.success)
+            return dispatch({
+                type: STATUS_SIGN,
+                status: status.success,
+                message: status.message
+            })
+        }
+        catch (err) {
+            console.log(err)
+        }
+
+    }
+}
 const login = (userName, passWord) => {
 
     return async (dispatch) => {
@@ -747,10 +776,13 @@ const login = (userName, passWord) => {
             };
             const res = await fetch(gURL + "/login", requestOptions)
             const messageLogin = await res.json()
-            console.log(messageLogin)
+            const token = messageLogin.token
+            localStorage.setItem("token", token)
+            console.log( messageLogin.success)
             return dispatch({
                 type: STATUS_LOGIN,
-                messageLogin: messageLogin
+                payload: messageLogin.success
+                // isAdmin: messageLogin.data.isAdmin
             })
         }
         catch (err) {
@@ -759,13 +791,19 @@ const login = (userName, passWord) => {
 
     }
 }
+const moveItem = (number) =>{
+    return{
+        type: MOVE_ITEM,
+        data: number
+    }
+}
 export {
     callAPI,
     btnLoc,
     onclickCard,
     apiAddCard,
     ApiItemInShopping,
-    addNewSL,
+    addQuantity,
     subtractionSL,
     callAPILimit3,
     AddUserProductDetail,
@@ -794,5 +832,7 @@ export {
     getSoLuongItem,
     changePaginationOder,
     changePaginationCustomer,
-    login
+    login,
+    signIn,
+    moveItem
 }

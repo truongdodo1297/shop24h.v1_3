@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Home from "./pages/home";
 import ThanhToan from "./pages/thanhToan";
 import Admin from "./pages/admin";
+import Sign from "./pages/sign"
 
 const routerList = [
   
@@ -14,6 +15,7 @@ const routerList = [
     {path:"/cart", element: <Cart/>},
     {path:"/Login", element: <Login/>},
     {path:"/ThanhToan", element: <ThanhToan/>},
-    {path:"/admin", element: <Admin/>}
+    {path:"/admin", element: <Admin/>},
+    {path:"/sign", element: <Sign/>}
 ]
 export default routerList;

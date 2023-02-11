@@ -5,10 +5,9 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiAddCard, AddUserProductDetail,callAPIAddUserProductDetail, addNewSL } from "../actions/action";
+import { apiAddCard, AddUserProductDetail,callAPIAddUserProductDetail, addQuantity } from "../actions/action";
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import CasesOutlinedIcon from '@mui/icons-material/CasesOutlined';
-
 
 const ProductInfo = () => {
     const navigate = useNavigate();
@@ -24,11 +23,10 @@ const ProductInfo = () => {
         navigate("/cart");
     }
     const saveData = JSON.parse(localStorage.getItem("item", "[]")) || [];
-    let index = localStorage.getItem("index") || 0 ;
     const [quantity, setQuantity] = useState(1);
 
        const onBtnAddToCard = (id, imageUrl, price, name) =>{
-            dispatch(addNewSL())
+            dispatch(addQuantity())
             //tìm xem trong giỏ hàng có sản phẩm nào giống sản phẩm này chưa
         let i = saveData.findIndex((el) => el.Product === id)
             // nếu đã có 1 sp giống sản phẩm trong local thì tăng sl lên 1
@@ -41,18 +39,12 @@ const ProductInfo = () => {
             // dispatch(addProductToCartHandler(saveData));
         }
         
-            // nếu chưa có sp trong local thì setlocal
         else {
             const ProductAdd = [{ Product: id, quantity: quantity , imgUrl : imageUrl, price: price , name: name}, ...saveData];
             localStorage.setItem("item", JSON.stringify(ProductAdd));
             //lưu dữ liệu sản phẩm đã chọn vào local storage
             // dispatch(addProductToCartHandler(ProductAdd));
         }
-    let index = JSON.parse(localStorage.getItem("index")) || 0 ;
-
-        index = parseInt(index) + 1
-        localStorage.setItem("index", index);
-
        }
 
 

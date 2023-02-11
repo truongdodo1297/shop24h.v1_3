@@ -10,25 +10,42 @@ import GoogleIcon from '@mui/icons-material/Google';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSoLuongItem } from "../actions/action"
+import { getSoLuongItem, changeStatusLogin } from "../actions/action"
 
 const Header = () => {
-    const { soLuongItem } = useSelector((reduxData) => reduxData.shopReducer);
+    const { numberItem, loginSuccess } = useSelector((reduxData) => reduxData.shopReducer);
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [displayCollapse, setDisplayCollapse] =  useState(false)
-    const signIn = () => {
-        navigate("/Login")
+    const [displayCollapse, setDisplayCollapse] = useState(false)
+    const isLoggedIn =  localStorage.getItem("isLoggedIn");
+    useEffect(() => {
+         if( loginSuccess){
+             localStorage.setItem("isLoggedIn", true);
+             navigate("/cart")
+         }
+        let array = JSON.parse(localStorage.getItem("item") || 0)
+        if (array !== 0) {
+            let number = array.reduce((total, item) => total + item.quantity, 0);
+            dispatch(getSoLuongItem(number))
+        }
+        else {
+            dispatch(getSoLuongItem(array))
+        }
+    }, []);
+    const logOut = () => {
+        console.log("??")
+        localStorage.setItem("isLoggedIn", false)
     }
     const goHome = () => {
         navigate("/")
     }
+    const logIn = () => {
+        navigate("/login")
+    }
     const goToShop = () => {
         navigate("/cart");
     }
-    useEffect(() => {
-        dispatch(getSoLuongItem(parseInt(localStorage.getItem("index")) || 0))
-    }, []);
+ 
 
     return (
 
@@ -90,11 +107,20 @@ const Header = () => {
                 <NavItem>
                     <NavLink className=" navItem m-1 ml-5" href="/components/">TV & Home</NavLink>
                 </NavItem>
+                {isLoggedIn ?
+                    <NavItem>
+                        <NavLink className=" navItem m-1 ml-5" onClick={logOut}>LogOut</NavLink>
+                    </NavItem>
+                    :
+                    <NavItem>
+                        <NavLink className=" navItem m-1 ml-5" onClick={logIn}>Login</NavLink>
+                    </NavItem>
+                }
                 <NavItem className="ShoppingCartCheckoutIcon" xs="2">
                     <ShoppingCartCheckoutIcon onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
-                    <div className="icoShopping"><p>{soLuongItem}</p></div>
+                    <div className="icoShopping"><p>{numberItem}</p></div>
                 </NavItem>
-
+             
 
                 {/* <Col className="SignInHeader bg-danger" >
     <AccountBoxIcon  className="AccountBoxIcon" onClick={()=>signIn()}></AccountBoxIcon>
@@ -104,13 +130,13 @@ const Header = () => {
             </Nav>
 
             <Navbar className="Navbar_sm" light>
-                <NavbarToggler onClick = {()=>setDisplayCollapse(!displayCollapse)}  />
-                <NavbarBrand onClick={goHome} className = "text-light">
-                <AppleIcon  onClick={goHome}></AppleIcon>
+                <NavbarToggler onClick={() => setDisplayCollapse(!displayCollapse)} />
+                <NavbarBrand onClick={goHome} className="text-light">
+                    <AppleIcon onClick={goHome}></AppleIcon>
                 </NavbarBrand>
                 <NavItem className="NavItem_con" >
                     <ShoppingCartCheckoutIcon onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
-                    <div className="icoShopping"><p>{soLuongItem}</p></div>
+                    <div className="icoShopping"><p>{numberItem}</p></div>
                 </NavItem>
 
                 <Collapse navbar isOpen={displayCollapse} className=" bg-primary text-light">

@@ -20,8 +20,6 @@ const AdminOrder = () => {
     const [vNameCustomer, setvNameCustomer] = useState()
     const [vStatus, setvStatus] = useState()
 
-    const [dislpayModalOderDetail, setDisplayModalOderDetail] = useState(false)
-
 
     const dispatch = useDispatch();
     const { allOrder, currentPageOrder, limit, totalOrder } = useSelector((reduxData) => reduxData.shopReducer);
@@ -57,10 +55,6 @@ const AdminOrder = () => {
         setvOrderCode(e.target.value)
     }
     // ấn nút sửa order
-    const onBtnSuaOrder = (id) => {
-        dispatch(getOrdertDetail(id))
-        setDisplayModalOderDetail(true)
-    }
     // thực hiên xóa order    
     const deleteOrderItem = () => {
         setDislpayModalOder(false)
@@ -83,7 +77,6 @@ const AdminOrder = () => {
         console.log(e.target.value)
         console.log(valueModalOder)
         dispatch(putOrder(valueModalOder, vStatus))
-        // setvStatus("")
 
     }
     let styleFilter = {
@@ -163,7 +156,7 @@ const AdminOrder = () => {
                                     <th>Số điện thoại</th>
                                     <th>Địa chỉ</th>
                                     <th>Ưu cầu khác</th>
-                                    <th className="text-center" >
+                                    <th className="text-center w-30" >
                                         Order
                                     </th>
                                     {/* <th >Trạng thái</th> */}
@@ -218,7 +211,6 @@ const AdminOrder = () => {
                                                     </select>
                                                 </td>
                                                 <td >
-                                                    <Button className="me-1 mb-1" outline size="sm" color="primary" onClick={() => onBtnSuaOrder(el._id)}>Sửa</Button>
                                                     <Button outline size="sm" color="danger" onClick={() => onBtnDeleteOrder(el.name, el._id)}>Xóa</Button>
                                                 </td>
                                             </tr>

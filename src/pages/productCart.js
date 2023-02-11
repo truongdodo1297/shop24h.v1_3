@@ -3,7 +3,7 @@ import { FormControl, InputLabel, MenuItem, Select, TextField, Grid } from "@mui
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { callAPIAddUserProductDetail, removeProduct, subtractionSL, addNewSL } from "../actions/action";
+import { callAPIAddUserProductDetail, removeProduct, subtractionSL,moveItem, addQuantity } from "../actions/action";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { json, useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ const ProductCard = () => {
     const saveData = JSON.parse(localStorage.getItem("item", "[]")) || [];
     const [count, setCount] = useState(0)
     useEffect(() => {
+
         dispatch(callAPIAddUserProductDetail());
         fetch('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json')
             .then(response => response.json())
@@ -29,7 +30,7 @@ const ProductCard = () => {
 
     const [displayNguoiNhanHang, setDisplayNguoiNhanHang] = useState({ display: "none" });
     const tangSoLuong = (id) => {
-        dispatch(addNewSL())
+        dispatch(addQuantity())
         let i = saveData.findIndex((el) => el.Product === id)
         if (i != -1) {
             saveData[i].quantity++;
@@ -37,12 +38,14 @@ const ProductCard = () => {
         }
     }
     const giamSoLuong = (id) => {
-        dispatch(subtractionSL())
         let i = saveData.findIndex((el) => el.Product === id)
         if (i != -1) {
-            saveData[i].quantity--;
-            // đẩy dữ liệu các sản phẩm lên local storage
-            localStorage.setItem("item", JSON.stringify(saveData));
+            if (saveData[i].quantity > 1) {
+                dispatch(subtractionSL())
+                saveData[i].quantity--;
+                // đẩy dữ liệu các sản phẩm lên local storage
+                localStorage.setItem("item", JSON.stringify(saveData));
+            }
         }
     }
 
@@ -50,16 +53,14 @@ const ProductCard = () => {
         console.log("move");
         let i = saveData.findIndex((el) => el.Product === id)
         if (i != -1) {
+            let number = saveData[i].quantity;
+            dispatch(moveItem(number))
             saveData.splice(i, 1);
             // đẩy dữ liệu các sản phẩm lên local storage
             localStorage.setItem("item", JSON.stringify(saveData));
         }
     }
     const tongTien = saveData.reduce((sumary, item) => sumary + item.price * item.quantity, 0);
-
-    const changeDisplay = () => {
-        setDisplayNguoiNhanHang({ display: 'block' })
-    }
     const [soLuongSp, setsoLuongSP] = useState(1)
     // const [tongTien, settongTien] = useState(0)
     const [cityName, setCityName] = useState()
@@ -111,8 +112,6 @@ const ProductCard = () => {
     }
     const changeSexGirl = () => {
         setSexGirl(!sexGirl)
-        console.log(sexGirl)
-
         setSexBoy(false)
         if (sexGirl == false) {
             setCheckedSex("Chị")
@@ -203,70 +202,72 @@ const ProductCard = () => {
             {
                 saveData ?
                     <>
-                        <Row className="shopHead">
-                            <h2 className="shopHeadH2">Your bag total is {tongTien.toLocaleString()} $.</h2>
-                            <p className="rowInfoP">Free delivery and free returns.</p>
+                        <Row className="cartHead">
+                            <h2 className="cartHeadH2">Your bag total is {tongTien.toLocaleString()} $.</h2>
+                            <p className="cartInfoP">Free delivery and free returns.</p>
                             <Container>
                                 <Button className="btnAddToCard" >Check Out</Button>
                             </Container>
 
                         </Row>
-                        
+
                         <Row className="mt-4">
                             <hr className="shopHr"></hr>
-                            <Col xs="12" md = "" className="CartSP ">
+                            <Col xs="12" md="" className="CartSP ">
                                 {
                                     saveData.map((el, index) => {
                                         return (
                                             <>
                                                 <Row className="shopItem">
-                                                   
-                                                        <Col xs="3" className="shopImg">
-                                                            <img src={el.imgUrl} />
-                                                        </Col>
-                                                        <Col xs="9" className="shopInfo">
 
-                                                            <Row className="shopDiv" >
-                                                                <Col xs="5">
-                                                                    <h2 className="shopH2">
-                                                                        {el.name}</h2>
-                                                                </Col>
-                                                                <Col className=" mt-3 " >
-                                                                    <ButtonGroup size="sm">
-                                                                        <Button outline
-                                                                            onClick={() => giamSoLuong(el.Product)}
-                                                                        >-</Button>
-                                                                        <Button outline size="sm">{el.quantity}</Button>
-                                                                        <Button outline size="sm"
-                                                                            onClick={() => tangSoLuong(el.Product)}
-                                                                        >+</Button>
-                                                                    </ButtonGroup>
-                                                                </Col>
-                                                                <Col className="shopPrice">
-                                                                    <h3>${(el.price * el.quantity).toLocaleString()} </h3>
-                                                                    <p className="shopP" onClick={() => btnRemove(el.Product)}>Remove</p>
-                                                                </Col>
-                                                                <hr ></hr>
-                                                            </Row>
+                                                    <Col xs="3" className="shopImg">
+                                                        <img src={el.imgUrl} />
+                                                    </Col>
+                                                    <Col xs="9" className="shopInfo">
 
-                                                            <div className="d-flex pt-3 pb-3">
-                                                                <CardGiftcardIcon></CardGiftcardIcon>
-                                                                <p className="shopPriceP">Add a gift message</p>
-                                                                <Col className="shopP">  <p>Add</p> </Col>
-                                                            </div>
-                                                            <Row>
-                                                                <hr ></hr>
-                                                                <Col xs="12" >
-                                                                    <p className="shopPriceP ">Find out how soon you can get this item</p>
-                                                                    <LocalMallIcon></LocalMallIcon>
-                                                                    <span style={{ marginLeft: "10px", marginTop: "95px" }}>In stock and ready to ship.</span>
-                                                                </Col>
-                                                                {/* <Col>
+                                                        <Row className="shopDiv" >
+                                                            <Col xs="4">
+                                                                <h2 className="cartNameProduct">
+                                                                    {el.name}</h2>
+                                                            </Col>
+
+                                                            <Col className=" mt-3 " >
+                                                                <ButtonGroup size="sm">
+                                                                    <Button outline
+                                                                        onClick={() => giamSoLuong(el.Product)}
+                                                                    >-</Button>
+                                                                    <Button outline size="sm">{el.quantity}</Button>
+                                                                    <Button outline size="sm"
+                                                                        onClick={() => tangSoLuong(el.Product)}
+                                                                    >+</Button>
+                                                                </ButtonGroup>
+                                                            </Col>
+
+                                                            <Col className="cartPrice" xs = "3">
+                                                                <h3>${(el.price * el.quantity).toLocaleString()} </h3>
+                                                                <p className="shopP" onClick={() => btnRemove(el.Product)}>Remove</p>
+                                                            </Col>
+                                                            <hr ></hr>
+                                                        </Row>
+
+                                                        <div className="d-flex pt-3 pb-3">
+                                                            <CardGiftcardIcon></CardGiftcardIcon>
+                                                            <p className="shopPriceP">Add a gift message</p>
+                                                            <Col className="shopP">  <p>Add</p> </Col>
+                                                        </div>
+                                                        <Row>
+                                                            <hr ></hr>
+                                                            <Col xs="12" >
+                                                                <p className="shopPriceP ">Find out how soon you can get this item</p>
+                                                                <LocalMallIcon></LocalMallIcon>
+                                                                <span style={{ marginLeft: "10px", marginTop: "95px" }}>In stock and ready to ship.</span>
+                                                            </Col>
+                                                            {/* <Col>
                                                                 <p className="shopPriceP" href="/">Enter zip code</p>
                                                             </Col> */}
-                                                            </Row>
-                                                        </Col>
-                                                        <hr className="mt-2"></hr>
+                                                        </Row>
+                                                    </Col>
+                                                    <hr className="mt-2"></hr>
                                                 </Row>
                                             </>)
                                     }

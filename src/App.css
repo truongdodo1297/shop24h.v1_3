@@ -1,127 +1,162 @@
+@media only screen and (max-width: 600px) {
+    .btnLoc {
+        width: 200px;
+        /* margin-top: 100px; */
+        /* margin-left: 30px; */
+    }
 
-  @media only screen and (max-width: 600px) {
-    .Nav_lg{
+    .Nav_lg {
         display: none;
     }
-    .Nav_Icon{
+
+    .Nav_Icon {
         display: none;
     }
-    .imgHeadPhone{
+
+    .imgHeadPhone {
         position: relative;
         padding-top: 0%;
     }
-    .imgHeadPhone{
+
+    .imgHeadPhone {
         display: none;
     }
-    .LIST_rating{
+
+    .listRating {
         margin-top: -13px;
     }
-    .LIST_productPrice{
+
+    .listproductPrice {
         font-size: 14px;
     }
-    .MuiRating-icon{
+
+    .MuiRating-icon {
         font-size: medium;
         left: -27px;
         margin-top: -15px;
     }
+
     /* body {
       font-size: 8px;
     } */
-    button{
-      font-size: 0.5em;
+    button {
+        font-size: 0.5em;
         padding: 0.5em;
     }
-    .AM_list{
+
+    .AM_list {
         display: none;
     }
-    .grid-item{
+
+    .grid-item {
         width: 5rem;
         height: 10rem;
         background-color: #4444ff;
     }
-    .LIST_Filter{
+
+    .listFilter {
         display: none;
     }
-    .LIST_productName{
+
+    .listproductName {
         margin-top: -15px;
         font-size: 15px;
     }
-    .LIST_gridItem {
-        position: absolute;
+
+    .listGridItem {
+        text-align: center;
         padding: 8px;
-        border: 1px solid rgba(224, 5, 5, 0.8);
+        border: 1px solid rgba(119, 119, 119, 0.8);
         text-align: left;
-        margin: 0px;
+        max-width: 20rem;
+        max-height: 30rem;
+        padding: 10px;
+        margin: 5px;
+
     }
-    .LIST_grid{
-        padding-top: 50px;
+
+    .listGrid {
+        padding-top: 20px;
         display: grid;
-        grid-template-columns: auto auto ;
+        grid-template-columns: auto auto;
     }
-    .LIST_productName{
+
+    .listproductName {
         margin-top: -15px;
         font-size: 15px;
     }
-    .LIST_productPrice{
+
+    .listproductPrice {
         margin-top: -15px;
     }
-    .Card{
+
+    .Card {
         border: #4444ff;
     }
-    .LIST_type{
+
+    .listtype {
         font-size: 2px;
     }
-  }
-  
+}
+
 @media (min-width: 600px) {
-    .Navbar_sm{
+    .Navbar_sm {
         display: none;
     }
-    .imgHeadPhone_xs{
+
+    .imgHeadPhone_xs {
         display: none;
     }
-    .imgBody3_tilte{
+
+    .imgBody3_tilte {
         background-color: #4444ff;
         width: 4400px;
         padding-top: 300px;
         margin-right: 120px;
     }
-    .iPhoneName{
+
+    .iPhoneName {
         font-size: 50px;
         font-weight: 700;
     }
-  }
-  .LIST_img{
+}
+
+
+.listimg {
     height: 50%;
-  }
+}
 
-.LIST_productPrice{
+.listproductPrice {
     margin-top: -15px;
 }
 
-  .LIST_productName{
+.listproductName {
     margin-top: -15px;
 }
 
- .LIST_Filter{
+.listFilter {
     padding-top: 40px;
     padding-left: 90px;
- } 
-.Nav_sm_NavItem{
+}
+
+.Nav_sm_NavItem {
     width: 20%;
     background-color: #4444ff;
-  }
-  .footer{
+}
+
+.footer {
     width: 100%;
     padding-top: 30px;
     text-align: center;
     background-color: #ced4da;
-  }
-  .Navbar_sm{
+}
+
+.Navbar_sm {
     color: white;
     background-color: rgb(54, 53, 53);
-  }
-  .icoShopping {
+}
+
+.icoShopping {
     background-color: rgb(252, 22, 22);
     width: 20px;
     text-align: center;
@@ -131,18 +166,22 @@
     margin-top: -10px;
     margin-left: -5px;
 }
+
 .NavItem_con {
     display: flex;
     justify-content: flex-end;
 }
+
 .menu {
     background-color: aqua;
 }
-.imgHeadPhone_xs{
+
+.imgHeadPhone_xs {
     margin-top: 30px;
     text-align: center;
 }
-.Navbar_sm_Nav{
+
+.Navbar_sm_Nav {
     padding-top: 0px;
     padding-left: 40px;
     padding-right: 40px;
@@ -152,21 +191,23 @@
     position: absolute;
     width: 98%;
     text-align: left;
-   
-}
-.LIST_grid {
-    padding-top: 30px;
-    display: grid;
-    grid-template-columns: auto auto auto;
 
 }
-.LIST_type{
+
+.listGrid {
+    display: flex;
+    padding-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.listtype {
     font-size: 16px;
     color: red;
     font-weight: 600;
 }
 
-.LIST_gridItem {
+.listGridItem {
     position: relative;
     padding: 18px;
     border: 1px solid rgba(179, 179, 179, 0.8);
@@ -178,20 +219,22 @@
     max-width: 20rem;
     max-height: 30rem;
 }
-.HOME_card{
+
+.HOME_card {
     height: auto;
     width: 15rem;
     margin: 1rem;
 }
-.LIST_gridItem:hover {
+
+.listgridItem:hover {
     opacity: 0.7;
     border: 1px solid rgba(254, 4, 4, 0.8);
 }
 
-.btn-block {
+.btnLoc {
     width: 200px;
-    margin-top: 100px;
-    margin-left: 30px;
+    margin-top: 50px;
+    margin-left: 80px;
 }
 
 
@@ -258,6 +301,7 @@ h1 {
     font-weight: 500;
     color: black;
 }
+
 .iPhoneName2 {
     margin-top: -10px;
     font-size: xx-large;
@@ -293,7 +337,8 @@ a {
     text-align: center;
     /* background-color: #f3f9ea; */
 }
-.imgBody3_tilte{
+
+.imgBody3_tilte {
     width: 300px;
     position: absolute;
     justify-content: end;
@@ -301,7 +346,8 @@ a {
     text-align: center;
     right: 0px;
 }
-.imgBody3_img{
+
+.imgBody3_img {
     width: 100%;
 }
 
@@ -315,7 +361,7 @@ a {
     width: 400px;
     margin-left: 220px;
     position: absolute;
-} 
+}
 
 .cardHeadPhone {
     text-align: center;
@@ -391,7 +437,7 @@ a {
     width: 500px;
 }
 
-.rowInfoP {
+.cartInfoP {
     font-size: larger;
 }
 
@@ -399,12 +445,12 @@ a {
     margin-top: 50px;
 }
 
-.shopHeadH2 {
+.cartHeadH2 {
     font-size: 45px;
     font-weight: 700;
 }
 
-.shopHead {
+.cartHead {
     margin-top: 20px;
     text-align: center;
     align-items: center;
@@ -424,7 +470,7 @@ a {
     padding-top: 50px;
 }
 
-.shopH2 {
+.cartNameProduct {
     font-size: 25px;
     font-weight: 600;
 }
@@ -441,7 +487,7 @@ s .shopDiv {
     border: none;
 }
 
-.shopPrice {
+.cartPrice {
     text-align: end;
 }
 
@@ -514,7 +560,8 @@ s .shopDiv {
     margin-top: 15px;
     left: 50%;
 }
-.NavbarBrand{
+
+.NavbarBrand {
     align-items: center;
 }
 
@@ -577,7 +624,9 @@ s .shopDiv {
 /* @import url('https://fonts.googleapis.com/css?family=Numans'); */
 
 
-.containerSigin {
+.loginDiv {
+    background: rgb(13, 12, 33);
+    background: linear-gradient(43deg, rgba(13, 12, 33, 1) 0%, rgba(115, 92, 125, 1) 47%, rgba(9, 202, 241, 1) 100%);
     height: 100%;
     align-content: center;
     padding: 110px;
@@ -588,7 +637,7 @@ s .shopDiv {
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
-    background-color: rgba(0, 0, 0, 0.5) ;
+    /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 .social_icon span {
@@ -642,7 +691,37 @@ s .shopDiv {
     background-color: white;
 }
 
-
 .links a {
     margin-left: 4px;
+}
+
+.SignDiv {
+    background: rgb(13, 12, 33);
+    background: linear-gradient(43deg, rgba(13, 12, 33, 1) 0%, rgba(217, 59, 217, 1) 28%, rgba(76, 206, 232, 1) 71%);
+}
+
+.SignForm {
+    padding: 35%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.signH2 {
+    font-size: 50px;
+    font-weight: 400;
+}
+
+.signInput {
+    border-radius: none;
+    border-bottom: 1px solid black;
+}
+
+.signBtn {
+    margin-top: 2rem;
+    width: 200px;
+}
+
+.signDivBtn {
+    justify-content: center;
+    display: flex;
 }
