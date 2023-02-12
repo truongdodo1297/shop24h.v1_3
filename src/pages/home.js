@@ -77,24 +77,14 @@ const Home = () => {
                 <img src="https://vcdn1-sohoa.vnecdn.net/2022/09/08/Apple-iPhone-14-Pro-iPhone-14-8382-5558-1662584561.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NTL8BUbSQE4ChgTW8r9D-Q"></img>
             </Row>
 
-            <Row className="imgBody3 text-light ">
-                {/* <Col xs="4" md = "4" className="text1 bg-danger">
-                    <p className="New">New</p>
-                    <p className="iPhoneName text-dark">iPhone SE</p>
-                    <h1>Love the power.<br></br>
-                        Love the value.</h1>
-                    <div className="mt-4  text-light" >
-                        <Button className="btn btnBuy">Buy</Button>
-                        <a style={{ color: "blue" }}>Learn more  </a>
-                    </div>
-                </Col> */}
-                <Container xs="12" md="12" className="imgBody3_tilte">
+            <Row className="imgBody3 text-light bg-danger ">
+                <Container xs="12" md="6" className="imgBody3_tilte">
                     <p className="iPhoneName text-dark">WATCH</p>
                     <p className="text-danger">SERIES 8</p>
                     <h3>Love the power Love the value.</h3>
-                    <div className="mt-4  text-light" >
+                    <div className="mt-4 text-light" >
                         <Button className="btn btnBuy">Buy</Button>
-                        <a style={{ color: "blue" }}>Learn more  </a>
+                        <a style={{ color: "blue", marginLeft: "10px" }}>Learn more  </a>
                     </div>
                 </Container>
                 <Col xs="12" md="12">

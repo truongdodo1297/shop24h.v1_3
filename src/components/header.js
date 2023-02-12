@@ -82,7 +82,7 @@ const Header = () => {
         //         </Col>
         //     </Navbar>
         <>
-            <Nav className="Nav_lg">
+            <Nav xs = "12" className="Nav_lg">
                 <NavItem>
                     <AppleIcon className="AppleIcon" onClick={goHome}></AppleIcon>
                 </NavItem>
@@ -135,7 +135,7 @@ const Header = () => {
                     <AppleIcon onClick={goHome}></AppleIcon>
                 </NavbarBrand>
                 <NavItem className="NavItem_con" >
-                    <ShoppingCartCheckoutIcon onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
+                    <ShoppingCartCheckoutIcon style={{ filter: "brightness(0) saturate(100%) invert(100%)" }} onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
                     <div className="icoShopping"><p>{numberItem}</p></div>
                 </NavItem>
 

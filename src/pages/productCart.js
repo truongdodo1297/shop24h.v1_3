@@ -3,7 +3,7 @@ import { FormControl, InputLabel, MenuItem, Select, TextField, Grid } from "@mui
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { callAPIAddUserProductDetail, removeProduct, subtractionSL,moveItem, addQuantity } from "../actions/action";
+import { callAPIAddUserProductDetail, removeProduct, subtractionSL, moveItem, addQuantity } from "../actions/action";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { json, useNavigate } from "react-router-dom";
@@ -199,257 +199,236 @@ const ProductCard = () => {
     }
     return (
         <>
-            {
-                saveData ?
+            <Row className="cartHead ">
+                <h2 className="cartHeadH2 ">Tổng số tiền trong giỏ hàng là {tongTien.toLocaleString()} VND.</h2>
+                {/* <p className="cartInfoP">Free delivery and free returns.</p> */}
+                <Container>
+                    <Button className="btnAddToCard" >Đăng xuất</Button>
+                </Container>
+
+            </Row>
+
+            <Row className="mt-4 ">
+                <hr className="shopHr"></hr>
+                {saveData.Product ?
                     <>
-                        <Row className="cartHead">
-                            <h2 className="cartHeadH2">Your bag total is {tongTien.toLocaleString()} $.</h2>
-                            <p className="cartInfoP">Free delivery and free returns.</p>
-                            <Container>
-                                <Button className="btnAddToCard" >Check Out</Button>
-                            </Container>
+                        <Col md="6" >
+                            {
+                                saveData.map((el, index) => {
+                                    return (
+                                        <>
+                                            <Row xs="12" className="shopItem ">
 
-                        </Row>
+                                                <Col xs="3" className="shopImg">
+                                                    <img src={el.imgUrl} />
+                                                </Col>
 
-                        <Row className="mt-4">
-                            <hr className="shopHr"></hr>
-                            <Col xs="12" md="" className="CartSP ">
-                                {
-                                    saveData.map((el, index) => {
-                                        return (
-                                            <>
-                                                <Row className="shopItem">
+                                                <Col xs="9" className="shopInfo">
 
-                                                    <Col xs="3" className="shopImg">
-                                                        <img src={el.imgUrl} />
-                                                    </Col>
-                                                    <Col xs="9" className="shopInfo">
+                                                    <Row className="shopDiv" >
+                                                        <Col md="5" xs="3">
+                                                            <h2 className="cartNameProduct">
+                                                                {el.name}</h2>
+                                                        </Col>
 
-                                                        <Row className="shopDiv" >
-                                                            <Col xs="4">
-                                                                <h2 className="cartNameProduct">
-                                                                    {el.name}</h2>
-                                                            </Col>
+                                                        <Col md="4" xs="5" className=" mt-3 " >
+                                                            <ButtonGroup size="sm">
+                                                                <Button outline
+                                                                    onClick={() => giamSoLuong(el.Product)}
+                                                                >-</Button>
+                                                                <Button outline size="sm">{el.quantity}</Button>
+                                                                <Button outline size="sm"
+                                                                    onClick={() => tangSoLuong(el.Product)}
+                                                                >+</Button>
+                                                            </ButtonGroup>
+                                                        </Col>
 
-                                                            <Col className=" mt-3 " >
-                                                                <ButtonGroup size="sm">
-                                                                    <Button outline
-                                                                        onClick={() => giamSoLuong(el.Product)}
-                                                                    >-</Button>
-                                                                    <Button outline size="sm">{el.quantity}</Button>
-                                                                    <Button outline size="sm"
-                                                                        onClick={() => tangSoLuong(el.Product)}
-                                                                    >+</Button>
-                                                                </ButtonGroup>
-                                                            </Col>
+                                                        <Col md="3" xs="3" className="cartPrice " >
+                                                            <h3>${(el.price * el.quantity).toLocaleString()} </h3>
+                                                            <p className="shopP" onClick={() => btnRemove(el.Product)}>Remove</p>
+                                                        </Col>
+                                                        <hr ></hr>
+                                                    </Row>
 
-                                                            <Col className="cartPrice" xs = "3">
-                                                                <h3>${(el.price * el.quantity).toLocaleString()} </h3>
-                                                                <p className="shopP" onClick={() => btnRemove(el.Product)}>Remove</p>
-                                                            </Col>
-                                                            <hr ></hr>
-                                                        </Row>
-
-                                                        <div className="d-flex pt-3 pb-3">
-                                                            <CardGiftcardIcon></CardGiftcardIcon>
-                                                            <p className="shopPriceP">Add a gift message</p>
-                                                            <Col className="shopP">  <p>Add</p> </Col>
-                                                        </div>
-                                                        <Row>
-                                                            <hr ></hr>
-                                                            <Col xs="12" >
-                                                                <p className="shopPriceP ">Find out how soon you can get this item</p>
-                                                                <LocalMallIcon></LocalMallIcon>
-                                                                <span style={{ marginLeft: "10px", marginTop: "95px" }}>In stock and ready to ship.</span>
-                                                            </Col>
-                                                            {/* <Col>
+                                                    <div className="d-flex pt-3 pb-3">
+                                                        <CardGiftcardIcon></CardGiftcardIcon>
+                                                        <p className="shopPriceP">Add a gift message</p>
+                                                        <Col className="shopP">  <p>Add</p> </Col>
+                                                    </div>
+                                                    <Row>
+                                                        <hr ></hr>
+                                                        <Col xs="12" >
+                                                            <p className="shopPriceP ">Find out how soon you can get this item</p>
+                                                            <LocalMallIcon></LocalMallIcon>
+                                                            <span style={{ marginLeft: "10px", marginTop: "95px" }}>In stock and ready to ship.</span>
+                                                        </Col>
+                                                        {/* <Col>
                                                                 <p className="shopPriceP" href="/">Enter zip code</p>
                                                             </Col> */}
-                                                        </Row>
-                                                    </Col>
-                                                    <hr className="mt-2"></hr>
-                                                </Row>
-                                            </>)
-                                    }
-                                    )
-                                }
-                            </Col>
-
-                            {saveData ?
-                                <Col className="cartTTKhachHang">
-                                    <Row className="TTKhachHang">
-                                        <Row className="pt-3">
-                                            <h6>THÔNG TIN KHÁCH HÀNG</h6>
-                                            <Row className="pt-2">
-                                                <Col xs="3">
-                                                    <Input type="radio" checked={sexBoy} onClick={() => changeSexBoy()} />
-                                                    <Label check> Anh </Label>
+                                                    </Row>
                                                 </Col>
-
-                                                <Col xs="6">
-                                                    <Input type="radio" checked={sexGirl} onClick={() => changeSexGirl()} />
-                                                    <Label check>Chị </Label>
-                                                </Col>
-
+                                                <hr className="mt-2"></hr>
                                             </Row>
-                                            <Row className="mt-2 ">
-                                                <Col xs="4" >
-                                                    <TextField
-                                                        label="Họ và tên"
-                                                        size="small"
-                                                        onChange={changeName}
-
-                                                    />
-                                                </Col>
-                                                <Col xs="6">
-                                                    <TextField
-                                                        label="Số điện thoại"
-                                                        size="small"
-                                                        onChange={changePhone}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        </Row>
-
-                                        <Row className="pt-3" >
-                                            <h6>CHỌN CÁCH THỨC NHẬN HÀNG</h6>
-                                            <Row className="pt-3">
-                                                <Col xs="6">
-                                                    <Input type="radio" checked={true} />
-                                                    <Label check > Giao tận nơi </Label>
-                                                </Col>
-
-                                                <Col xs="6">
-                                                    <Input type="radio" disabled />
-                                                    <Label check>Nhận tại siêu thị </Label>
-                                                </Col>
-
-                                            </Row>
-                                            <Col xs="10" className="TTVitri">
-                                                <p>Chọn địa chỉ để biết thời gian nhận hàng và phí vận chuyển (nếu có)</p>
-                                                <Row >
-                                                    <Col xs="6" >
-                                                        <Col>
-                                                            {city ?
-                                                                <FormControl style={{ width: "180px", paddingTop: "4px" }}>
-                                                                    <InputLabel >Chọn tỉnh / Thành phố</InputLabel>
-                                                                    <Select
-                                                                        size="small"
-                                                                        onChange={cityChange}>
-                                                                        {/* <MenuItem value={'none'}></MenuItem> */}
-                                                                        {city.map((value, index) => {
-                                                                            return <MenuItem value={index} >{value.Name}</MenuItem>
-                                                                        }
-                                                                        )}
-                                                                    </Select>
-                                                                </FormControl>
-                                                                :
-                                                                <Select>
-                                                                    <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
-                                                                </Select>
+                                        </>
+                                            )
                                                             }
-                                                        </Col>
+                                            )
+                            }
+                        </Col>
 
-                                                        <Col className="mt-3">
-                                                            <FormControl style={{ width: "180px", paddingTop: "4px" }}>
-                                                                <InputLabel >Chọn Phường / Xã</InputLabel>
-                                                                <Select
-                                                                    size="small"
-                                                                    onChange={warChange}>
-                                                                    <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
-                                                                    {wardstName ? wardstName.map((value, index) => {
-                                                                        return <MenuItem value={value.Name} >{value.Name}</MenuItem>
-                                                                    }
-                                                                    ) :
-                                                                        <Select>
-                                                                            <MenuItem value={'none'}>Chọn Phường / Xã</MenuItem>
-                                                                        </Select>}
-                                                                </Select>
+                        <Col md="6">
+                            <Col xs="12" md="12" className="cartTTKhachHang ">
 
-                                                            </FormControl>
-                                                        </Col>
-
-                                                    </Col>
-
-                                                    <Col>
-                                                        <Col xs="5">
-                                                            <FormControl style={{ width: "180px", paddingTop: "4px" }}>
-                                                                <InputLabel >Chọn Quận / Huyện</InputLabel>
-                                                                <Select
-                                                                    size="small"
-                                                                    onChange={districChange}>
-                                                                    <MenuItem value={'none'}></MenuItem>
-                                                                    {districtName ? districtName.map((value, index) => {
-                                                                        return <MenuItem value={index}>{value.Name}</MenuItem>
-                                                                    }
-                                                                    ) :
-                                                                        <Select>
-                                                                            <MenuItem value={'none'}></MenuItem>
-                                                                        </Select>}
-                                                                </Select>
-
-                                                            </FormControl>
-
-                                                        </Col>
-
-                                                        <Col xs="5">
-                                                            <TextField
-                                                                className="TTInputDiaChi mt-3"
-                                                                xs="10"
-                                                                size="small"
-                                                                label="Số nhà, tên đường"
-                                                            />
-                                                        </Col></Col>
-                                                </Row>
-
+                                <Row className="TTKhachHang ">
+                                    <Row className="pt-3">
+                                        <h6>THÔNG TIN KHÁCH HÀNG</h6>
+                                        <Row className="pt-2">
+                                            <Col xs="3">
+                                                <Input type="radio" checked={sexBoy} onClick={() => changeSexBoy()} />
+                                                <Label check> Anh </Label>
                                             </Col>
-                                            <Col xs="6" className="pl-2 mt-3">
+
+                                            <Col xs="6">
+                                                <Input type="radio" checked={sexGirl} onClick={() => changeSexGirl()} />
+                                                <Label check>Chị </Label>
+                                            </Col>
+
+                                        </Row>
+                                        <Row className="mt-2 ">
+                                            <Col xs="6" >
                                                 <TextField
-                                                    onChange={changeRequirement}
-                                                    className="TextField"
+                                                    label="Họ và tên"
                                                     size="small"
-                                                    label="Yêu cầu khác (không bắt buộc)"
-                                                    style={{
-                                                        width: "400px"
-                                                    }}
+                                                    onChange={changeName}
+
                                                 />
                                             </Col>
-
-                                            <Row>
-                                                <Col>
-                                                    <hr></hr>
-                                                    <TextField
-                                                        className="TextFieldVoucher"
-                                                        xs="10"
-                                                        size="small"
-                                                        label="Nhập Voucher"
-                                                    />
-                                                </Col>
-                                            </Row>
-                                            <Row className="TTTongTien">
-                                                <hr></hr>
-                                                <Col className="text-right">
-                                                    <h5>Tổng tiền</h5>
-                                                </Col>
-                                                <Col className="TTColTongTien">
-                                                    <h5>{tongTien} $</h5>
-                                                </Col>
-                                                <Button className="TTbtnDatHang" onClick={() => datHang()}>ĐẶT HÀNG</Button>
-                                            </Row>
+                                            <Col xs="6">
+                                                <TextField
+                                                    label="Số điện thoại"
+                                                    size="small"
+                                                    onChange={changePhone}
+                                                />
+                                            </Col>
                                         </Row>
                                     </Row>
-                                </Col>
-                                : ""}
-                        </Row>
 
+                                    <Row className="pt-3 " >
+                                        <h6>CHỌN CÁCH THỨC NHẬN HÀNG</h6>
+                                        <Row className="pt-3">
+                                            <Col xs="6">
+                                                <Input type="radio" checked={true} />
+                                                <Label check > Giao tận nơi </Label>
+                                            </Col>
 
+                                            <Col xs="6">
+                                                <Input type="radio" disabled />
+                                                <Label check>Nhận tại siêu thị </Label>
+                                            </Col>
+
+                                        </Row>
+                                        <Col xs="12" className="TTVitri">
+                                            <p>Chọn địa chỉ để biết thời gian nhận hàng và phí vận chuyển (nếu có)</p>
+                                            <Row xs="12" >
+
+                                                <Col xs="5" md="5" >
+                                                    <Col xs="4">
+                                                        {city ?
+                                                            <FormControl className="cartInput">
+                                                                <InputLabel >Chọn tỉnh / Thành phố</InputLabel>
+                                                                <Select
+                                                                    size="small"
+                                                                    onChange={cityChange}>
+                                                                    {/* <MenuItem value={'none'}></MenuItem> */}
+                                                                    {city.map((value, index) => {
+                                                                        return <MenuItem value={index} >{value.Name}</MenuItem>
+                                                                    }
+                                                                    )}
+                                                                </Select>
+                                                            </FormControl>
+                                                            :
+                                                            <Select>
+                                                                <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
+                                                            </Select>
+                                                        }
+                                                    </Col>
+
+                                                    <Col xs="4" className="mt-3 ">
+                                                        <FormControl className="cartInput">
+                                                            <InputLabel >Chọn Phường / Xã</InputLabel>
+                                                            <Select
+                                                                size="small"
+                                                                onChange={warChange}>
+                                                                <MenuItem value={'none'}>Tỉnh/Thành phố</MenuItem>
+                                                                {wardstName ? wardstName.map((value, index) => {
+                                                                    return <MenuItem value={value.Name} >{value.Name}</MenuItem>
+                                                                }
+                                                                ) :
+                                                                    <Select>
+                                                                        <MenuItem value={'none'}>Chọn Phường / Xã</MenuItem>
+                                                                    </Select>}
+                                                            </Select>
+
+                                                        </FormControl>
+                                                    </Col>
+                                                </Col>
+
+                                                <Col xs="5">
+                                                    <Col xs="4">
+                                                        <FormControl className="cartInput">
+                                                            <InputLabel >Chọn Quận / Huyện</InputLabel>
+                                                            <Select
+                                                                size="small"
+                                                                onChange={districChange}>
+                                                                <MenuItem value={'none'}></MenuItem>
+                                                                {districtName ? districtName.map((value, index) => {
+                                                                    return <MenuItem value={index}>{value.Name}</MenuItem>
+                                                                }
+                                                                ) :
+                                                                    <Select>
+                                                                        <MenuItem value={'none'}></MenuItem>
+                                                                    </Select>}
+                                                            </Select>
+
+                                                        </FormControl>
+
+                                                    </Col>
+
+                                                    <Col xs="4">
+                                                        <TextField
+                                                            className="cartInput mt-3"
+                                                            xs="10"
+                                                            size="small"
+                                                            label="Số nhà, tên đường"
+                                                        />
+                                                    </Col>
+                                                </Col>
+                                            </Row>
+
+                                        </Col>
+                                        <Row className="TTTongTien">
+                                            <hr></hr>
+                                            <Col className="text-right">
+                                                <h5>Tổng tiền</h5>
+                                            </Col>
+                                            <Col className="TTColTongTien">
+                                                <h5>{tongTien} $</h5>
+                                            </Col>
+                                            <Button className="TTbtnDatHang" onClick={() => datHang()}>ĐẶT HÀNG</Button>
+                                        </Row>
+                                    </Row>
+                                </Row>
+                            </Col>
+                        </Col>
                     </>
-
                     :
-                    <h1>mua sam them</h1>
-            }
-
-
+                    <>
+                        <div className="empty-cart">
+                            <h2>Giỏ hàng trống !!</h2>
+                        </div>
+                    </>
+                }
+            </Row>
         </>
     )
 }

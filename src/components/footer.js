@@ -7,7 +7,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 const Footer = () => {
     return (
         <>
-            <Row className="footer">
+            <Row xs = "12" className="footer">
                 <Col xs="4">
                     <h5>PRODUCT</h5>
                     <p>Help Center</p>

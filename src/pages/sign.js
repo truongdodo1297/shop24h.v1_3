@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, useNavigate } from 'react-router-dom';
 import { Button, Container, FormFeedback, FormGroup, FormText, Input, Label } from 'reactstrap';
-import {signIn} from "../actions/action"
+import { signIn } from "../actions/action"
 const LoginForm = () => {
     const [signStatus, setSignStatus] = useState("")
     const [passWord, setPassWord] = useState("")
     const navigate = useNavigate()
-    const { signSuccess,messageSign } = useSelector((reduxData) => reduxData.shopReducer);
+    const { signSuccess, messageSign } = useSelector((reduxData) => reduxData.shopReducer);
     useEffect(() => {
-        if(signSuccess){
+        if (signSuccess) {
             navigate("/login")
         }
     }, [signSuccess])
@@ -22,35 +22,71 @@ const LoginForm = () => {
         phone: '',
         passWord: '',
     });
-    const validateInput = () =>{
-        if(formData.userName == ""){
-            setSignStatus("Tên tài khoản không được bỏ trống")
-            return;
+    const [statusInvalid, setStatusInvalid] = useState({
+        userName: false,
+        email: false,
+        phone: false,
+        passWord: false,
+        rePassWord: false
+    });
+    const validateInput = () => {
+        if (formData.userName == "") {
+            setStatusInvalid(prevState => ({
+                ...prevState,
+                userName : true
+            }))
+            return false;
         }
-        if(formData.userName.length < 6){
-            setSignStatus("Tên tài khoản phải lớn hơn 6")
-            return;
+        setStatusInvalid(prevState => ({
+            ...prevState,
+            userName : false
+        }))
+        if (formData.email == "") {
+            setStatusInvalid(prevState => ({
+                ...prevState,
+                email : true
+            }))
+            return false
         }
-        if(formData.email == ""){
-            setSignStatus("Email không được bỏ trống")
-            return;
+        setStatusInvalid(prevState => ({
+            ...prevState,
+            email : false
+        }))
+        if (formData.phone == "") {
+            setStatusInvalid(prevState => ({
+                ...prevState,
+                phone : true
+            }))
+            return false
         }
-        if(formData.phone == ""){
-            setSignStatus("Số điện thoại không được bỏ trống")
-            return;
+        setStatusInvalid(prevState => ({
+            ...prevState,
+            phone : false
+        }))
+        console.log(formData.phone.length)
+        if (formData.phone.length < 10) {
+            setStatusInvalid(prevState => ({
+                ...prevState,
+                phone : true
+            }))
+            return false
         }
-        if(formData.phone.length < 10){
-            setSignStatus("Số điện thoại phải lớn hơn 10 số")
-            return;
+        setStatusInvalid(prevState => ({
+            ...prevState,
+            phone : false
+        }))
+        if (formData.passWord !== passWord) {
+            setStatusInvalid(prevState => ({
+                ...prevState,
+                rePassWord : true
+            }))
+            return false
         }
-        if(formData.phone.length < 10){
-            setSignStatus("Số điện thoại phải lớn hơn 10 số")
-            return;
-        }
-        if(formData.passWord !==  passWord){
-            setSignStatus("Pass word không đúng")
-            return;
-        }
+        setStatusInvalid(prevState => ({
+            ...prevState,
+            rePassWord : false
+        }))
+        return true
     }
     const handleInputChange = (event) => {
         setFormData({
@@ -59,20 +95,20 @@ const LoginForm = () => {
         });
 
     };
-    const handlePassWordChange = (e) =>{
+    const handlePassWordChange = (e) => {
         setPassWord(e.target.value)
     }
 
     const handleSubmit = () => {
-        debugger;
         console.log(formData)
         validateInput()
-        dispatch(signIn(formData))
+        if (validateInput())
+            dispatch(signIn(formData))
     };
 
     return (
         <div className='SignDiv'>
-            <form className="SignForm">
+            <div className="SignForm">
                 <h3>{signStatus}</h3>
                 <h2 className='signH2'>Đăng kí tài khoản</h2>
                 <FormGroup className="position-relative">
@@ -83,10 +119,11 @@ const LoginForm = () => {
                         name="userName"
                         value={formData.name}
                         onChange={handleInputChange}
+                        invalid={statusInvalid.userName}
                     />
-                    {/* <FormFeedback tooltip >
-                    Oh noes! that name is already taken
-                </FormFeedback> */}
+                    <FormFeedback invalid  >
+                        Tên tài khoản không được bỏ trống 
+                    </FormFeedback>
                 </FormGroup>
                 <div>
                     <InputLabel className='text-light'>Email:</InputLabel>
@@ -97,7 +134,11 @@ const LoginForm = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
+                        invalid={statusInvalid.email}
                     />
+                    <FormFeedback invalid  >
+                        Email không được bỏ trống
+                    </FormFeedback>
                 </div>
                 <div>
                     <InputLabel className='text-light'>Số điện thoại:</InputLabel>
@@ -108,7 +149,11 @@ const LoginForm = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
+                        invalid={statusInvalid.phone}
                     />
+                    <FormFeedback invalid  >
+                        Số điện thoại không hợp lệ
+                    </FormFeedback>
                 </div>
                 <div>
                     <InputLabel className='text-light'>Mật khẩu:</InputLabel>
@@ -119,7 +164,11 @@ const LoginForm = () => {
                         name="passWord"
                         value={formData.passWord}
                         onChange={handleInputChange}
+                        invalid={statusInvalid.passWord}
                     />
+                    <FormFeedback invalid  >
+                        Pass word không đúng
+                    </FormFeedback>
                 </div>
                 <div>
                     <InputLabel className='text-light'>Nhắc lại mật khẩu:</InputLabel>
@@ -127,13 +176,17 @@ const LoginForm = () => {
                         className='signInput'
                         type="password"
                         id="password"
-                        onChange={(e)=>handlePassWordChange(e)}
+                        onChange={(e) => handlePassWordChange(e)}
+                        invalid={statusInvalid.rePassWord}
                     />
+                    <FormFeedback invalid  >
+                    Pass word không đúng
+                    </FormFeedback>
                 </div>
                 <div className='signDivBtn'>
-                <Button onClick={handleSubmit} className = "signBtn">Đăng Kí</Button>
+                    <Button onClick={handleSubmit} className="signBtn">Đăng Kí</Button>
                 </div>
-            </form>
+            </div>
         </div>
 
 

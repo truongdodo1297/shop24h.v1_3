@@ -1,4 +1,13 @@
 @media only screen and (max-width: 600px) {
+    .SignForm{
+        padding: 20px;
+    }
+    .signH2{
+        font-size: 20px;
+    }
+    .cartInput{
+        width: 130px;
+    }
     .btnLoc {
         width: 200px;
         /* margin-top: 100px; */
@@ -36,9 +45,6 @@
         margin-top: -15px;
     }
 
-    /* body {
-      font-size: 8px;
-    } */
     button {
         font-size: 0.5em;
         padding: 0.5em;
@@ -100,6 +106,11 @@
 }
 
 @media (min-width: 600px) {
+    .SignForm {
+        padding: 35%;
+        padding-top: 10%;
+        padding-bottom: 10%;
+    }
     .Navbar_sm {
         display: none;
     }
@@ -109,10 +120,14 @@
     }
 
     .imgBody3_tilte {
+        padding-top: 200px;
         background-color: #4444ff;
-        width: 4400px;
-        padding-top: 300px;
-        margin-right: 120px;
+        font-size: 40px;
+        align-items: center;
+        width: auto;
+        height: 500px;
+        margin-top: 300px;
+        margin-right: 200px;
     }
 
     .iPhoneName {
@@ -145,7 +160,6 @@
 }
 
 .footer {
-    width: 100%;
     padding-top: 30px;
     text-align: center;
     background-color: #ced4da;
@@ -234,13 +248,14 @@
 .btnLoc {
     width: 200px;
     margin-top: 50px;
-    margin-left: 80px;
+    margin-left: 0px;
+}
+.cartInput{
+    width: 300%;
 }
 
 
-
 .ShoppingCartCheckoutIcon {
-    background-color: #4444ff;
     margin-top: 15px;
     text-align: end;
     width: 20%;
@@ -257,7 +272,7 @@
 
 .nav {
     padding-left: 200px;
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(44, 44, 44);
 }
 
 .navItem {
@@ -339,10 +354,10 @@ a {
 }
 
 .imgBody3_tilte {
-    width: 300px;
+    width: 200px;
     position: absolute;
     justify-content: end;
-    margin-top: 110px;
+    margin-top: 30px;
     text-align: center;
     right: 0px;
 }
@@ -578,11 +593,6 @@ s .shopDiv {
     /* padding-left: 20px; */
 }
 
-.TextFieldVoucher {
-    width: 200px;
-    margin: 30px;
-}
-
 .TTbtnDatHang {
     margin-left: 50px;
     width: 85%;
@@ -614,14 +624,6 @@ s .shopDiv {
     border: 1px solid blue;
     background-color: #fcfcfc;
 }
-
-.TTInputDiaChi {
-    width: 180px;
-
-}
-
-
-/* @import url('https://fonts.googleapis.com/css?family=Numans'); */
 
 
 .loginDiv {
@@ -700,13 +702,10 @@ s .shopDiv {
     background: linear-gradient(43deg, rgba(13, 12, 33, 1) 0%, rgba(217, 59, 217, 1) 28%, rgba(76, 206, 232, 1) 71%);
 }
 
-.SignForm {
-    padding: 35%;
-    padding-top: 10%;
-    padding-bottom: 10%;
-}
+
 
 .signH2 {
+    text-align: center;
     font-size: 50px;
     font-weight: 400;
 }
@@ -725,3 +724,15 @@ s .shopDiv {
     justify-content: center;
     display: flex;
 }
+.empty-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }
+  
+  .empty-cart h2 {
+    font-size: 1.5rem;
+    color: gray;
+    text-align: center;
+  }
