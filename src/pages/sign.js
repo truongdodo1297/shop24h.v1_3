@@ -3,7 +3,7 @@ import { InputLabel } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, useNavigate } from 'react-router-dom';
-import { Button, Container, FormFeedback, FormGroup, FormText, Input, Label } from 'reactstrap';
+import { Button, Col, Container, FormFeedback, FormGroup, FormText, Input, Label, Row } from 'reactstrap';
 import { signIn } from "../actions/action"
 const LoginForm = () => {
     const [signStatus, setSignStatus] = useState("")
@@ -33,58 +33,58 @@ const LoginForm = () => {
         if (formData.userName == "") {
             setStatusInvalid(prevState => ({
                 ...prevState,
-                userName : true
+                userName: true
             }))
             return false;
         }
         setStatusInvalid(prevState => ({
             ...prevState,
-            userName : false
+            userName: false
         }))
         if (formData.email == "") {
             setStatusInvalid(prevState => ({
                 ...prevState,
-                email : true
+                email: true
             }))
             return false
         }
         setStatusInvalid(prevState => ({
             ...prevState,
-            email : false
+            email: false
         }))
         if (formData.phone == "") {
             setStatusInvalid(prevState => ({
                 ...prevState,
-                phone : true
+                phone: true
             }))
             return false
         }
         setStatusInvalid(prevState => ({
             ...prevState,
-            phone : false
+            phone: false
         }))
         console.log(formData.phone.length)
         if (formData.phone.length < 10) {
             setStatusInvalid(prevState => ({
                 ...prevState,
-                phone : true
+                phone: true
             }))
             return false
         }
         setStatusInvalid(prevState => ({
             ...prevState,
-            phone : false
+            phone: false
         }))
         if (formData.passWord !== passWord) {
             setStatusInvalid(prevState => ({
                 ...prevState,
-                rePassWord : true
+                rePassWord: true
             }))
             return false
         }
         setStatusInvalid(prevState => ({
             ...prevState,
-            rePassWord : false
+            rePassWord: false
         }))
         return true
     }
@@ -107,87 +107,107 @@ const LoginForm = () => {
     };
 
     return (
-        <div className='SignDiv'>
-            <div className="SignForm">
-                <h3>{signStatus}</h3>
+        <Row xs = "12" className='sign'>
+            <Row md="12">
                 <h2 className='signH2'>Đăng kí tài khoản</h2>
-                <FormGroup className="position-relative">
-                    <InputLabel className='text-light'>Tên đăng nhập</InputLabel>
-                    <Input
-                        className='signInput'
-                        id="name"
-                        name="userName"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        invalid={statusInvalid.userName}
-                    />
-                    <FormFeedback invalid  >
-                        Tên tài khoản không được bỏ trống 
-                    </FormFeedback>
-                </FormGroup>
-                <div>
-                    <InputLabel className='text-light'>Email:</InputLabel>
-                    <Input
-                        className='signInput'
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        invalid={statusInvalid.email}
-                    />
-                    <FormFeedback invalid  >
-                        Email không được bỏ trống
-                    </FormFeedback>
-                </div>
-                <div>
-                    <InputLabel className='text-light'>Số điện thoại:</InputLabel>
-                    <Input
-                        className='signInput'
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        invalid={statusInvalid.phone}
-                    />
-                    <FormFeedback invalid  >
-                        Số điện thoại không hợp lệ
-                    </FormFeedback>
-                </div>
-                <div>
-                    <InputLabel className='text-light'>Mật khẩu:</InputLabel>
-                    <Input
-                        className='signInput'
-                        type="password"
-                        id="password"
-                        name="passWord"
-                        value={formData.passWord}
-                        onChange={handleInputChange}
-                        invalid={statusInvalid.passWord}
-                    />
-                    <FormFeedback invalid  >
-                        Pass word không đúng
-                    </FormFeedback>
-                </div>
-                <div>
-                    <InputLabel className='text-light'>Nhắc lại mật khẩu:</InputLabel>
-                    <Input
-                        className='signInput'
-                        type="password"
-                        id="password"
-                        onChange={(e) => handlePassWordChange(e)}
-                        invalid={statusInvalid.rePassWord}
-                    />
-                    <FormFeedback invalid  >
-                    Pass word không đúng
-                    </FormFeedback>
-                </div>
-                <div className='signDivBtn'>
-                    <Button onClick={handleSubmit} className="signBtn">Đăng Kí</Button>
-                </div>
-            </div>
-        </div>
+            </Row>
+
+            <Col md="12" className='signDiv'>
+                <Row md="12" >
+                    <Col md="6" className='signInfo'>
+                        <h2 className='signWelcome'>Chào mừng bạn đến với Apple Store</h2>
+                        <ul>
+                            <li className='signH1'>Mac</li>
+                            <li className='signH1'>iPad</li>
+                            <li className='signH1'>iPhone</li>
+                            <li className='signH1'>iWatch</li>
+                            <li className='signH1'>AirPods</li>
+                            <li className='signH1'>HeadPhone</li>
+                        </ul>
+
+                    </Col>
+                    <Col md="5" xs = "12" className="SignForm ">
+                        <h3>{signStatus}</h3>
+                        <FormGroup >
+                            <InputLabel >Tên đăng nhập</InputLabel>
+                            <Input
+                                className='signInput'
+                                id="name"
+                                name="userName"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                invalid={statusInvalid.userName}
+                            />
+                            <FormFeedback invalid  >
+                                Tên tài khoản không được bỏ trống
+                            </FormFeedback>
+                        </FormGroup>
+                        <div>
+                            <InputLabel >Email:</InputLabel>
+                            <Input
+                                className='signInput'
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                invalid={statusInvalid.email}
+                            />
+                            <FormFeedback invalid  >
+                                Email không được bỏ trống
+                            </FormFeedback>
+                        </div>
+                        <div>
+                            <InputLabel >Số điện thoại:</InputLabel>
+                            <Input
+                                className='signInput'
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                                invalid={statusInvalid.phone}
+                            />
+                            <FormFeedback invalid  >
+                                Số điện thoại không hợp lệ
+                            </FormFeedback>
+                        </div>
+                        <div>
+                            <InputLabel >Mật khẩu:</InputLabel>
+                            <Input
+                                className='signInput'
+                                type="password"
+                                id="password"
+                                name="passWord"
+                                value={formData.passWord}
+                                onChange={handleInputChange}
+                                invalid={statusInvalid.passWord}
+                            />
+                            <FormFeedback invalid  >
+                                Pass word không đúng
+                            </FormFeedback>
+                        </div>
+                        <div>
+                            <InputLabel >Nhắc lại mật khẩu:</InputLabel>
+                            <Input
+                                className='signInput'
+                                type="password"
+                                id="password"
+                                onChange={(e) => handlePassWordChange(e)}
+                                invalid={statusInvalid.rePassWord}
+                            />
+                            <FormFeedback invalid  >
+                                Pass word không đúng
+                            </FormFeedback>
+                        </div>
+                        <div className='signDivBtn'>
+                            <Button onClick={handleSubmit} className="signBtn">Đăng Kí</Button>
+                        </div>
+                    </Col>
+                </Row>
+
+            </Col>
+        </Row>
 
 
     );

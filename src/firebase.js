@@ -5,12 +5,14 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA2RwEahJqaKxaIewlDvAkrX2KvupiPan0",
-  authDomain: "shop24h-19875.firebaseapp.com",
-  projectId: "shop24h-19875",
-  storageBucket: "shop24h-19875.appspot.com",
-  messagingSenderId: "34358971648",
-  appId: "1:34358971648:web:5d44227da4823d8c2277e5"
+  apiKey: "AIzaSyD_TSXF6EFn5gJq_7m8UYN5dTngdpqs9s8",
+  authDomain: "shop24h-fc419.firebaseapp.com",
+  databaseURL: "https://shop24h-fc419-default-rtdb.firebaseio.com",
+  projectId: "shop24h-fc419",
+  storageBucket: "shop24h-fc419.appspot.com",
+  messagingSenderId: "296935975521",
+  appId: "1:296935975521:web:3ef880aa8191eea000d820",
+  measurementId: "G-MSR56X2V19"
 };
 
 

@@ -14,7 +14,7 @@ function App() {
     const navigate = useNavigate();
     const [userName, setUserName] = useState();
     const [passWord, setPassWord] = useState();
-    const { statusLogin, loginSuccess, isAdmin } = useSelector((reduxData) => reduxData.shopReducer);
+    const {loginSuccess, isAdmin } = useSelector((reduxData) => reduxData.shopReducer);
     useEffect(()=>{
        let isLoggedIn =  localStorage.getItem("isLoggedIn");
        if(isLoggedIn == "true"){
@@ -47,10 +47,6 @@ function App() {
             .then((result) => {
                 console.log(result)
                 setUser(result.user)
-                console.log(statusLogin)
-                if (statusLogin == false) {
-                    // dispatch(changeStatusLogin())
-                }
             })
             .catch((err) => {
                 console.log(err)
@@ -83,12 +79,12 @@ function App() {
                                         <Input type="" className="form-control" placeholder="password" onChange={changePassWord}></Input>
                                     </div>
                                     <div className="row align-items-center remember ml-3 p-3 mt-1">
-                                        <FormGroup check>
+                                        {/* <FormGroup check>
                                             <Input name="check" type="checkbox" />
                                             <Label check for="exampleCheck">
                                                 Lưu tài khoản
                                             </Label>
-                                        </FormGroup>
+                                        </FormGroup> */}
                                     </div>
                                     <div className="form-group">
                                         <button type="submit" value="Login" className="btn btn-lg login_btn" onClick={onlogin}>Đăng nhập</button>

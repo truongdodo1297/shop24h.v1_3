@@ -215,7 +215,7 @@ const ProductList = () => {
                         </Col>
 
                         <Col>
-                            <UncontrolledAccordion stayOpen >
+                            <UncontrolledAccordion className="listAccordion" stayOpen >
                                 <AccordionItem>
                                     <AccordionHeader targetId="1">
                                         Tìm kiếm sản phẩm
@@ -296,8 +296,8 @@ const ProductList = () => {
                                                 </Container>
 
                                             </Container>
-                                            <Row >
-                                                <Button color="info" className="btn btn-block btnLoc" onClick={onBtnLoc}>Lọc</Button>
+                                            <Row className="btnLoc" >
+                                                <Button color="info" className="btn btn-block" onClick={onBtnLoc}>Lọc</Button>
                                             </Row>
 
                                         </Col>
@@ -311,12 +311,12 @@ const ProductList = () => {
                                     return (
 
                                         <Card onClick={() => productDetail(productItem._id)} key={index} className="listGridItem">
-                                            <img className="listimg" alt="product" src={productItem.imageUrl}></img>
+                                            <img className="listImg" alt="product" src={productItem.imageUrl}></img>
                                             <CardBody >
-                                                <p className="listtype">{productItem.type}</p>
-                                                <p className="listproductName">{productItem.name}</p>
-                                                <p className="listproductPrice"><span className="m-2 " style={{ textDecorationLine: "line-through" }}>{productItem.buyPrice}</span> <b>{productItem.promotionPrice}</b></p>
-                                                <Col className="listrating">
+                                                <p className="listType">{productItem.type}</p>
+                                                <p className="listProductName">{productItem.name}</p>
+                                                <p className="listProductPrice"><span className="m-2 " style={{ textDecorationLine: "line-through" }}>{productItem.buyPrice}</span> <b>{productItem.promotionPrice}</b></p>
+                                                <Col className="listRating">
                                                     <Rating name="read-only" value={productItem.rating} readOnly />
                                                 </Col>
                                             </CardBody>

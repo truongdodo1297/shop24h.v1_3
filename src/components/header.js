@@ -17,12 +17,15 @@ const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [displayCollapse, setDisplayCollapse] = useState(false)
-    const isLoggedIn =  localStorage.getItem("isLoggedIn");
     useEffect(() => {
-         if( loginSuccess){
-             localStorage.setItem("isLoggedIn", true);
-             navigate("/cart")
-         }
+        if (loginSuccess) {
+            localStorage.setItem("isLoggedIn", true);
+            //  navigate("/cart")
+        }
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (isLoggedIn == "true") {
+            dispatch(changeStatusLogin(true))
+        }
         let array = JSON.parse(localStorage.getItem("item") || 0)
         if (array !== 0) {
             let number = array.reduce((total, item) => total + item.quantity, 0);
@@ -35,6 +38,7 @@ const Header = () => {
     const logOut = () => {
         console.log("??")
         localStorage.setItem("isLoggedIn", false)
+        dispatch(changeStatusLogin(false))
     }
     const goHome = () => {
         navigate("/")
@@ -45,7 +49,7 @@ const Header = () => {
     const goToShop = () => {
         navigate("/cart");
     }
- 
+
 
     return (
 
@@ -82,7 +86,7 @@ const Header = () => {
         //         </Col>
         //     </Navbar>
         <>
-            <Nav xs = "12" className="Nav_lg">
+            <Nav xs="12" md = "12" className="navLg">
                 <NavItem>
                     <AppleIcon className="AppleIcon" onClick={goHome}></AppleIcon>
                 </NavItem>
@@ -107,7 +111,7 @@ const Header = () => {
                 <NavItem>
                     <NavLink className=" navItem m-1 ml-5" href="/components/">TV & Home</NavLink>
                 </NavItem>
-                {isLoggedIn ?
+                {loginSuccess ?
                     <NavItem>
                         <NavLink className=" navItem m-1 ml-5" onClick={logOut}>LogOut</NavLink>
                     </NavItem>
@@ -120,7 +124,7 @@ const Header = () => {
                     <ShoppingCartCheckoutIcon onClick={() => goToShop()}></ShoppingCartCheckoutIcon>
                     <div className="icoShopping"><p>{numberItem}</p></div>
                 </NavItem>
-             
+
 
                 {/* <Col className="SignInHeader bg-danger" >
     <AccountBoxIcon  className="AccountBoxIcon" onClick={()=>signIn()}></AccountBoxIcon>
@@ -129,7 +133,7 @@ const Header = () => {
 
             </Nav>
 
-            <Navbar className="Navbar_sm" light>
+            <Navbar className="navbarSm" light>
                 <NavbarToggler onClick={() => setDisplayCollapse(!displayCollapse)} />
                 <NavbarBrand onClick={goHome} className="text-light">
                     <AppleIcon onClick={goHome}></AppleIcon>

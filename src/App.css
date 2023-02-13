@@ -1,20 +1,41 @@
 @media only screen and (max-width: 600px) {
-    .SignForm{
-        padding: 20px;
+    .listGrid {
+        padding-top: 20px;
+        display: grid;
     }
-    .signH2{
-        font-size: 20px;
+    .signDiv{
+        border: none;
+        box-shadow: none;
     }
-    .cartInput{
-        width: 130px;
+    .SignForm {
+        width: 270px;
+        padding: 0px;
     }
-    .btnLoc {
-        width: 200px;
-        /* margin-top: 100px; */
-        /* margin-left: 30px; */
+    .sign {
+        background: rgb(13, 12, 33);
+        background: linear-gradient(43deg, rgba(13, 12, 33, 1) 0%, rgba(217, 59, 217, 1) 28%, rgba(76, 206, 232, 1) 71%);
     }
 
-    .Nav_lg {
+    .signInfo {
+
+        display: none;
+    }
+
+    .signH2 {
+        font-size: 20px;
+    }
+
+    .cartInput {
+        width: 130px;
+    }
+
+    .btnLoc {
+       left: 50%;
+        width: 200px;
+        background-color: #4444ff;
+    }
+
+    .navLg {
         display: none;
     }
 
@@ -64,7 +85,7 @@
         display: none;
     }
 
-    .listproductName {
+    .listProductName {
         margin-top: -15px;
         font-size: 15px;
     }
@@ -81,18 +102,12 @@
 
     }
 
-    .listGrid {
-        padding-top: 20px;
-        display: grid;
-        grid-template-columns: auto auto;
-    }
-
-    .listproductName {
+    .listProductName {
         margin-top: -15px;
         font-size: 15px;
     }
 
-    .listproductPrice {
+    .listProductPrice {
         margin-top: -15px;
     }
 
@@ -107,11 +122,15 @@
 
 @media (min-width: 600px) {
     .SignForm {
-        padding: 35%;
-        padding-top: 10%;
-        padding-bottom: 10%;
+        padding: 20px;
+        width: 345px;
+        border-radius: 20px;
+
+        /* padding-top: 10%;
+        padding-bottom: 10%; */
     }
-    .Navbar_sm {
+
+    .navbarSm {
         display: none;
     }
 
@@ -136,8 +155,12 @@
     }
 }
 
+.navLg{
+    width: 100%;
+    position: fixed;
+}
 
-.listimg {
+.listImg {
     height: 50%;
 }
 
@@ -153,6 +176,9 @@
     padding-top: 40px;
     padding-left: 90px;
 }
+.listAccordion{
+    margin-top: 50px;
+}
 
 .Nav_sm_NavItem {
     width: 20%;
@@ -165,9 +191,13 @@
     background-color: #ced4da;
 }
 
-.Navbar_sm {
+.navbarSm {
+    height: 50px;
+    width: 100%;
+    position: fixed;
     color: white;
     background-color: rgb(54, 53, 53);
+    z-index: 9999;
 }
 
 .icoShopping {
@@ -195,7 +225,7 @@
     text-align: center;
 }
 
-.Navbar_sm_Nav {
+.navbarSm_Nav {
     padding-top: 0px;
     padding-left: 40px;
     padding-right: 40px;
@@ -210,12 +240,12 @@
 
 .listGrid {
     display: flex;
-    padding-top: 30px;
+    padding-top: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.listtype {
+.listType {
     font-size: 16px;
     color: red;
     font-weight: 600;
@@ -250,7 +280,8 @@
     margin-top: 50px;
     margin-left: 0px;
 }
-.cartInput{
+
+.cartInput {
     width: 300%;
 }
 
@@ -299,7 +330,7 @@ img {
     background-color: black;
 }
 
-h1 {
+.homeH1 {
     font-size: 54px;
     background: -webkit-linear-gradient(rgba(2, 0, 36, 1) 1%, rgba(245, 36, 224, 1) 47%, rgba(0, 212, 255, 1) 100%);
     -webkit-background-clip: text;
@@ -697,9 +728,59 @@ s .shopDiv {
     margin-left: 4px;
 }
 
-.SignDiv {
-    background: rgb(13, 12, 33);
-    background: linear-gradient(43deg, rgba(13, 12, 33, 1) 0%, rgba(217, 59, 217, 1) 28%, rgba(76, 206, 232, 1) 71%);
+ul {
+    list-style: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.signWelcome {
+    padding: 40px;
+    text-align: center;
+    color: white;
+}
+
+.signH1 {
+    color: rgb(13, 31, 34);
+    font-size: 40px;
+    font-weight: 700;
+    animation: fadeIn 1s ease-in forwards;
+}
+
+.signInfo {
+    /* margin-left: -53px; */
+    width: 350px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    background: rgb(217, 59, 31);
+    background: linear-gradient(43deg, rgba(217, 59, 31, 1) 0%, rgba(223, 198, 104, 1) 49%, rgba(230, 20, 208, 1) 99%);
+    border-radius: 8px 0px 0px 8px;
+}
+
+.signDiv {
+    box-shadow: 5px 5px 5px 5px #b9b8b8;
+    border-radius: 8px;
+    width: 700px;
+    border: 1px solid #797979;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign {
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
 }
 
 
@@ -724,15 +805,16 @@ s .shopDiv {
     justify-content: center;
     display: flex;
 }
+
 .empty-cart {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50vh;
-  }
-  
-  .empty-cart h2 {
+}
+
+.empty-cart h2 {
     font-size: 1.5rem;
     color: gray;
     text-align: center;
-  }
+}

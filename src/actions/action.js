@@ -779,6 +779,7 @@ const login = (userName, passWord) => {
             const token = messageLogin.token
             localStorage.setItem("token", token)
             console.log( messageLogin.success)
+            localStorage.setItem("isLoggedIn",  messageLogin.success)
             return dispatch({
                 type: STATUS_LOGIN,
                 payload: messageLogin.success
