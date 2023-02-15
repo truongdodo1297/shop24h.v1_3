@@ -78,8 +78,14 @@
         padding: 0.5em;
     }
 
-    .adList {
+    .AM_list {
         display: none;
+    }
+
+    .grid-item {
+        width: 5rem;
+        height: 10rem;
+        background-color: #4444ff;
     }
 
     .listFilter {
@@ -260,7 +266,7 @@
 }
 
 .listGrid {
-    z-index: -1;
+    z-index: 100;
     padding-top: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -342,7 +348,7 @@ img {
 }
 
 .imgBody {
-    margin-top: 100px;
+    margin-top: 3rem;
     text-align: center;
 }
 
@@ -470,7 +476,6 @@ a {
 }
 
 .divColorAll {
-    z-index: -1;
     align-items: center;
 }
 
@@ -516,7 +521,6 @@ a {
 }
 
 .cartHeadH2 {
-    padding-top: 50px;
     font-size: 45px;
     font-weight: 700;
 }

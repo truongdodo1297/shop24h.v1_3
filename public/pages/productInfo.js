@@ -52,7 +52,8 @@ const ProductInfo = () => {
     return (
 
         <>
-            <Row className="pt-5">
+
+            <Container>
                 <Container style={{ marginTop: "30px", textAlign: "end" }} onClick={() => goToShop()}>
                     {/* <ShoppingCartCheckoutIcon style={{ marginTop: "30px", textAlign: "end" }} onClick={() => goToShop()}></ShoppingCartCheckoutIcon><div className="icoShopping"><p ></p></div> */}
                 </Container>
@@ -127,7 +128,7 @@ const ProductInfo = () => {
 
 
                     : <h3 className="text-center ">No data here !!</h3>}
-            </Row>
+            </Container>
         </>
     )
 

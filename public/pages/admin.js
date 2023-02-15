@@ -39,8 +39,7 @@ const Admin = () => {
         marginTop: "5px",
         borderRadius: "17px",
         border: "1px solid blue",
-        padding: "18px",
-        marginTop: "60px"
+        padding: "18px"
     }
     const [colorProductList, setColorProductList]  = useState("red")
     const [colorCustomerList, setColorCustomerList]  = useState("red")
@@ -48,7 +47,7 @@ const Admin = () => {
     return (
         <>
             <Row >
-                <Col xs="2" md = "1" style={styleFilter} className = "adList">
+                <Col xs="2" md = "1" style={styleFilter} className = "AM_list">
                     <Row className="mt-3"  onClick={() => displayProduct()}>
                         <h6 style={{color: colorProductList }} >Danh sách sản phẩm</h6>
                         <hr></hr>
